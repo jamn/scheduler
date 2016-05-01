@@ -1,0 +1,379 @@
+/* GLOBAL STYLES */
+
+body,
+input, select, textarea {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+body {
+	margin-bottom: 40px;
+}
+
+.centered {
+	text-align: center;
+}
+
+.padded-box {
+	padding: 40px 0;
+}
+
+#mask {
+	display: none;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,.8);
+	z-index: 10000;
+	text-align: center;
+}
+
+#mask .loader {
+	top: 180px;
+	position: relative;
+}
+
+/* Remove the blue halo jquery mobile adds */
+.ui-focus,
+.ui-page { 
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	outline: none 0px;
+}
+
+.link,
+.as-button {
+	cursor: pointer;
+}
+
+.green-button{
+	background-color: #827D00;
+	background: -moz-linear-gradient(top,  rgba(130,125,0,0.9) 0%, rgba(130,125,0,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(130,125,0,0.9)), color-stop(100%,rgba(130,125,0,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(130,125,0,0.9) 0%,rgba(130,125,0,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(130,125,0,0.9) 0%,rgba(130,125,0,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(130,125,0,0.9) 0%,rgba(130,125,0,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(130,125,0,0.9) 0%,rgba(130,125,0,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6827d00', endColorstr='#827d00',GradientType=0 ); /* IE6-9 */
+	border: 1px solid #777200;
+	box-shadow: 1px 1px 2px #B9B300 inset;
+	color: #FFF;
+	font-size: 1.8em;
+	vertical-align: middle;
+	text-align: center;
+	padding: 20px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.error-button{
+	background: rgb(196,3,3) !important; /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(196,3,3,1) 0%, rgba(160,3,3,1) 44%, rgba(132,0,0,1) 100%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(196,3,3,1)), color-stop(44%,rgba(160,3,3,1)), color-stop(100%,rgba(132,0,0,1))) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(196,3,3,1) 0%,rgba(160,3,3,1) 44%,rgba(132,0,0,1) 100%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(196,3,3,1) 0%,rgba(160,3,3,1) 44%,rgba(132,0,0,1) 100%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(196,3,3,1) 0%,rgba(160,3,3,1) 44%,rgba(132,0,0,1) 100%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(196,3,3,1) 0%,rgba(160,3,3,1) 44%,rgba(132,0,0,1) 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c40303', endColorstr='#840000',GradientType=0 ) !important; /* IE6-9 */
+	border-color: #630000 !important;
+	box-shadow: 1px 1px 2px #E2466C inset !important;
+	color: #fff;
+}
+
+
+/* SHELL */
+
+.grey-box .logo{
+	display: none;
+}
+
+.header {
+	margin-bottom: 16px;
+}
+
+.header .logo {
+	margin: 0 auto;
+	padding: 18px 0 4px;
+	transform: scale(0.9, 0.9);
+	-ms-transform: scale(0.9, 0.9);
+	-webkit-transform: scale(0.9, 0.9);
+}
+
+.address {
+	padding: 10px 0;
+}
+
+.header .address {
+	text-align: center;
+	font-size: 1.4em;
+	margin-top: 7px;
+	margin-left: 2px;
+	line-height: 1.1em;
+	color: #B5B5B5;
+}
+
+.grey-box {
+	background-color: #58585A;
+	padding: 20px 0;
+}
+
+.message-board-backing{
+	background-color: #a8a8a8;
+	border-top: 1px solid #d0d0d0;
+	border-left: 1px solid #d0d0d0;
+	border-bottom: 1px solid #4a4a4c;
+	border-right: 1px solid #4a4a4c;
+	-webkit-box-shadow: 1px 1px 6px #363636, 1px 1px 2px #CCC inset;
+	-moz-box-shadow: 1px 1px 6px #363636, 1px 1px 2px #CCC inset;
+	box-shadow: 1px 1px 6px #363636, 1px 1px 2px #CCC inset;
+	padding: 10px;
+}
+
+.message-board-backing,
+.message-board{
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.message-board{
+	background-color: #FFF;
+	padding: 20px;
+	line-height: 18px;
+	overflow-y: scroll;
+	height: 100%;
+}
+
+.grey-box .message-board-backing,
+.grey-box .logo {
+	height: 158px;
+}
+
+.grey-box .logo {
+	margin: 0 auto;
+}
+
+.main-content {
+	margin-bottom: 24px;
+}
+
+.main-content .page {
+	min-height: 300px;
+}
+
+.footer .address {
+	text-align: center;
+	font-size: 1.3em;
+}
+
+.address:hover{
+	color: #fff;
+	background-color: #8D8800;
+}
+
+.google-map {
+	display: none;
+}
+
+.existingAppointmentInfo{
+	width: 100%;
+	text-align: center;
+	font-size: 1.1em;
+	padding: 20px 0;
+	background-color: #858117;
+	z-index: 10000;
+	position: fixed;
+	clear: both;
+	color: #E4E4E4;
+	letter-spacing: 1px;
+	border-bottom: 1px solid #707555;
+	box-shadow: 0px 2px 5px rgba(78, 82, 65, 0.69);
+}
+
+.server-error-message {
+	text-align: center;
+	padding: 144px 10px 0;
+}
+
+/* HOME PAGE */
+
+.building-front {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+#bookNowButton {
+	margin-top: 50px;
+	margin-bottom: 25px;
+}
+
+/* SERVICES */
+
+.book-now-button:hover,
+.address:hover,
+.google-map:hover,
+.service:hover,
+.time-slot:hover{
+	color: #fff;
+	background-color: #8D8800;
+	cursor: pointer;
+}
+
+.service,
+.time-slot{
+	font-size: 1.1em;
+	margin: 4px auto;
+}
+
+.page h1 {
+	text-align: center;
+	margin-bottom: 38px;
+	font-size: 2.8em;
+	font-weight: normal;
+	top: 14px;
+	position: relative;
+}
+
+
+/* TIME SLOTS */
+
+#recurringAppointmentOptions ul li {
+	display: inline-block;
+}
+
+#recurringAppointmentOptions ul {
+	padding: 0;
+}
+
+#recurringAppointmentCheckbox {
+	height: 20px;
+	width: 20px;
+}
+
+.time-slots {
+	margin-left: 0px; 
+	margin-right: 0px;
+	width: 100%;
+}
+
+.time-slots h2,
+.noTimesAvailableMessage {
+	text-align: center;
+}
+
+.noTimesAvailableMessage {
+	background-color: #DBDBDB;
+	padding: 16px 0;
+}
+
+.noTimesAvailableMessage p {
+	margin: 0;
+}
+
+
+/* LOGIN */
+#loginButton {
+	cursor: pointer;
+}
+
+.login-box,
+.reset-password-box{
+	border: 1px solid #A2A2A2;
+	margin-top: 50px;
+	border-radius: 4px;
+	padding: 20px; 
+}
+
+.login-box input,
+.reset-password-box input {
+	margin: 5px
+}
+
+.reset-password-box {
+	margin-bottom: 8px;
+}
+
+.login-box ul {
+	margin: 30px 0;
+}
+
+.login-box .logged-in {
+	display: none;
+}
+
+.errorDetails{
+	width: 304px;
+	padding: 6px;
+	display: none;
+	color: red;
+	font-style: .8em;
+	margin: auto;
+	text-align: center;
+	margin-top: 8px;
+}
+
+#showLoginForm,
+.new-user {
+	display: none;
+}
+
+.no-show-policy {
+	background-color: #DBDBDB;
+	padding: 10px;
+	margin-bottom: 14px;
+	margin-left: 5px;
+	margin-right: -5px;
+	font-size: .8em;
+}
+
+.reminders-note {
+	margin-left: 28px;
+	font-size: .8em;
+	color: #767676;
+	margin-bottom: 10px;
+	position: relative;
+	top: -5px;
+}
+
+#registerLink,
+#resetPassword,
+#showLoginForm{
+	position: relative;
+	text-decoration: underline;
+	color: blue;
+	cursor: pointer;
+	text-align: center;
+}
+
+.reset-password-links {
+	margin: 16px 4px;
+}
+
+.right-divider{
+	display: none;
+}
+
+/* CONFIRMATION */
+
+.confirmation {
+	text-align: center;
+	padding: 150px 0 100px;
+}
+
+.confirmation h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.confirm-appointment-cancellation {
+	text-align: center;
+	padding: 54px;
+}
+.confirm-appointment-cancellation .btn {
+	  padding: 10px 42px;
+	  margin: 40px 2px 10px;
+}
+
+

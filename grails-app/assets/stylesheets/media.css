@@ -1,0 +1,41 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Additional query not based on bootstrap */
+@media (min-width: 580px) {
+	.footer .address {
+		font-size: 1.7em;
+	}
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	.header .logo {
+			transform: scale(1.0, 1.0);
+			-ms-transform: scale(1.0, 1.0);
+			-webkit-transform: scale(1.0, 1.0);
+	}
+	.grey-box .logo {
+		display: block;
+	}
+
+	.footer .address {
+		font-size: 2em;
+	}
+	.login-box,
+	.reset-password-box{
+		padding: 40px; 
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.time-slots {
+		width: 80%;
+		margin: auto;
+	}
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
