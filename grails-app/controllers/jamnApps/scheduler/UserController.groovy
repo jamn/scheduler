@@ -14,11 +14,12 @@ class UserController {
 	}
 
 	def updateProfile(){
-		println "--------------- UPDATING PROFILE --------------"
+		println "\n--------------- UPDATING PROFILE --------------"
 		println "params: " + params
 		def userUpdated = true
-		userService.updateUser(session.client, params)
+		userService.updateExistingClient(session.client, params)
 		if (userUpdated){
+			session.client = User.get(session.client.id)
 			flash.success = "User updated successfully."
 		}else{
 			flash.error = "There was an error updating your profile."

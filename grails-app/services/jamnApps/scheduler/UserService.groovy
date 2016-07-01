@@ -71,14 +71,15 @@ class UserService {
 		return newClient
 	}
 
-	public Boolean updateClient(client, params) {
+	public Boolean updateExistingClient(existingClient, params) {
+		def client = User.get(existingClient.id)
 		Boolean success = false
 		client.firstName = params?.firstName
 		client.lastName = params?.lastName
 		client.password = params?.password
 		client.email = params?.email
 		client.phone = params?.phone
-		client.save()
+		client.save(flush:true)
 		if (client.hasErrors()){
 			println "ERROR! " + client.errors
 		}
