@@ -1,14 +1,10 @@
 package jamnApps.scheduler
 
 
-class UserInterceptor {
+class AccessInterceptor {
 
     boolean before() {
         session.caller = request.getHeader('referer') ?: "/"
-        if (!session.client){
-            redirect(controller:'book')
-            return
-        }
         true
     }
 

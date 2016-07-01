@@ -11,4 +11,8 @@ class UtilService {
 		return communicationBoardMessage
 	}
 
+	def resetSession(){
+		session.invalidate()
+	}
+
 }

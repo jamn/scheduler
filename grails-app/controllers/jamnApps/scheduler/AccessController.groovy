@@ -13,21 +13,18 @@ class AccessController {
 	static defaultAction = 'login'
 
 	def login(){
-		println "\n---- LOGGING IN ----"
-		println "params: " + params
-		println new Date()
-		def caller = request.getHeader('referer') ?: "/"
-		return [caller:caller]
+		if (session.client){
+			redirect(controller:'book')
+		}
 	}
 
 	def attemptLogin(){
-		println "params: " + params
 		if (params?.email || params?.password){
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.client){
 				session.client = loginResults.client
-				if (params.caller){
-					redirect(uri:params.caller)
+				if (session.caller){
+					redirect(uri:session.caller)
 					return
 				}else{
 					redirect(controller:'book')
@@ -35,15 +32,17 @@ class AccessController {
 				}
 			}
 			flash.error = loginResults?.errorDetails
+		}else{
+			flash.error = 'Email/password required.'
 		}
+		flash.email = params?.email
 		redirect(action:'login')
 	}
 
 	def logout(){
-		def targetUri = request.getHeader('referer') ?: "/"
-		session.invalidate()
+		session.client = null
 		//response.deleteCookie('scheduler-1')
-		redirect(uri:targetUri)
+		redirect(uri:session.caller)
 	}
 
 	def checkCredentials(){

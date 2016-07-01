@@ -7,11 +7,9 @@ class UserController {
 
 	def userService
 
-	def profile(){
-		if (!session.client){
-			redirect(controller:'book')
-		}
-	}
+	def profile(){}
+
+	def history(){}
 
 	def updateProfile(){
 		println "\n--------------- UPDATING PROFILE --------------"
@@ -20,7 +18,7 @@ class UserController {
 		userService.updateExistingClient(session.client, params)
 		if (userUpdated){
 			session.client = User.get(session.client.id)
-			flash.success = "User updated successfully."
+			flash.success = "Your profile has been updated."
 		}else{
 			flash.error = "There was an error updating your profile."
 		}

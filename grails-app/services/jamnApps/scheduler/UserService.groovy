@@ -78,7 +78,7 @@ class UserService {
 		client.lastName = params?.lastName
 		client.password = params?.password
 		client.email = params?.email
-		client.phone = params?.phone
+		client.phone = params?.phoneNumber
 		client.save(flush:true)
 		if (client.hasErrors()){
 			println "ERROR! " + client.errors

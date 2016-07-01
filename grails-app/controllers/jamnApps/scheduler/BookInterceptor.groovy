@@ -5,6 +5,8 @@ class BookInterceptor {
 
     boolean before() { 
 
+        session.caller = request.getHeader('referer') ?: "/"
+
         def serviceProvider = session?.serviceProvider
         def service = session?.service
         def serviceDate = session?.nextAppointment

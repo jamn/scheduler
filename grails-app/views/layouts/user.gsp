@@ -55,21 +55,27 @@
 			</div>
 		</div>
 
-		<g:if test="${flash.error}">
-			<div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>Error!</strong> ${flash.error}
-			</div>
-		</g:if>
-		<g:if test="${flash.message}">
-			<div class="alert alert-success alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>Well done!</strong> ${flash.message}
-			</div>
-		</g:if>
-
 		<div class="row main-content">
 			<div class="page">
+
+				<g:if test="${flash.error}">
+					<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>Error!</strong> ${flash.error}
+						</div>
+					</div>
+				</g:if>
+				<g:if test="${flash.success}">
+					<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+						<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>Success!</strong> ${flash.success}
+						</div>
+					</div>
+				</g:if>
+
+
 				<g:layoutBody />
 			</div>
 		</div>

@@ -5,8 +5,9 @@
 	</button>
 	<ul class="dropdown-menu">
 			<li><h4>${session.client.fullName}</h4></li>
-			<li><a href="#">History</a></li>
-			<li><a href="${createLink(controller:'user', action:'profile')}">Update Profile</a></li>
+			<li><a href="${createLink(controller:'user', action:'history')}">History <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a></li>
+			<li><a href="${createLink(controller:'user', action:'profile')}">Update Profile <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+			<li><a href="${createLink(controller:'book', action:'chooseService')}">Book Appointment <span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></li>
 			<li role="separator" class="divider"></li>
 			<li><a href="${createLink(controller:'access',action:'logout')}">Logout</a></li>
 

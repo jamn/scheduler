@@ -4,8 +4,6 @@
 	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
 		<form method="post" class="login-box" action="attemptLogin">
 
-			<input type="hidden" value="${caller}" name="caller" id="caller">
-
 			<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${flash?.email}" autofocus />
 
 			<input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" />
@@ -19,10 +17,6 @@
 			</div>
 
 			<input type="submit" class="btn green-button login-button" id="loginButton" value="Login" onclick="showMask()" />
-			
-			<g:if test="${flash.error}">
-				<div class="errorDetails">${flash.error}</div>
-			</g:if>
 
 		</form>
 	</div>
