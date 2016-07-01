@@ -21,7 +21,9 @@
 					<div class="col-xs-12 ${offsetColumn} col-sm-4 morning">
 						<h2>Morning</h2>
 						<g:each in="${timeSlots.value}">
-							<div startTime="${it.startTime}" class="green-button time-slot" id="time-slot-${it.id}"><div class="as-button-label">${it.timeSlot}</div><img width='20px' height'20px' src="${resource(dir:'images', file:'spinner.gif')}" style="display:none;" class="spinner"></div>
+							<a href="${createLink(action:'holdTimeslot', params:[startTime:it.startTime])}">
+								<div class="green-button time-slot" id="time-slot-${it.id}"><div class="as-button-label">${it.timeSlot}</div></div>
+							</a>
 						</g:each>
 					</div>
 				<%}%>
@@ -29,7 +31,9 @@
 					<div class="col-xs-12 ${offsetColumn} col-sm-4 lunch">
 						<h2>Lunch</h2>
 						<g:each in="${timeSlots.value}">
-							<div startTime="${it.startTime}" class="green-button time-slot" id="time-slot-${it.id}"><div class="as-button-label">${it.timeSlot}</div><img width='20px' height'20px' src="${resource(dir:'images', file:'spinner.gif')}" style="display:none;" class="spinner"></div>
+							<a href="${createLink(action:'holdTimeslot', params:[startTime:it.startTime])}">
+								<div class="green-button time-slot" id="time-slot-${it.id}"><div class="as-button-label">${it.timeSlot}</div></div>
+							</a>
 						</g:each>
 					</div>
 				<%}%>
@@ -37,7 +41,9 @@
 					<div class="col-xs-12 ${offsetColumn} col-sm-4 afternoon">
 						<h2>Afternoon</h2>
 						<g:each in="${timeSlots.value}">
-							<div startTime="${it.startTime}" class="green-button time-slot" id="time-slot-${it.id}"><div class="as-button-label">${it.timeSlot}</div><img width='20px' height'20px' src="${resource(dir:'images', file:'spinner.gif')}" style="display:none;" class="spinner"></div>
+							<a href="${createLink(action:'holdTimeslot', params:[startTime:it.startTime])}">
+								<div class="green-button time-slot" id="time-slot-${it.id}"><div class="as-button-label">${it.timeSlot}</div></div>
+							</a>
 						</g:each>
 					</div>
 				<%}%>

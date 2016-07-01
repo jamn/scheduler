@@ -84,17 +84,17 @@ class SchedulerService {
 					def timeSlot = timeSlotStart.getTime().format('h:mma').replace(':00', '') + " / " + timeSlotEnd.getTime().format('h:mma').replace(':00', '')
 					if (timeSlotStart.get(Calendar.HOUR_OF_DAY) < 11){
 						List morning = timeSlotsMap.get("morning") ?: []
-						morning.add([startTime:timeSlotStart.getTime().format('MM/dd/yyyy HH:mm'), timeSlot: timeSlot, id:count])
+						morning.add([startTime:timeSlotStart.getTime().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("morning", morning)
 					}
 					else if (timeSlotStart.get(Calendar.HOUR_OF_DAY) < 14){
 						List lunch = timeSlotsMap.get("lunch") ?: []
-						lunch.add([startTime:timeSlotStart.getTime().format('MM/dd/yyyy HH:mm'), timeSlot: timeSlot, id:count])
+						lunch.add([startTime:timeSlotStart.getTime().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("lunch", lunch)
 					}
 					else{
 						List afternoon = timeSlotsMap.get("afternoon") ?: []
-						afternoon.add([startTime:timeSlotStart.getTime().format('MM/dd/yyyy HH:mm'), timeSlot: timeSlot, id:count])
+						afternoon.add([startTime:timeSlotStart.getTime().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("afternoon", afternoon)
 					}
 				}
@@ -203,6 +203,38 @@ class SchedulerService {
 			emailService.sendEmailConfirmation(appointmentsScheduled)
 		}
 		return success
+	}
+
+	public List getServicesForServiceProvider(User serviceProvider = null){
+		def serviceList = []
+		if (serviceProvider){
+			def services = ServiceType.executeQuery("FROM ServiceType s WHERE s.serviceProvider = :serviceProvider AND display = true ORDER BY s.displayOrder", [serviceProvider:serviceProvider])
+			services?.each(){
+				//def duration = dateService.getTimeString(it.duration)
+				def price = it.price
+				def description = it.description
+				serviceList.add([price:price, description:description, id:it.id])
+			}
+		}
+		return serviceList
+	}
+
+	public void deleteStaleAppointments(){
+		println "\n---- DELETING STALE APPOINTMENTS ----"
+		println new Date()
+		def numberOfTimeSlotsFreed = 0
+		def lastAppointmentUserAttemptedToBook = Appointment.get(session?.appointmentId)
+		if (lastAppointmentUserAttemptedToBook && lastAppointmentUserAttemptedToBook.booked == false){
+			lastAppointmentUserAttemptedToBook.deleted = true
+			lastAppointmentUserAttemptedToBook.save(flush:true)
+			numberOfTimeSlotsFreed++
+		}
+		Calendar calendarObject = new GregorianCalendar()
+		calendarObject.add(Calendar.MINUTE, -1)
+		def fiveMinutesAgo = calendarObject.getTime()
+		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true where a.booked = false and a.dateCreated < :fiveMinutesAgo", [fiveMinutesAgo:fiveMinutesAgo])	
+		sessionFactory.currentSession.flush()
+		println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
 	}
 
 	public getCalendarClass(appointment,day){

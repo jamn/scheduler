@@ -1,6 +1,6 @@
 package jamnApps.scheduler
 
-class ApplicationProperty {
+class ApplicationProperty extends CoreObject {
 
 	String name
 	String value

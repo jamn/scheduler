@@ -10,11 +10,6 @@
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-	.header .logo {
-			transform: scale(1.0, 1.0);
-			-ms-transform: scale(1.0, 1.0);
-			-webkit-transform: scale(1.0, 1.0);
-	}
 	.grey-box .logo {
 		display: block;
 	}

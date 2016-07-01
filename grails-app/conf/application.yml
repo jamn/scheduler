@@ -13,6 +13,7 @@ dataSource:
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     username: root
     password:
+    #configClass: org.grails.plugin.multitenant.HibernateMultitenantConfiguration 
 
 environments:
     development:

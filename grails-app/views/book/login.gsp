@@ -2,11 +2,9 @@
 <head></head><body>
 
 	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
-		<form method="post" class="login-box" action="attemptLogin">
+		<form class="login-box" action="login">
 
-			<input type="hidden" value="${caller}" name="caller" id="caller">
-
-			<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${flash?.email}" autofocus />
+			<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${flash?.email}" />
 
 			<input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" />
 

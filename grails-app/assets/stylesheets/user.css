@@ -1,0 +1,68 @@
+body{
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+}
+.page h1{
+	font-weight: 200;
+}
+.handwriting {
+	font-family: 'Dancing Script', cursive;
+}
+.header {
+	background-color: #ccc;
+	height: 100px;
+}
+.header .header-logo {
+	float: left;
+	position: relative;
+	top: -37px;
+	left: 17px;
+
+	overflow-y: hidden;
+
+	transition-property: top;
+	transition-duration: 1.5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.header .header-logo.closed {
+	top: -1000px;
+}
+.header .header-board {
+	width: 300px;
+}
+.header .logo {
+    margin: 14px;
+    width: 228px;
+    padding: initial;
+    background-color: #FFF;
+    border-radius: 4px;
+    padding: 10px;
+    position: absolute;
+    top: 63px;
+    left: 21px;
+    border: 1px solid #CACACA;
+}
+.header .user-links {
+	float: right;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.footer hr {
+	border-color: #aaa;
+	max-width: 637px;
+	margin: auto;
+	margin-top: 60px;
+}
+.footer .glyphicon,
+.footer p{
+	text-align: center;
+}
+.footer p {
+	font-size: 14px;
+	margin: 4px;
+}
+.footer .glyphicon {
+	display: block;
+	color: #01B9FF;
+}
+

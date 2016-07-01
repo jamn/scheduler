@@ -35,9 +35,11 @@ class BootStrap {
 			defaultClient = new User()
 			defaultClient.username = "default-client"
 			defaultClient.password = "dc2016"
+			defaultClient.password = "ben"
 			defaultClient.firstName = "Default"
 			defaultClient.lastName = "Client"
-			defaultClient.email = "dc@schedulepro.online"
+			defaultClient.email = "ben"
+			//defaultClient.email = "dc@schedulepro.online"
 			defaultClient.isClient = true
 			defaultClient.code = "dc12391"
 			defaultClient.save(flush:true)

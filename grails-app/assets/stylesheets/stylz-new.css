@@ -43,6 +43,22 @@ body {
 	outline: none 0px;
 }
 
+.btn-default {
+	background-color: #58585A;
+	border-color: #525252;
+	color: #eee;
+}
+
+.btn-default:hover {
+	background-color: #e6e6e6;
+	border-color: #adadad;
+	-webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+	        box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+.dropdown-menu li,
+.mdl-menu__item {
+	text-align: right;
+}
 .link,
 .as-button {
 	cursor: pointer;
@@ -99,6 +115,37 @@ body {
 	transform: scale(0.9, 0.9);
 	-ms-transform: scale(0.9, 0.9);
 	-webkit-transform: scale(0.9, 0.9);
+}
+
+.header .user-links {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+}
+.header .user-links a.login-link {
+	color: #666;
+}
+.header .user-links .dropdown-menu {
+	left: initial;
+	right: 0;
+	padding-top: 0;
+	max-height: 200px;
+	max-width: 400px;
+	overflow-y: hidden;
+	transition-property: all;
+	transition-duration: 600ms;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.header .user-links .dropdown-menu h4 {
+	padding: 8px;
+	background-color: #efefef;
+	margin: 0 0 6px 0;
+	border-bottom: 3px solid #ccc;
+}
+.header .user-links .dropdown-menu.closed {
+	max-height: 0;
+	max-width: 0;
+	opacity: 0;
 }
 
 .address {
@@ -197,6 +244,10 @@ body {
 	padding: 144px 10px 0;
 }
 
+.footer {
+	padding: 0 24px;
+}
+
 /* HOME PAGE */
 
 .building-front {
@@ -266,6 +317,7 @@ body {
 .noTimesAvailableMessage {
 	background-color: #DBDBDB;
 	padding: 16px 0;
+	margin-top: 40px;
 }
 
 .noTimesAvailableMessage p {
@@ -306,7 +358,6 @@ body {
 .errorDetails{
 	width: 304px;
 	padding: 6px;
-	display: none;
 	color: red;
 	font-style: .8em;
 	margin: auto;

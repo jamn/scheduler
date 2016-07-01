@@ -7,17 +7,49 @@ import org.apache.commons.lang.RandomStringUtils
 class AccessController {
 
 	def dateService
+	def userService
 
-	def index() {
-		render(view:'login')
+	static layout = 'user'
+	static defaultAction = 'login'
+
+	def login(){
+		println "\n---- LOGGING IN ----"
+		println "params: " + params
+		println new Date()
+		def caller = request.getHeader('referer') ?: "/"
+		return [caller:caller]
 	}
 
-	def login = {
+	def attemptLogin(){
 		println "params: " + params
-		
+		if (params?.email || params?.password){
+			def loginResults = userService.loginUser(request, params)
+			if (loginResults?.client){
+				session.client = loginResults.client
+				if (params.caller){
+					redirect(uri:params.caller)
+					return
+				}else{
+					redirect(controller:'book')
+					return
+				}
+			}
+			flash.error = loginResults?.errorDetails
+		}
+		redirect(action:'login')
+	}
+
+	def logout(){
+		def targetUri = request.getHeader('referer') ?: "/"
+		session.invalidate()
+		//response.deleteCookie('scheduler-1')
+		redirect(uri:targetUri)
+	}
+
+	def checkCredentials(){
 		def user
 		def loggedIn = false
-		def loggedInCookieId = request.getCookie('den1')
+		def loggedInCookieId = request.getCookie('scheduler-1')
 		println "EXISTING loggedInCookieId: " + loggedInCookieId
 		
 		if (loggedInCookieId){
@@ -30,7 +62,7 @@ class AccessController {
 				//println "last login was less than four months ago"
 				user = loginLog.user
 			}else if (!loginLog){
-				response.deleteCookie('den1')
+				response.deleteCookie('scheduler-1')
 			}else{
 				println "last login was more than four months ago"
 			}
@@ -54,25 +86,12 @@ class AccessController {
 					user:user,
 					loggedInCookieId: loggedInCookieId
 				).save(flush:true)
-				response.setCookie('den1', loggedInCookieId)
+				response.setCookie('scheduler-1', loggedInCookieId)
 			}
 			redirect (controller:'admin', action:'index')
 		}
 		else{
-			render(view:'login')
+			redirect(controller:'book', action:'bookAppointment')
 		}
-	}
-
-	def logout = {
-
-		if (session.user){
-			session.invalidate()
-			response.deleteCookie('den1')
-		}
-		if (session.adminUser){
-			session.invalidate()
-			response.deleteCookie('den1')
-		}
-		render(view:'login')
 	}
 }

@@ -41,6 +41,16 @@
 			<div class=".col-xs-12">
 				<img class="img-responsive logo link home-link" id="logoPlain" src="${resource(dir:'images',file:'logo-plain.png')}" />
 				<div class="link address" id="headerAddressLink">1013 W 47th Street<br/>KCMO, 64112</div>
+				<div class="user-links">
+					<g:if test="${session.client}">
+						<g:render template="/user/menu" />
+					</g:if>
+					<g:else>
+						<a class="login-link" href="${createLink(controller:'access',action:'login')}">
+							Login <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</a>
+					</g:else>
+				</div>
 			</div>
 		</div>
 		<div class="row grey-box">
@@ -59,7 +69,7 @@
 			</div>
 		</div>
 
-		<g:render template="footer" />
+		<g:render template="/layouts/footer" />
 
 
 	</div>
