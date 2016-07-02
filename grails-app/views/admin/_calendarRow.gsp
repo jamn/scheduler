@@ -1,5 +1,8 @@
-<!-- DETERMINE IF BEGGINING OF APPOINTMENT, FIND OUT HOW LONG APPOINTMENT IS -->
-<!-- ADD ROWSPAN, & DON'T DRAW ROW IF NOT BEGINNING OF APPOINTMENT -->
+<!-- 
+	TODO:
+	  * DETERMINE IF WE'RE @ THE BEGGINING OF THE APPOINTMENT (DRAW ROW IF TRUE)
+      * FIND OUT HOW LONG THE APPOINTMENT IS (ADD ROWSPAN IF NECESSARY)
+-->
 
 <tr class="${rowClass}" time="${days[0].getTime().format('hh:mm a')}">
 	<g:if test="${rowClass == 'halfHour'}">

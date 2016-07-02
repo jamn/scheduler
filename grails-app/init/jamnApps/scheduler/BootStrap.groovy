@@ -123,7 +123,7 @@ class BootStrap {
 			println "creating default homepage message..."
 			new ApplicationProperty(
 				name:"HOMEPAGE_MESSAGE", 
-				value:"<p>Welcome! This site will make it easy for you to schedule with me. Click 'Book Now' to get started."
+				value:"<p>Welcome! This site will make it easy for you to schedule with me. Click 'Book Now' to get started.</p>"
 			).save()
 		}
 
