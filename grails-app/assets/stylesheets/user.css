@@ -66,3 +66,10 @@ body{
 	color: #01B9FF;
 }
 
+.history-table tr td:first-child {
+	width: 120px;
+}
+
+.history-table tr td {
+	border-bottom: 1px solid #ddd;
+}

@@ -43,9 +43,7 @@
 				</div>
 			</g:if>
 
-			<br/>
-			<br/>
-			<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+			<div class="col-xs-12 col-sm-offset-3 col-sm-6 book-appointment-button">
 				<a href="${createLink(controller:'book', action:'chooseService')}"><div class="btn btn-default green-button">Book Another Appointment?</div></a>
 			</div>
 		</g:else>

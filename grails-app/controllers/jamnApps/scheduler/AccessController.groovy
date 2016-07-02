@@ -13,16 +13,21 @@ class AccessController {
 	static defaultAction = 'login'
 
 	def login(){
-		if (session.client){
-			redirect(controller:'book')
+		println "session.user: " + session.user
+		println "    - isAdmin: " + session.user?.isAdmin
+		println "    - isClient: " + session.user?.isClient
+		if (session.user?.isClient){
+			redirect(controller:'book', action:'chooseService')
+		}else if (session.user?.isAdmin){
+			redirect(controller:'admin')
 		}
 	}
 
 	def attemptLogin(){
 		if (params?.email || params?.password){
 			def loginResults = userService.loginUser(request, params)
-			if (loginResults?.client){
-				session.client = loginResults.client
+			if (loginResults?.user){
+				session.user = loginResults.user
 				if (session.caller){
 					redirect(uri:session.caller)
 					return
@@ -40,7 +45,8 @@ class AccessController {
 	}
 
 	def logout(){
-		session.client = null
+		println "session: " + session
+		session.user = null
 		//response.deleteCookie('scheduler-1')
 		redirect(uri:session.caller)
 	}
@@ -49,9 +55,8 @@ class AccessController {
 		def user
 		def loggedIn = false
 		def loggedInCookieId = request.getCookie('scheduler-1')
-		println "EXISTING loggedInCookieId: " + loggedInCookieId
-		
 		if (loggedInCookieId){
+			println "EXISTING loggedInCookieId: " + loggedInCookieId
 			loggedIn = true
 			def loginLog = LoginLog.findByLoggedInCookieId(loggedInCookieId)
 			//def fourMonthsAgo = dateService.getDateFourMonthsAgo()
@@ -73,20 +78,8 @@ class AccessController {
 				deleted: false
 			)
 		}
-
-		println 'admin user: ' + user?.getFullName()
-
-		if (user?.hasPermission('admin')){
-			session.adminUser = user
-			if (!loggedIn){
-				loggedInCookieId = RandomStringUtils.random(20, true, true)
-				println "NEW loggedInCookieId: " + loggedInCookieId
-				new LoginLog(
-					user:user,
-					loggedInCookieId: loggedInCookieId
-				).save(flush:true)
-				response.setCookie('scheduler-1', loggedInCookieId)
-			}
+		println 'user: ' + user?.getFullName()
+		if (user?.isAdmin){
 			redirect (controller:'admin', action:'index')
 		}
 		else{

@@ -5,7 +5,7 @@
 	<g:set var="buttonId" value="${cancelAppointment ? 'cancelAppointmentLoginButton' : 'loginButton'}" />
 
 	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
-		<form class="login-box" action="confirmation">
+		<form method="post" class="login-box" action="confirmation">
 
 			<g:set var="plural" value="${session?.bookedAppointments?.size() == 1 ? '' : 's'}" />
 
@@ -37,7 +37,7 @@
 				<div class="no-show-policy">There will be a $20 charge at your following visit if you cancel within 4 hours of your appointment. Unless previous arrangements have been made, anything past 10 minutes late will be considered a no show and you will need to reschedule.</div>
 			</div>
 
-			<g:if test="${!session.client}">
+			<g:if test="${!session.user}">
 				<g:render template="login" />
 			</g:if>
 

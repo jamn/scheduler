@@ -7,17 +7,20 @@ class UserController {
 
 	def userService
 
-	def profile(){}
+	def history(){
+		def appointments = Appointment.findAllByClient(session.user)
+		return [appointments:appointments]
+	}
 
-	def history(){}
+	def profile(){}
 
 	def updateProfile(){
 		println "\n--------------- UPDATING PROFILE --------------"
 		println "params: " + params
 		def userUpdated = true
-		userService.updateExistingClient(session.client, params)
+		userService.updateExistingClient(session.user, params)
 		if (userUpdated){
-			session.client = User.get(session.client.id)
+			session.user = User.get(session.user.id)
 			flash.success = "Your profile has been updated."
 		}else{
 			flash.error = "There was an error updating your profile."

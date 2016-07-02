@@ -83,7 +83,6 @@
 
 
 <script type="text/javascript">
-	var baseUrl = $('body').attr('baseUrl');
 
 	$('#clientDetailsModal').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
@@ -98,7 +97,7 @@
 		var cId = button.data('id');
 		$.ajax({
 			type: "POST",
-			url: baseUrl + "/getClientHistory",
+			url: "/admin/getClientHistory",
 			data: {cId:cId}
 		}).done(function(response) {
 			modal.find('.modal-body .client-history').html(response);
@@ -111,7 +110,7 @@
 		$('#emailClientButton').html($('.spinner').html());
 		$.ajax({
 			type: "POST",
-			url: baseUrl + "/emailClient",
+			url: "/admin/emailClient",
 			data: {m:m, e:e}
 		}).done(function(response) {
 			var jsonResponse = JSON.parse(response);
@@ -138,7 +137,7 @@
 			var c = $(e.currentTarget).attr('c');
 			$.ajax({
 				type: "POST",
-				url: baseUrl + "/cancelAppointment",
+				url: "/admin/cancelAppointment",
 				data: { c: c }
 			}).done(function(response) {
 				var success = response.search('"success":false');

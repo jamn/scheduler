@@ -150,8 +150,8 @@ class BookController {
 		def loginResults = userService.loginUser(request, params)
 		def error = params?.error
 		println "params: " + params
-		if (loginResults?.client){
-			session.client = loginResults.client
+		if (loginResults?.user){
+			session.user = loginResults.user
 		}
 		return [loggedIn:loginResults.loggedIn, error:error]
 	}
@@ -169,13 +169,13 @@ class BookController {
 		def serviceProvider = User.get(session.serviceProvider.id)
 		def tempAppointment = Appointment.get(session.nextAppointment.id)
 
-		if (session?.client){
-			client = User.get(session.client.id)
+		if (session?.user){
+			client = User.get(session.user.id)
 		}else{
 			def loginResults = userService.loginUser(request, params)
-			if (loginResults?.client){
-				client = loginResults.client
-				session.client = client
+			if (loginResults?.user){
+				client = loginResults.user
+				session.user = client
 			}else{
 				redirect(action:"bookAppointment", params:[error:loginResults.errorDetails])
 			}

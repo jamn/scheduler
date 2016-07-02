@@ -5,7 +5,7 @@ class UserInterceptor {
 
     boolean before() {
         session.caller = request.getHeader('referer') ?: "/"
-        if (!session.client){
+        if (!session.user){
             redirect(controller:'book')
             return
         }

@@ -6,7 +6,7 @@ class UserService {
 		def results = [
 			'error': false,
 			'errorDetails': null,
-			'client': null
+			'user': null
 		]
 
 		def existingUser
@@ -33,7 +33,7 @@ class UserService {
 						results['error'] = true
 						results['errorDetails'] = "There was an error creating a new user. Please try again."
 					}else{
-						results['client'] = newClient
+						results['user'] = newClient
 					}
 				}else{
 					println "NO USER FOUND"
@@ -43,7 +43,7 @@ class UserService {
 			}else{
 				if (existingUser.password == params.password){
 					println "USER LOGGED IN CORRECTLY"
-					results['client'] = existingUser
+					results['user'] = existingUser
 				}else{
 					println "BAD PASSWORD"
 					results['error'] = true
@@ -67,6 +67,7 @@ class UserService {
 		newClient.password = params.password
 		newClient.phone = params.phone
 		newClient.code = newClient.firstName.substring(0,1).toLowerCase() + newClient.lastName.substring(0,1).toLowerCase() + new Date().getTime()
+		newClient.isClient = true
 		newClient.save(flush:true)
 		return newClient
 	}

@@ -97,9 +97,9 @@ class AdminController {
 
     private Map getClients(lastNameStartsWith = null){
 		def clients = []
-		User.list()?.each(){
-			if (it.hasPermission("client") && (!lastNameStartsWith || it.lastName.substring(0,1).toUpperCase() == lastNameStartsWith.toUpperCase()) ){
-				clients.add(it)
+		User.list()?.each(){ user ->
+			if (user.isClient && (!lastNameStartsWith || user.lastName.substring(0,1).toUpperCase() == lastNameStartsWith.toUpperCase()) ){
+				clients.add(user)
 			}
 		}
 		clients.sort{it.lastName}
@@ -123,10 +123,11 @@ class AdminController {
     }
 
     private Map getServiceProviderInfo(){
-    	def serviceProvider = User.findByCode("kp")
+    	def serviceProvider = User.findByCode("dsp907201")
+    	def dayOfTheWeek = DayOfTheWeek.findByServiceProvider(serviceProvider)
 
-    	def serviceProviderStartTime = dateService.get24HourTimeValues(serviceProvider.startTime)
-		def serviceProviderEndTime = dateService.get24HourTimeValues(serviceProvider.endTime)
+    	def serviceProviderStartTime = dateService.get24HourTimeValues(dayOfTheWeek.startTime)
+		def serviceProviderEndTime = dateService.get24HourTimeValues(dayOfTheWeek.endTime)
 
 		Calendar startTime = new GregorianCalendar()
 		startTime.set(Calendar.HOUR_OF_DAY, serviceProviderStartTime.hour.intValue())
@@ -179,20 +180,15 @@ class AdminController {
 	def saveHomepageMessage(){
 		println "\n" + new Date()
 		println "params: " + params
-		if (session.adminUser){
-			def homepageText = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")
-			homepageText.value = params.m.replace("\r", "<br />").replace("\n", "<br />")
-			homepageText.save(flush:true)
-			if (homepageText.hasErrors()){
-				println "ERROR: new message not saved."
-				println homepageText.errors
-			}
-			else{
-				println "SAVED!"
-			}
-		}else{
-			println "ERROR: user in session is not an admin."
-			println "    " + session
+		def homepageText = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")
+		homepageText.value = params.m.replace("\r", "<br />").replace("\n", "<br />")
+		homepageText.save(flush:true)
+		if (homepageText.hasErrors()){
+			println "ERROR: new message not saved."
+			println homepageText.errors
+		}
+		else{
+			println "SAVED!"
 		}
 		return true
 	}
@@ -247,104 +243,96 @@ class AdminController {
 	def blockOffTime(){
 		println "\n" + new Date()
 		println "params: " + params
-		if (session.adminUser){
-			Boolean success = false
-			Boolean appointmentFailedToSave = false
-			try {
-				def from = dateFormatter2.parse(params?.date+params?.from)
-				def to = dateFormatter2.parse(params?.date+params?.to)
+		Boolean success = false
+		Boolean appointmentFailedToSave = false
+		try {
+			def from = dateFormatter2.parse(params?.date+params?.from)
+			def to = dateFormatter2.parse(params?.date+params?.to)
 
-				def serviceProvider = User.findByCode("kp")
-				def service = ServiceType.findByDescription("Blocked Off Time")
-				Calendar currentDate = new GregorianCalendar()
-				currentDate.setTime(from)
+			def serviceProvider = User.findByCode("kp")
+			def service = ServiceType.findByDescription("Blocked Off Time")
+			Calendar currentDate = new GregorianCalendar()
+			currentDate.setTime(from)
 
-				while (currentDate.getTime() < to){
-					def appointment = new Appointment()
-					appointment.appointmentDate = currentDate.getTime()
-					appointment.serviceProvider = serviceProvider
-					appointment.service = service
-					appointment.code = RandomStringUtils.random(14, true, true)
-					appointment.client = serviceProvider
-					appointment.booked = true
-					appointment.sendEmailReminder = false
-					appointment.sendTextReminder = false
-					appointment.save(flush:true)
-					if (appointment.hasErrors()){
-						appointmentFailedToSave = true
-						println "ERROR!"
-						println appointment.errors
-					}else{
-						success = true
-					}
-					println "appointment: " + appointment
-					currentDate.add(Calendar.MINUTE, 15)
+			while (currentDate.getTime() < to){
+				def appointment = new Appointment()
+				appointment.appointmentDate = currentDate.getTime()
+				appointment.serviceProvider = serviceProvider
+				appointment.service = service
+				appointment.code = RandomStringUtils.random(14, true, true)
+				appointment.client = serviceProvider
+				appointment.booked = true
+				appointment.sendEmailReminder = false
+				appointment.sendTextReminder = false
+				appointment.save(flush:true)
+				if (appointment.hasErrors()){
+					appointmentFailedToSave = true
+					println "ERROR!"
+					println appointment.errors
+				}else{
+					success = true
 				}
+				println "appointment: " + appointment
+				currentDate.add(Calendar.MINUTE, 15)
 			}
-			catch(Exception e) {
-				println "ERROR: " + e
-			}
-			if (success && !appointmentFailedToSave){
-				render ('{"success":true}') as JSON
-			}else{
-				render ('{"success":false}') as JSON
-			}
+		}
+		catch(Exception e) {
+			println "ERROR: " + e
+		}
+		if (success && !appointmentFailedToSave){
+			render ('{"success":true}') as JSON
 		}else{
-			println "ERROR: user in session is not an admin."
-			println "    " + session
-			return false
+			render ('{"success":false}') as JSON
 		}
 	}
 
 	def blockOffWholeDay(){
 		println "\n" + new Date()
 		println "params: " + params
-		if (session.adminUser){
-			Boolean success = false
-			Boolean dayOffFailedToSave = false
-			try {
-				def from = dateFormatter3.parse(params?.from)
-				def to = dateFormatter3.parse(params?.to)
+		Boolean success = false
+		Boolean dayOffFailedToSave = false
+		try {
+			def from = dateFormatter3.parse(params?.from)
+			def to = dateFormatter3.parse(params?.to)
 
-				def serviceProvider = User.findByCode("kp")
-				Calendar currentDate = new GregorianCalendar()
-				currentDate.setTime(from)
-				currentDate.set(Calendar.HOUR_OF_DAY, 0)
-				currentDate.set(Calendar.MINUTE, 0)
-				currentDate.set(Calendar.SECOND, 0)
-				currentDate.set(Calendar.MILLISECOND, 0)
-				Calendar endDate = new GregorianCalendar()
-				endDate.setTime(to)
-				endDate.set(Calendar.HOUR_OF_DAY, 0)
-				endDate.set(Calendar.MINUTE, 0)
-				endDate.set(Calendar.SECOND, 0)
-				endDate.set(Calendar.MILLISECOND, 0)
+			def serviceProvider = User.findByCode("kp")
+			Calendar currentDate = new GregorianCalendar()
+			currentDate.setTime(from)
+			currentDate.set(Calendar.HOUR_OF_DAY, 0)
+			currentDate.set(Calendar.MINUTE, 0)
+			currentDate.set(Calendar.SECOND, 0)
+			currentDate.set(Calendar.MILLISECOND, 0)
+			Calendar endDate = new GregorianCalendar()
+			endDate.setTime(to)
+			endDate.set(Calendar.HOUR_OF_DAY, 0)
+			endDate.set(Calendar.MINUTE, 0)
+			endDate.set(Calendar.SECOND, 0)
+			endDate.set(Calendar.MILLISECOND, 0)
 
-				while (currentDate.getTime() <= endDate.getTime()){
-					def dayOff = new DayOff()
-					dayOff.dayOffDate = currentDate.getTime()
-					dayOff.serviceProvider = serviceProvider
-					dayOff.save(flush:true)
-					if (dayOff.hasErrors()){
-						dayOffFailedToSave = true
-						println "ERROR!"
-						println dayOff.errors
-					}else{
-						success = true
-					}
-					println "dayOff: " + dayOff
-					currentDate.add(Calendar.DAY_OF_YEAR, 1)
+			while (currentDate.getTime() <= endDate.getTime()){
+				def dayOff = new DayOff()
+				dayOff.dayOffDate = currentDate.getTime()
+				dayOff.serviceProvider = serviceProvider
+				dayOff.save(flush:true)
+				if (dayOff.hasErrors()){
+					dayOffFailedToSave = true
+					println "ERROR!"
+					println dayOff.errors
+				}else{
+					success = true
 				}
+				println "dayOff: " + dayOff
+				currentDate.add(Calendar.DAY_OF_YEAR, 1)
 			}
-			catch(Exception e) {
-				println "ERROR: " + e
-			}
+		}
+		catch(Exception e) {
+			println "ERROR: " + e
+		}
 
-			if (success && !dayOffFailedToSave){
-				render ('{"success":true}') as JSON
-			}else{
-				render ('{"success":false}') as JSON
-			}
+		if (success && !dayOffFailedToSave){
+			render ('{"success":true}') as JSON
+		}else{
+			render ('{"success":false}') as JSON
 		}
 	}
 
@@ -353,24 +341,22 @@ class AdminController {
 		println "params: " + params
 		Boolean success = false
 		def deletedTimeslots = []
-		if (session.adminUser){
-			def timeSlotsToDelete = params?.blockedOffTime ?: []
-			if (timeSlotsToDelete instanceof String) {
-				timeSlotsToDelete = [timeSlotsToDelete]
+		def timeSlotsToDelete = params?.blockedOffTime ?: []
+		if (timeSlotsToDelete instanceof String) {
+			timeSlotsToDelete = [timeSlotsToDelete]
+		}
+		timeSlotsToDelete?.each(){
+			def appointment = Appointment.get(it.toLong())
+			appointment.deleted = true
+			appointment.save(flush:true)
+			if (appointment.hasErrors()){
+				success = false
+				println "        ERROR: " + appointment.errors
 			}
-			timeSlotsToDelete?.each(){
-				def appointment = Appointment.get(it.toLong())
-				appointment.deleted = true
-				appointment.save(flush:true)
-				if (appointment.hasErrors()){
-					success = false
-					println "        ERROR: " + appointment.errors
-				}
-				else {
-					println "    - deleted blocked timeslot: " + appointment.appointmentDate.format('E MMM dd, yyyy @ hh:mm a')
-					deletedTimeslots.add(appointment.id)
-					success = true
-				}
+			else {
+				println "    - deleted blocked timeslot: " + appointment.appointmentDate.format('E MMM dd, yyyy @ hh:mm a')
+				deletedTimeslots.add(appointment.id)
+				success = true
 			}
 		}
 		render ('{"success":'+success+', "deletedTimeslots":'+deletedTimeslots+'}') as JSON
@@ -380,7 +366,7 @@ class AdminController {
 		println "\n" + new Date()
 		println "params: " + params
 		Boolean success = false
-		if (session.adminUser && params?.cId && params?.sId && params?.aDate && params?.sTime){
+		if (params?.cId && params?.sId && params?.aDate && params?.sTime){
 			success = schedulerService.bookForClient(params)
 		}
 		if (success){
@@ -395,7 +381,7 @@ class AdminController {
 		println "\n" + new Date()
 		println "params: " + params
 		Boolean success = false
-		if (session.adminUser && params?.aId && params?.sId && params?.aDate && params?.sTime){
+		if (params?.aId && params?.sId && params?.aDate && params?.sTime){
 			try {
 				def existingApointment = Appointment.get(new Long(params.aId))
 				params["cId"] = existingApointment.client.id
@@ -428,7 +414,7 @@ class AdminController {
 		println "\n" + new Date()
 		println "params: " + params
 		def timeSlots = []
-		if (session.adminUser && params?.aDate && params?.sId){
+		if (params?.aDate && params?.sId){
 			def requestedDate = dateFormatter3.parse(params.aDate)
 			def service = ServiceType.get(new Long(params.sId))
 			def serviceProvider = User.findByCode("kp")
@@ -443,7 +429,7 @@ class AdminController {
 		println "\n" + new Date()
 		println "params: " + params
 		def appointment
-		if (session.adminUser && params?.aId){
+		if (params?.aId){
 			appointment = Appointment.get(new Long(params.aId))
 		}
 		if (appointment){
@@ -510,7 +496,7 @@ class AdminController {
 		println "\n" + new Date()
 		println "params: " + params
 		def appointments = []
-		if (session.adminUser && params?.cId){
+		if (params?.cId){
 			def client = User.get(params.cId)
 			appointments = getAppointmentsForClient(client)
 		}

@@ -1,11 +1,13 @@
 package jamnApps.scheduler
 
 
-class AccessInterceptor {
+class AdminInterceptor {
 
     boolean before() {
-        println "params: " + params
-        session.caller = request.getHeader('referer') ?: "/book"
+        if (!session.user?.isAdmin){
+            redirect(controller:'access', action:'login')
+            return false
+        }
         true
     }
 

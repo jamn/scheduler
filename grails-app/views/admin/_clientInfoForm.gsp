@@ -1,5 +1,5 @@
 <div class="row">
-	<form class="form-horizontal client-info-form" role="form">
+	<form method="post" class="form-horizontal client-info-form" role="form">
 		<input type="hidden" id="cId" value="${client?.id}" />
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="e">Email:</label>

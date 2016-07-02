@@ -47,7 +47,7 @@
 					<img class="header-board" src="${resource(dir:'images',file:'header-board.png')}" />
 					<img class="logo link home-link" id="logoPlain" src="${resource(dir:'images',file:'logo-plain.png')}" />
 				</div>
-				<g:if test="${session.client}">
+				<g:if test="${session.user}">
 					<div class="user-links">
 						<g:render template="/user/menu" />
 					</div>

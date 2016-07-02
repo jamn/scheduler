@@ -5,11 +5,10 @@ $( document ).ready(function() {
 function getTimeSlotOptions(){
 	var sId = $('#services').val();
 	var aDate = $('#dateOfAppointment').val();
-	var baseUrl = $('body').attr('baseUrl');
 	if (sId != 'Choose a service...'){
 		$.ajax({
 			type: "POST",
-			url: baseUrl + "/getTimeSlotOptions",
+			url: "/admin/getTimeSlotOptions",
 			data: { sId:sId, aDate:aDate}
 		}).done(function(response) {
 			if (response.indexOf("ERROR") > -1){
@@ -27,11 +26,10 @@ function getTimeSlotOptions(){
 function getTimeSlotOptionsForRescheduledAppointment(aId){
 	var sId = $('#servicesForRescheduledAppointment-'+aId).val();
 	var aDate = $('#dateOfRescheduledAppointment-'+aId).val();
-	var baseUrl = $('body').attr('baseUrl');
 	if (sId != 'Choose a service...'){
 		$.ajax({
 			type: "POST",
-			url: baseUrl + "/getTimeSlotOptions",
+			url: "/admin/getTimeSlotOptions",
 			data: { sId:sId, aDate:aDate}
 		}).done(function(response) {
 			if (response.indexOf("ERROR") > -1){
@@ -53,7 +51,7 @@ $(document).on("tap", ".main", function() {
 $(document).on('tap', '.nav a', function(e) {
 	var section = $(this).attr("href");
 	if (section === "#logout") {
-		window.location.href = "./access/logout";
+		window.location.href = "/access/logout";
 	}
 	else {
 		getSection(section);
@@ -63,10 +61,9 @@ $(document).on('tap', '.nav a', function(e) {
 
 function getSection(section){
 	$('#mask').fadeIn();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/getSection",
+		url: "/admin/getSection",
 		data: {section:section}
 	}).done(function(response) {
 		$('.active').removeClass("active");
@@ -77,10 +74,9 @@ function getSection(section){
 }
 
 $(document).on('tap', '#addClient', function(e) {
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/getClientDataForm"
+		url: "/admin/getClientDataForm"
 	}).done(function(response) {
 		if (response.indexOf("ERROR") > -1){
 			alert('Dang... you broke it.');
@@ -96,10 +92,9 @@ $(document).on('tap', '#addClient', function(e) {
 
 $(document).on('tap', '#editClient', function(e) {
 	var cId = $("#clientsDetailsSelector").val();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/getClientDataForm",
+		url: "/admin/getClientDataForm",
 		data: { cId:cId}
 	}).done(function(response) {
 		if (response.indexOf("ERROR") > -1){
@@ -129,10 +124,9 @@ $(document).on('tap', '.last-name-filter', function(e) {
 });
 
 function getClientSelectMenuData(lastNameStartsWith){
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl+"/getClientsSelectMenu",
+		url: "/admin/getClientsSelectMenu",
 		data: {lastNameStartsWith: lastNameStartsWith}
 	}).done(function(confirmation) {
 		var success = confirmation.search('"success":false');
@@ -154,11 +148,10 @@ $(document).on('tap', '#saveClientButton', function(e) {
 	if (email && password && firstName && lastName){
 		$('#saveClientButton .label').hide();
 		$('#saveClientButton .spinner').show();
-		var baseUrl = $('body').attr('baseUrl');
 		$.ajax({
 			type: "POST",
-			url: baseUrl+"/saveClient",
-			data: {e:email, hp:email2, p:password, f:firstName, l:lastName, ph:phoneNumber, cId:cId}
+			url: "/admin/saveClient",
+			data: {email:email, hp:email2, password:password, firstName:firstName, lastName:lastName, phoneNumber:phoneNumber, cId:cId}
 		}).done(function(confirmation) {
 			var success = confirmation.search('"success":false');
 			if (success === -1){
@@ -185,10 +178,9 @@ $(document).on('change', '#clientsDetailsSelector', function() {
 	$(this).slideUp();
 	$('.reset-search').fadeIn();
 	var cId = $(this).val();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/getClientDetails",
+		url: "/admin/getClientDetails",
 		data: { cId:cId }
 	}).done(function(response) {
 		var success = response.search('"success":false');
@@ -200,20 +192,18 @@ $(document).on('change', '#clientsDetailsSelector', function() {
 
 $(document).on('tap', '#saveTextButton', function(e) {
 	var message = $('#homepageText').val();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/saveHomepageMessage",
+		url: "/admin/saveHomepageMessage",
 		data: { m: message }
 	});
 });
 
 $(document).on('tap', '#saveClientNotesButton', function(e) {
 	var notes = encodeURIComponent($('#clientNotes').val());
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/saveClientNotes",
+		url: "/admin/saveClientNotes",
 		data: { n:notes }
 	});
 });
@@ -233,10 +223,9 @@ $(document).on('tap', '#blockOffTimeButton', function(e) {
 
 	$('#blockOffTimeButton').html($('#waitingSpinner').html());
 
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/blockOffTime",
+		url: "/admin/blockOffTime",
 		data: { date:date, from:from, to:to}
 	}).done(function(response) {
 		var jsonResponse = JSON.parse(response);
@@ -259,10 +248,9 @@ $(document).on('tap', '#blockOffDaysButton', function(e) {
 
 	$(this).html($('#waitingSpinner').html());
 
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/blockOffWholeDay",
+		url: "/admin/blockOffWholeDay",
 		data: { from:from, to:to}
 	}).done(function(response) {
 		var jsonResponse = JSON.parse(response);
@@ -296,11 +284,10 @@ $(document).on('tap', '.blocked-time', function(e) {
 $(document).on('tap', '#deleteBlockedTimeslotsButton', function(e) {
 	var button = $('#deleteBlockedTimeslotsButton');
 	$(button).html($('#waitingSpinner').html());
-	var baseUrl = $('body').attr('baseUrl');
 	$('.blocked-timeslots-table tr:hidden').remove();
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/clearBlockedTime",
+		url: "/admin/clearBlockedTime",
 		data: $('#blockedTimesForm').serialize()
 	}).done(function(response) {
 		var jsonResponse = JSON.parse(response);
@@ -338,10 +325,9 @@ $(document).on('change', '#dateOfAppointment', function() {
 });
 
 function getRescheduleOptions(appointmentId){
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl + "/getRescheduleOptions",
+		url: "/admin/getRescheduleOptions",
 		data: { aId:appointmentId }
 	}).done(function(response) {
 		if (response.indexOf("ERROR") === -1){
@@ -363,7 +349,7 @@ function getRescheduleOptions(appointmentId){
 				$('#rescheduleButton-'+appointmentId).html($('.spinner').html());
 				$.ajax({
 					type: "POST",
-					url: baseUrl + "/rescheduleAppointment",
+					url: "/admin/rescheduleAppointment",
 					data: { aId:appointmentId, sId:sId, aDate:aDate, sTime:sTime }
 				}).done(function(response) {
 					var jsonResponse = JSON.parse(response);
