@@ -65,7 +65,7 @@ class AdminController {
 			model = getClients()
 		}
 		else if (template == "fourteenDayView"){
-			model = getUpcomingAppointments() + getServiceProviderInfo()
+			model = getUpcomingAppointments() + getServiceProviderInfo() + [startRange:0]
 		}
 		else if (template == "upcomingAppointments"){
 			model = getUpcomingAppointments() + getServiceProviderInfo()

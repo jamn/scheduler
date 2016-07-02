@@ -1,6 +1,6 @@
 <%
 	def days = []
-	for ( i in 0..13 ){
+	for ( i in startRange..startRange+6 ){
 		Calendar cal = new GregorianCalendar()
 		cal.setTime(startTime.getTime())
 		if (i > 0) cal.add(Calendar.DAY_OF_WEEK, i)
@@ -11,15 +11,15 @@
 <table id="fourteenDayView-week1">
 	<tr class="dateHeader">
 		<td></td>
-		<g:each in="${(0..6)}" var="i"> 
+		<g:each in="${(startRange..startRange+6)}" var="i"> 
 			<td>${days[i].getTime().format('EEE dd')}</td>
 		</g:each>
 		<td></td>
 	</tr>
 	<% while (days[0] < endTime){ %>
 		<g:each in="${['halfHour','fifteen']}">
-			<g:render template="calendarRow" model="['appointments':appointments, 'days':days, 'daysRange':(0..6), 'rowClass':it]" />
-			<%for ( i in 0..6 ){
+			<g:render template="calendarRow" model="['appointments':appointments, 'days':days, 'daysRange':(startRange..startRange+6), 'rowClass':it]" />
+			<%for ( i in startRange..startRange+6 ){
 				days[i].add(Calendar.MINUTE, 15)
 			}%>
 		</g:each>
