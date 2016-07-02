@@ -1,5 +1,7 @@
 package jamnApps.scheduler
 
+import java.text.SimpleDateFormat
+
 class BootStrap {
 
 	def superUser
@@ -14,27 +16,26 @@ class BootStrap {
 			println "creating default users..."
 			superUser = new User()
 			superUser.username = "super-user"
-			superUser.password = "su2016"
+			superUser.password = "su"
 			superUser.isAdmin = true
 			superUser.firstName = "Super"
 			superUser.lastName = "User"
 			superUser.code = "su987123"
-			superUser.email = "su@schedulepro.online"
+			superUser.email = "su"
 			superUser.save(flush:true)
 
 			defaultServiceProvider = new User()
 			defaultServiceProvider.username = "default-service-provider"
-			defaultServiceProvider.password = "dsp2016"
+			defaultServiceProvider.password = "stylist"
 			defaultServiceProvider.firstName = "Default"
 			defaultServiceProvider.lastName = "Service Provider"
-			defaultServiceProvider.email = "dsp@schedulepro.online"
+			defaultServiceProvider.email = "stylist"
 			defaultServiceProvider.isServiceProvider = true
 			defaultServiceProvider.code = "dsp907201"
 			defaultServiceProvider.save(flush:true)
 
 			defaultClient = new User()
 			defaultClient.username = "default-client"
-			defaultClient.password = "dc2016"
 			defaultClient.password = "ben"
 			defaultClient.firstName = "Default"
 			defaultClient.lastName = "Client"
@@ -176,6 +177,39 @@ class BootStrap {
 				startTime: 36000000,
 				endTime: 68400000,
 				serviceProvider: serviceProvider
+			).save()
+		}
+
+		if (Appointment.count() == 0){
+			def serviceProvider = User.findWhere(username:'default-service-provider')
+			def client = User.findWhere(username:'default-client')
+			def service = ServiceType.findWhere(description:'Haircut')
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			new Appointment(
+				appointmentDate: sdf.parse("03/03/2016 11:00"),
+				serviceProvider: serviceProvider,
+				client: client,
+				service: service,
+				notes: 'Uses #2 guard on sides.',
+				code: '234lsSWkisisWkw992i21z',
+				booked: true,
+				sendEmailReminder: true,
+				reminderEmailSent: true,
+				sendTextReminder: true,
+				reminderTextSent: true
+			).save()
+			new Appointment(
+				appointmentDate: sdf.parse("04/07/2016 13:30"),
+				serviceProvider: serviceProvider,
+				client: client,
+				service: service,
+				notes: 'Uses #2 guard on sides.',
+				code: '234lsSWkisisWkw992i21z',
+				booked: true,
+				sendEmailReminder: true,
+				reminderEmailSent: true,
+				sendTextReminder: true,
+				reminderTextSent: true
 			).save()
 		}
 

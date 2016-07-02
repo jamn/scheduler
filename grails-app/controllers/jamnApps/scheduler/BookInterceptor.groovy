@@ -5,7 +5,7 @@ class BookInterceptor {
 
     boolean before() { 
 
-        session.caller = request.getHeader('referer') ?: "/"
+        session.caller = request.getHeader('referer') ?: "/book"
 
         def serviceProvider = session?.serviceProvider
         def service = session?.service
@@ -18,8 +18,8 @@ class BookInterceptor {
             'index': true, //prevents an endless loop
             'login': true,
             'logout': true,
-            'chooseService': (serviceProvider ? true : false),
-            'saveServiceSelection': (serviceProvider ? true : false),
+            'chooseService': true,
+            'saveServiceSelection': (serviceProvider),
             'chooseTime': (serviceProvider && service),
             'holdTimeslot': (serviceProvider && service),
             'bookAppointment': (serviceProvider && service && serviceDate),

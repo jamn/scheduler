@@ -4,8 +4,11 @@ package jamnApps.scheduler
 class AccessInterceptor {
 
     boolean before() {
-        println "params: " + params
-        session.caller = request.getHeader('referer') ?: "/book"
+        def caller = request.getHeader('referer') ?: "/book"
+        println "caller: " + caller
+        if (!caller.contains('login')){
+            session.caller = caller
+        }
         true
     }
 

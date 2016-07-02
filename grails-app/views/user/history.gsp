@@ -10,7 +10,7 @@
 			<table class="table history-table">
 				<g:each in="${appointments}" var="appointment">
 					<tr>
-						<td>${appointment.appointmentDate.format('dd/MM/yyyy')}</td>
+						<td>${appointment.appointmentDate.format('dd/MM/yyyy @ hh:mm a')} </td>
 						<td>${appointment.service.description}</td>
 					</tr>
 				</g:each>

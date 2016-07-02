@@ -22,16 +22,13 @@ class BookController {
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MMddyyyyHHmm")
 	SimpleDateFormat dateFormatter3 = new SimpleDateFormat("MM/dd/yyyy")
 
-	def index(){
-		session.serviceProvider = User.findWhere(isServiceProvider:true) ?: null
-		println "serviceProvider: " + session?.serviceProvider?.getFullName()
-		
-	}
+	def index(){}
 
 	def chooseService(){
 		//schedulerService.deleteStaleAppointments()
 		println "\n---- GETTING SERVICES ----"
 		println new Date()
+		session.serviceProvider = User.findWhere(isServiceProvider:true) ?: null
 		def services = schedulerService.getServicesForServiceProvider(session.serviceProvider)
 		return [services:services]
 	}

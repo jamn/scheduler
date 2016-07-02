@@ -7,7 +7,7 @@
 	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
 		<form method="post" class="login-box" action="confirmation">
 
-			<g:set var="plural" value="${session?.bookedAppointments?.size() == 1 ? '' : 's'}" />
+			<g:set var="plural" value="${session?.bookedAppointments?.size() > 1 ? 's' : ''}" />
 
 			<div class="reminders">
 				<g:if test="${!cancelAppointment && session?.bookedAppointments?.size() > 0}">

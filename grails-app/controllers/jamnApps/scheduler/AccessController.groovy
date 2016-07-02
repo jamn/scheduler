@@ -13,13 +13,10 @@ class AccessController {
 	static defaultAction = 'login'
 
 	def login(){
-		println "session.user: " + session.user
-		println "    - isAdmin: " + session.user?.isAdmin
-		println "    - isClient: " + session.user?.isClient
-		if (session.user?.isClient){
-			redirect(controller:'book', action:'chooseService')
-		}else if (session.user?.isAdmin){
+		if (session.user?.isAdmin){
 			redirect(controller:'admin')
+		}else if (session.user?.isClient && !session.caller.contains('admin')){
+			redirect(controller:'book', action:'chooseService')
 		}
 	}
 
@@ -28,6 +25,7 @@ class AccessController {
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.user){
 				session.user = loginResults.user
+				println "LOGGED IN, REDIRECTING TO: " + session.caller
 				if (session.caller){
 					redirect(uri:session.caller)
 					return

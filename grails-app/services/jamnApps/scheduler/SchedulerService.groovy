@@ -252,4 +252,19 @@ class SchedulerService {
 		return cssClass
 	}
 
+	public findAppointment(appointments, dayOfWeek){
+		def appointment
+		appointments.each(){
+			Calendar startDate = new GregorianCalendar()
+			startDate.setTime(it.appointmentDate)
+			Calendar endDate = new GregorianCalendar()
+			endDate.setTime(it.appointmentDate)
+			endDate.add(Calendar.MILLISECOND, new BigDecimal(it.service.duration).intValueExact())
+			if (dayOfWeek.getTime() >= startDate.getTime() && dayOfWeek.getTime() < endDate.getTime()){
+				appointment = it
+			}
+		}
+		return appointment
+	}
+
 }

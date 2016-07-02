@@ -67,9 +67,10 @@ body{
 }
 
 .history-table tr td:first-child {
-	width: 120px;
+	width: 50%;
+	border-right: 1px dashed #d6d6d6;
+	text-align: right;
 }
-
 .history-table tr td {
 	border-bottom: 1px solid #ddd;
 }
