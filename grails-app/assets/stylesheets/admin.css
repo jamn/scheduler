@@ -468,6 +468,63 @@ select{
 	font-size: 1.4em;
 }
 
+
+
+
+
+
+/* CALENDAR */
+
+.calendar-appointment {
+	transition:all 0.3s ease;
+	z-index: 1;
+	/*background-color: rgba(255, 255, 255, 0.54);*/
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	justify-content: center;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-align-items: center;
+	 -webkit-flex-align: center;
+	     -ms-flex-align: center;
+	        align-items: center;
+}
+.calendar-appointment:hover {
+	background-color: rgba(255, 255, 255, 0.74);
+	-webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+            transform: scale(1.3);
+}
+.calendar-appointment .glyphicon {
+    font-size: 1.5em;
+    color: #383838;
+}
+.appointmentDetailsCallOut{
+	background-color: #EEE;
+	position: absolute;
+	width: 95px;
+	border-radius: 4px;
+	margin-top: 13px;
+	padding: 5px;
+	z-index: 100;
+	margin-left: -8px;
+}
+.booked .appointmentDetailsCallOut,
+.booked .glyphicon{
+	opacity: 0;
+}
+.booked:hover .appointmentDetailsCallOut,
+.booked:hover .glyphicon{
+	opacity: 1;
+}
+
 .fourteenDayViewLink{
 	position: absolute;
 	top: 5px;
@@ -508,22 +565,6 @@ select{
 	vertical-align: middle;
 }
 
-.appointmentDetailsCallOut{
-	display: none;
-	background-color: #EEE;
-	position: absolute;
-	width: 95px;
-	border-radius: 4px;
-	margin-top: 13px;
-	padding: 5px;
-	z-index: 100;
-	margin-left: -8px;
-}
-
-.booked:hover .appointmentDetailsCallOut{
-	display: block;
-}
-
 .halfHour td{
 	border-top: 1px solid #f0f0f0;
 }
@@ -532,26 +573,29 @@ select{
 .available,
 .booked,
 .blocked-off{
-	width: 90px;
+	width: 74px;
 }
 
 .unavailable{
-	background-color: #ccc;
+	background-color: #888;
 }
 
 .available{
 	background-color: #858003;
+}
+.unavailable,
+.available,
+.booked {
 	border-right: 1px solid #ccc;
 }
 
 .booked{
 	background-color: #971111;
 	cursor: pointer;
-	border-right: 1px solid #ccc;
 }
 
 .booked.new-user {
-	background-color: #28A1CD;
+	background-color: #cec771;
 }
 
 .appointment-data .new-user {

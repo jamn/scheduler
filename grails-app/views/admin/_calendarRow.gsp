@@ -1,21 +1,31 @@
-<!-- 
-	TODO:
-	  * DETERMINE IF WE'RE @ THE BEGGINING OF THE APPOINTMENT (DRAW ROW IF TRUE)
-      * FIND OUT HOW LONG THE APPOINTMENT IS (ADD ROWSPAN IF NECESSARY)
--->
-
 <tr class="${rowClass}" time="${days[0].getTime().format('hh:mm a')}">
 	<g:if test="${rowClass == 'halfHour'}">
 		<td rowspan="2" class="time">${days[0].getTime().format('hh:mm a')}</td>
 	</g:if>
 	<g:each in="${daysRange}" var="i"> 
 		<%
-			def appointment = schedulerService.findAppointment(appointments, days[i])
-			def dayIndex = days[i].get(Calendar.DAY_OF_WEEK)
+			def dayOfWeek = days[i]
+			def appointment = schedulerService.findAppointment(appointments, dayOfWeek)
+			def javaDayOfWeekIndex = dayOfWeek.get(Calendar.DAY_OF_WEEK)
+			def calendarClass = schedulerService.getCalendarClass(appointment, javaDayOfWeekIndex)
+			def columnRowspanCount = 1
+			def isBeginningOfAppointment = true
+			if (appointment){
+				columnRowspanCount = schedulerService.getCalendarColumnRowspanCount(appointment)
+				isBeginningOfAppointment = schedulerService.isBeginningOfAppointment(appointment, dayOfWeek)
+			}
 		%>
-		<td class="${schedulerService.getCalendarClass(appointment,dayIndex)}">
-			<%if (appointment){%><div id="appointment-${appointment?.id}" class="appointmentDetailsCallOut">${appointment?.service?.description}</div><%}%>
-		</td>
+		<g:if test="${!appointment}">
+			<td class="${calendarClass}"></td>
+		</g:if>
+		<g:elseif test="${isBeginningOfAppointment}">
+			<td class="${calendarClass}" rowspan="${columnRowspanCount}">
+				<div class="calendar-appointment">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					<!-- <div id="appointment-${appointment?.id}" class="appointmentDetailsCallOut">${appointment?.service?.description}</div> -->
+				</div>
+			</td>
+		</g:elseif>
 	</g:each>
 	<g:if test="${rowClass == 'halfHour'}">
 		<td rowspan="2" class="time">${days[0].getTime().format('hh:mm a')}</td>

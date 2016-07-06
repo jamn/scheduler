@@ -252,15 +252,35 @@ class SchedulerService {
 		return cssClass
 	}
 
-	public findAppointment(appointments, dayOfWeek){
+	public getCalendarColumnRowspanCount(appointment){
+		def rowCount = 1 
+		if (appointment){
+			rowCount = new BigDecimal(appointment.service.duration).intValueExact() / (15 * 60000)
+		}
+		return rowCount
+	}
+
+	public isBeginningOfAppointment(appointment, calendarTimeslot){
+		Boolean isBeginningOfAppointment = true
+		if (appointment && calendarTimeslot){
+			Calendar appointmentStart = new GregorianCalendar()
+			appointmentStart.setTime(appointment.appointmentDate)
+			if (calendarTimeslot.getTime() != appointmentStart.getTime()){
+				isBeginningOfAppointment = false
+			}
+		}
+		return isBeginningOfAppointment
+	}
+
+	public findAppointment(appointments, calendarTimeslot){
 		def appointment
 		appointments.each(){
-			Calendar startDate = new GregorianCalendar()
-			startDate.setTime(it.appointmentDate)
-			Calendar endDate = new GregorianCalendar()
-			endDate.setTime(it.appointmentDate)
-			endDate.add(Calendar.MILLISECOND, new BigDecimal(it.service.duration).intValueExact())
-			if (dayOfWeek.getTime() >= startDate.getTime() && dayOfWeek.getTime() < endDate.getTime()){
+			Calendar appointmentStart = new GregorianCalendar()
+			appointmentStart.setTime(it.appointmentDate)
+			Calendar appointmentEnd = new GregorianCalendar()
+			appointmentEnd.setTime(it.appointmentDate)
+			appointmentEnd.add(Calendar.MILLISECOND, new BigDecimal(it.service.duration).intValueExact())
+			if (calendarTimeslot.getTime() >= appointmentStart.getTime() && calendarTimeslot.getTime() < appointmentEnd.getTime()){
 				appointment = it
 			}
 		}
