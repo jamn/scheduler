@@ -623,7 +623,9 @@ select{
 .booked.new-user {
 	background-color: #cec771;
 }
-
+.appointments tr:not(:first-child) {
+	border-top: 1px solid rgba(0,0,0,.02);
+}
 .appointment-data .new-user {
 	background-color: #E1F4FA;
 }
