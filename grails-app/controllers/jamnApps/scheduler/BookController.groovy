@@ -157,7 +157,6 @@ class BookController {
 		println "\n---- CONFIRMING BOOKING ----"
 		println new Date()
 		println "params: " + params
-		println "session: " + session
 		
 		Boolean errorOccurred = false
 		def errorMessage = ''
@@ -170,14 +169,11 @@ class BookController {
 		if (session?.user){
 			client = User.get(session.user.id)
 		}else{
-			println "********* logging in..."
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.user){
-				println "************* user found."
 				client = loginResults.user
 				session.user = client
 			}else{
-				println "************* redirecting to bookAppointment"
 				redirect(action:"bookAppointment", params:[error:loginResults.errorDetails])
 				return
 			}

@@ -39,7 +39,7 @@ class AdminController {
     	List allowedSections = [
     		"homepageMessage", 
     		"clients",
-    		"fourteenDayView",
+    		"calendar",
     		"upcomingAppointments",
     		"bookAppointment",
     		"blockOffTime",
@@ -64,7 +64,7 @@ class AdminController {
     	else if (template == "clients"){
 			model = getClients()
 		}
-		else if (template == "fourteenDayView"){
+		else if (template == "calendar"){
 			model = getUpcomingAppointments() + getServiceProviderInfo() + [startRange:0]
 		}
 		else if (template == "upcomingAppointments"){

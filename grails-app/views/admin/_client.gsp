@@ -11,7 +11,7 @@
 	<div id="saveClientNotesButton" class="btn green-button">Save</div>
 </div>
 <div class="row">
-	<h3>Contact:</h3>
+	<h3>Email:</h3>
 </div>
 <div class="row">
 	<g:if test="${client.phone}">

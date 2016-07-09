@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-	getSection('fourteenDayView');
+	getSection('calendar');
 });
 
 function getTimeSlotOptions(){

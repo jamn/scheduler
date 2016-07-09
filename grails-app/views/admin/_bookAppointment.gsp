@@ -101,7 +101,7 @@
 
 			$.ajax({
 				type: "POST",
-				url: "bookForClient",
+				url: "${createLink(controller:'admin',action:'bookForClient')}",
 				data: { cId:cId, sId:sId, aDate:aDate, sTime:sTime, r:recurringAppointment, dur:repeatDuration, num:repeatNumberOfAppointments}
 			}).done(function(response) {
 				var jsonResponse = JSON.parse(response);

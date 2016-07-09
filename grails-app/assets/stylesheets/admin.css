@@ -1,6 +1,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 80px;
+  padding-top: 50px;
+  min-width: 360px;
 }
 
 /*
@@ -475,10 +476,45 @@ select{
 
 /* CALENDAR */
 
+.date-range-picker {
+	font-size: 2em;
+	text-align: center;
+	border: 1px solid #ccc;
+    border-radius: 10px;
+	margin: 0 0 16px 0;
+}
+.date-range-picker h1 {
+    margin: 0;
+}
+.date-range-picker label {
+    font-weight: 100;
+    font-size: .7em;
+    margin: 0;
+    margin-left: -48px;
+}
+.date-range-picker input {
+	width: 140px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+.date-range-picker ul {
+	padding: 0;
+	margin: 15px;
+}
+.date-range-picker .glyphicon {
+	margin: 0 20px;
+	border-bottom: 2px solid #e6e6e6;
+	padding-bottom: 6px;
+}
+.date-range-picker .glyphicon:hover {
+	cursor: pointer;
+	color: #585858;
+	border-bottom: 2px solid #585858;
+}
+
 .calendar-appointment {
-	transition:all 0.3s ease;
+	transition: all 0.3s ease;
 	z-index: 1;
-	/*background-color: rgba(255, 255, 255, 0.54);*/
 	border: 1px solid rgba(0, 0, 0, 0.15);
 	position: absolute;
 	top: 0;
@@ -524,16 +560,7 @@ select{
 .booked:hover .glyphicon{
 	opacity: 1;
 }
-
-.fourteenDayViewLink{
-	position: absolute;
-	top: 5px;
-	right: 20px;
-	font-size: 1.3em;
-}
-
-#fourteenDayView-week1,
-#fourteenDayView-week2{
+#calendarTable{
 	width: 100%;
 	text-align: center;
 	margin-bottom: 20px;
@@ -541,26 +568,22 @@ select{
 	box-shadow: 2px 2px 3px #EEE;
 	border-spacing: 1px;
 }
-
-#fourteenDayView-week1 tr,
-#fourteenDayView-week2 tr{
+#calendarTable tr {
 	height: 20px;
 }
-
-#fourteenDayView-week1 tr td,
-#fourteenDayView-week2 tr td{
+#calendarTable tr td{
 	position: relative;
 }
-
 .dateHeader{
 	background-color: #58585A;
 	color: #fff;
 }
-
 .dateHeader td {
 	padding: 6px;
 }
-
+.dateHeader .day {
+	font-size: 1.2em;
+}
 .time{
 	vertical-align: middle;
 }
@@ -641,21 +664,6 @@ select{
 .appointments td{
 	padding: 6px;
 	font-size: 1.2em;
-}
-
-#appointmentDetailsPanel {
-	display: none;
-	background-color: #639;
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 100;
-	color: #fff;
-	font-size: 7em;
-	margin-top: 50px;
-	margin-left: 213px;
-	padding: 30px;
 }
 
 /*.appointment-data:hover,

@@ -193,6 +193,14 @@ class SchedulerService {
 					println "ERROR: existing appointment found for this time slot. Unable to book appointment."
 				}
 			}
+			else {
+				println "ERROR! Missing params:"
+				println "client: " + client
+				println "serviceProvider: " + serviceProvider
+				println "service: " + service
+				println "appointmentDate: " + appointmentDate
+
+			}
 
 			tempDate.add(Calendar.WEEK_OF_YEAR, repeatDuration)
 			appointmentDate = tempDate.getTime()
@@ -239,15 +247,15 @@ class SchedulerService {
 
 	public getCalendarClass(appointment,day){
 		def cssClass = "available"
-		if(day == 1 || day == 7) {
-			cssClass = "unavailable"
-		}else if(appointment?.service?.description == "Blocked Off Time"){
-			cssClass = "blocked-off"
-		}else if(appointment){
+		if(appointment){
 			cssClass = "booked"
 			if (appointment.client.isNewUser()){
 				cssClass += " new-user"
 			}
+		}else if(day == 1 || day == 7) {
+			cssClass = "unavailable"
+		}else if(appointment?.service?.description == "Blocked Off Time"){
+			cssClass = "blocked-off"
 		}
 		return cssClass
 	}
