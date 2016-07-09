@@ -19,13 +19,13 @@ class EmailService {
 		emailBody += "</ul><p>See you then!</p>"
 		emailBody += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
 		try {
-			sendMail {
+			/*sendMail {
 				async true
 				to "${appointments[0].client.email}"
 				from "info@thedenbarbershop-kc.com"  
 				subject "Appointment Booked @ The Den Barbershop"     
 				html emailBody
-			}
+			}*/
 		}
 		catch(Exception e) {
 			println "ERROR"
@@ -50,13 +50,13 @@ class EmailService {
 			if (Environment.current == Environment.DEVELOPMENT){
 				emailTo = "bjacobi@gmail.com"
 			}
-			sendMail {
+			/*sendMail {
 				async true
 				to emailTo
 				from "${appointments[0].client.email}"    
 				subject "New Appointment [${appointments[0].appointmentDate.format('E MM/dd @ hh:mm a')}]"     
 				html adminEmailBody
-			}
+			}*/
 		}
 		catch(Exception e) {
 			println "ERROR"

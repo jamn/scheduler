@@ -207,10 +207,9 @@ function sendPasswordResetEmail(){
 	var email = $('#email').val();
 	$('#loginButton .as-button-label').hide();
 	$('#loginButton .spinner').show();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl+"site/sendPasswordResetEmail",
+		url: "sendPasswordResetEmail",
 		data: {e:email}
 	}).done(function(confirmation) {
 		processResults(confirmation);
@@ -222,10 +221,9 @@ function attemptPasswordReset(){
 	var p2 = $('#verifyNewPassword').val();
 	$('#loginButton .as-button-label').hide();
 	$('#loginButton .spinner').show();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl+"site/attemptPasswordReset",
+		url: "attemptPasswordReset",
 		data: {p1:p1, p2:p2}
 	}).done(function(confirmation) {
 		processResults(confirmation)
@@ -244,10 +242,9 @@ function bookAppointment(){
 	var rememberMe = $('#rememberMe').is(':checked');
 	$('#loginButton .as-button-label').hide();
 	$('#loginButton .spinner').show();
-	var baseUrl = $('body').attr('baseUrl');
 	$.ajax({
 		type: "POST",
-		url: baseUrl+"site/bookAppointment",
+		url: "bookAppointment",
 		data: {loggedIn:loggedIn, e:email, p:password, f:firstName, l:lastName, ph:phoneNumber, eRmndr:emailReminder, tRmndr:textMessageReminder, remember:rememberMe}
 	}).done(function(confirmation) {
 		processResults(confirmation);
@@ -298,10 +295,9 @@ function cancelAppointment(){
 		var password = $('#password-Cancel').val();
 		$('#cancelAppointmentLoginButton .as-button-label').hide();
 		$('#cancelAppointmentLoginButton .spinner').show();
-		var baseUrl = $('body').attr('baseUrl');
 		$.ajax({
 			type: "POST",
-			url: baseUrl+"site/cancelAppointment",
+			url: "cancelAppointment",
 			data: {e:email, p:password}
 		}).done(function(confirmation) {
 			processCancelAppointmentResults(confirmation);
@@ -321,7 +317,7 @@ function getPageContent(button, data, nextPage){
 		var action = "get" + nextPage.charAt(0).toUpperCase() + nextPage.slice(1)
 		$.ajax({
 			type: "POST",
-			url: "site/"+action,
+			url: action,
 			data: data
 		}).done(function(response) {
 			loadPageContent(currentPage, nextPage, response);

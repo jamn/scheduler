@@ -49,9 +49,12 @@ $(document).on("tap", ".main", function() {
 });
 
 $(document).on('tap', '.nav a', function(e) {
-	var section = $(this).attr("href");
-	if (section === "#logout") {
+	var section = $(this).attr("href").substring(1);
+	if (section === "logout") {
 		window.location.href = "/access/logout";
+	}
+	else if (section === "clientSite"){
+		window.location.href = "/book";
 	}
 	else {
 		getSection(section);

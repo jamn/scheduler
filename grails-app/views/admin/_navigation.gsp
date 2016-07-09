@@ -3,4 +3,5 @@
 <li><a href="#bookAppointment">Book Appointment</a></li>
 <li><a href="#blockOffTime">Block Off Time</a></li>
 <li><a href="#clients">Clients</a></li>
+<li><a href="#clientSite">Client Site</a></li>
 <li><a href="#log">Log</a></li>

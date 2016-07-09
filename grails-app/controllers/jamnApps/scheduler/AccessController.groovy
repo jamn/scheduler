@@ -25,7 +25,7 @@ class AccessController {
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.user){
 				session.user = loginResults.user
-				println "LOGGED IN, REDIRECTING TO: " + session.caller
+				println "LOGGED IN, REDIRECTING TO: " + session.caller ?: '/book'
 				if (session.caller){
 					redirect(uri:session.caller)
 					return
@@ -45,6 +45,9 @@ class AccessController {
 	def logout(){
 		println "session: " + session
 		session.user = null
+		if (session.caller.contains('confirmation') || session.caller.contains('admin')){
+			session.caller = '/book'
+		}
 		//response.deleteCookie('scheduler-1')
 		redirect(uri:session.caller)
 	}

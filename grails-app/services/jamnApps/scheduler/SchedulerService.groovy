@@ -110,7 +110,7 @@ class SchedulerService {
 	public Boolean bookForClient(Map params = [:]){
 		Boolean success = false
 		def client = User.get(new Long(params.cId))
-		def serviceProvider = User.findByCode("kp")
+		def serviceProvider = User.findByCode("dsp907201")
 		def service = ServiceType.get(new Long(params.sId))
 
 		def startTimeString = params.sTime

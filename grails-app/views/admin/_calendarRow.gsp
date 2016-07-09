@@ -20,7 +20,7 @@
 		</g:if>
 		<g:elseif test="${isBeginningOfAppointment}">
 			<td class="${calendarClass}" rowspan="${columnRowspanCount}">
-				<div class="calendar-appointment">
+				<div class="calendar-appointment" id="appointment-${appointment?.id}" onclick='$("#appointmentDetailsPanel").slideToggle("slow");'>
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 					<!-- <div id="appointment-${appointment?.id}" class="appointmentDetailsCallOut">${appointment?.service?.description}</div> -->
 				</div>

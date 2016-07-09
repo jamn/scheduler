@@ -5,7 +5,7 @@ class AdminInterceptor {
 
     boolean before() {
         if (!session.user?.isAdmin){
-            redirect(controller:'access', action:'login')
+            redirect(controller:'access', action:'login', params: [caller:'/admin'])
             return false
         }
         true

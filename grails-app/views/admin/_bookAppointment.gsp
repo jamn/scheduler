@@ -96,13 +96,12 @@
 			var recurringAppointment = $('#recurringAppointment').is(':checked');
 			var repeatDuration = $('#repeatDuration').val();
 			var repeatNumberOfAppointments = $('#repeatNumberOfAppointments').val();
-			var baseUrl = $('body').attr('baseUrl');
 
 			$('#bookForClientButton').html($('#waitingSpinner').html());
 
 			$.ajax({
 				type: "POST",
-				url: baseUrl+"/bookForClient",
+				url: "bookForClient",
 				data: { cId:cId, sId:sId, aDate:aDate, sTime:sTime, r:recurringAppointment, dur:repeatDuration, num:repeatNumberOfAppointments}
 			}).done(function(response) {
 				var jsonResponse = JSON.parse(response);

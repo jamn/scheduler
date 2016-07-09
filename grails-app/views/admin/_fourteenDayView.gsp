@@ -30,3 +30,7 @@
 <br />
 <br />
 <g:render template="upcomingAppointments" />
+
+<div id="appointmentDetailsPanel">
+<a href="#" onclick='$("#appointmentDetailsPanel").slideToggle("slow");'>Tester!</a>
+</div>

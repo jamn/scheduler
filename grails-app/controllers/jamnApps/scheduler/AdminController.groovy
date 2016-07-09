@@ -249,7 +249,7 @@ class AdminController {
 			def from = dateFormatter2.parse(params?.date+params?.from)
 			def to = dateFormatter2.parse(params?.date+params?.to)
 
-			def serviceProvider = User.findByCode("kp")
+			def serviceProvider = User.findByCode("dsp907201")
 			def service = ServiceType.findByDescription("Blocked Off Time")
 			Calendar currentDate = new GregorianCalendar()
 			currentDate.setTime(from)
@@ -295,7 +295,7 @@ class AdminController {
 			def from = dateFormatter3.parse(params?.from)
 			def to = dateFormatter3.parse(params?.to)
 
-			def serviceProvider = User.findByCode("kp")
+			def serviceProvider = User.findByCode("dsp907201")
 			Calendar currentDate = new GregorianCalendar()
 			currentDate.setTime(from)
 			currentDate.set(Calendar.HOUR_OF_DAY, 0)
@@ -417,7 +417,7 @@ class AdminController {
 		if (params?.aDate && params?.sId){
 			def requestedDate = dateFormatter3.parse(params.aDate)
 			def service = ServiceType.get(new Long(params.sId))
-			def serviceProvider = User.findByCode("kp")
+			def serviceProvider = User.findByCode("dsp907201")
 			schedulerService.getTimeSlotsAvailableMap(requestedDate, serviceProvider, service)?.each(){ k,v ->
 				timeSlots += v
 			}

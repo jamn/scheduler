@@ -8,6 +8,9 @@
 			<li><a href="${createLink(controller:'user', action:'history')}">History <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></a></li>
 			<li><a href="${createLink(controller:'user', action:'profile')}">Update Profile <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
 			<li><a href="${createLink(controller:'book', action:'chooseService')}">Book Appointment <span class="glyphicon glyphicon-time" aria-hidden="true"></span></a></li>
+			<g:if test="${session.user.isAdmin}">
+				<li><a href="${createLink(controller:'admin')}">Admin <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
+			</g:if>
 			<li role="separator" class="divider"></li>
 			<li><a href="${createLink(controller:'access',action:'logout')}">Logout</a></li>
 

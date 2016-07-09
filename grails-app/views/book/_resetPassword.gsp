@@ -42,7 +42,7 @@
 <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir:'images', file:'apple-icon-114x114.png')}" />
 <link rel="apple-touch-icon" sizes="144x144" href="${resource(dir:'images', file:'apple-icon-144x144.png')}" />
 
-</head><body baseUrl="${createLink()}">
+</head><body>
 
 
 
@@ -142,7 +142,7 @@
 <link media="handheld, only screen" href="${resource(dir:'css', file:'media.css')}" type="text/css" rel="stylesheet" />
 
 <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'jquery-ui-1.10.3.custom.min.css')}" />
-</head><body baseUrl="${createLink()}">
+</head><body>
 
 		<div class="header">
 			<img class="home" id="logoPlain" src="${resource(dir:'images',file:'logo-plain.png')}">

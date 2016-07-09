@@ -5,7 +5,8 @@ class BookInterceptor {
 
     boolean before() { 
 
-        session.caller = request.getHeader('referer') ?: "/book"
+        def caller = request.getHeader('referer') ?: "/book"
+        session.caller = caller
 
         def serviceProvider = session?.serviceProvider
         def service = session?.service

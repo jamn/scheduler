@@ -52,7 +52,7 @@
 <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir:'images', file:'apple-icon-114x114.png')}" />
 <link rel="apple-touch-icon" sizes="144x144" href="${resource(dir:'images', file:'apple-icon-144x144.png')}" />
 
-</head><body baseUrl="${createLink()}">
+</head><body>
 
 	<div class="existingAppointmentInfo"><b>Existing Appointment:</b> ${appointment.service.description} | ${appointment.appointmentDate.format('EEEE MMMM dd, yyyy')} @ ${appointment.appointmentDate.format('hh:mm a')}</div>
 
