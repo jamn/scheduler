@@ -1,12 +1,12 @@
 <%
 	def days = []
-	def endRange = startRange + 6
-	for ( i in startRange..endRange ){
+	for ( i in 0..6 ){
 		Calendar cal = new GregorianCalendar()
 		cal.setTime(startTime.getTime())
-		if (i > 0) cal.add(Calendar.DAY_OF_WEEK, i)
+		cal.add(Calendar.DAY_OF_WEEK, i+startRange)
 		days[i] = cal
 	}
+	endTime.add(Calendar.DAY_OF_WEEK, startRange)
 %>
 <g:set var="schedulerService" bean="schedulerService"/>
 
@@ -32,7 +32,7 @@
 <table id="calendarTable">
 	<tr class="dateHeader">
 		<td></td>
-		<g:each in="${(startRange..endRange)}" var="i"> 
+		<g:each in="${(0..6)}" var="i"> 
 			<td>
 				<span class="day">${days[i].getTime().format('EEE')}</span><br>
 				${days[i].getTime().format('dd')}
@@ -42,8 +42,8 @@
 	</tr>
 	<% while (days[0] < endTime){ %>
 		<g:each in="${['halfHour','fifteen']}">
-			<g:render template="calendarRow" model="['appointments':appointments, 'days':days, 'daysRange':(startRange..endRange), 'rowClass':it]" />
-			<%for ( i in startRange..startRange+6 ){
+			<g:render template="calendarRow" model="['appointments':appointments, 'days':days, 'rowClass':it]" />
+			<%for ( i in 0..6 ){
 				days[i].add(Calendar.MINUTE, 15)
 			}%>
 		</g:each>
@@ -63,3 +63,18 @@
 		</div>
 	</div>
 </div>
+
+
+<script type="text/javascript">
+	var selectedDate = new Date('07/11/2016')
+	$(document).ready(function(){
+		$('#calendarStartDate').datepicker( {
+			onSelect: function(date) {
+				//var startDate = $('#calendarStartDate').val();
+				$("#mask").fadeIn();
+				document.location = "?startDate="+encodeURIComponent(date)
+			}
+		});
+		$('#calendarStartDate').datepicker("setDate", selectedDate)
+	})
+</script>

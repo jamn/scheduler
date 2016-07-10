@@ -65,7 +65,7 @@ class AdminController {
 			model = getClients()
 		}
 		else if (template == "calendar"){
-			model = getUpcomingAppointments() + getServiceProviderInfo() + [startRange:0]
+			model = getUpcomingAppointments(params) + getServiceProviderInfo() + [startRange:3]
 		}
 		else if (template == "upcomingAppointments"){
 			model = getUpcomingAppointments() + getServiceProviderInfo()
@@ -112,13 +112,19 @@ class AdminController {
     	return [services:services]
     }
 
-    private Map getUpcomingAppointments(){
+    private Map getUpcomingAppointments(params = [:]){
+    	def startDate = new Date()
+    	if (params?.startDate){
+    		startDate = dateFormatter3.parse(params.startDate)
+    	}
 		Calendar today = new GregorianCalendar()
+		today.setTime(startDate)
 		today.set(Calendar.HOUR_OF_DAY, 0)
 		today.set(Calendar.MINUTE, 0)
 		today.set(Calendar.SECOND, 0)
 		today.set(Calendar.MILLISECOND, 0)
 		def appointments = Appointment.executeQuery("from Appointment a where a.appointmentDate >= :today and a.booked = true and a.deleted = false", [today:today.getTime()])?.sort{it.appointmentDate}
+		println "appointments: " + appointments.size()
 		return [appointments:appointments]
     }
 

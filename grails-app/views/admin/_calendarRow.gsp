@@ -2,7 +2,7 @@
 	<g:if test="${rowClass == 'halfHour'}">
 		<td rowspan="2" class="time">${days[0].getTime().format('hh:mm a')}</td>
 	</g:if>
-	<g:each in="${daysRange}" var="i"> 
+	<g:each in="${0..6}" var="i"> 
 		<%
 			def dayOfWeek = days[i]
 			def appointment = schedulerService.findAppointment(appointments, dayOfWeek)
