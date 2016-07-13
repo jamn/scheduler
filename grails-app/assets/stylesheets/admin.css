@@ -589,7 +589,8 @@ select{
 }
 
 .halfHour td{
-	border-top: 1px solid #f0f0f0;
+	border-top: 2px solid rgba(0, 0, 0, 0.05);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 }
 
 .unavailable,
@@ -623,7 +624,7 @@ select{
 .booked.new-user {
 	background-color: #cec771;
 }
-.appointments tr:not(:first-child) {
+.appointments tr:not(:first-child) td {
 	border-top: 1px solid rgba(0,0,0,.02);
 }
 .appointment-data .new-user {

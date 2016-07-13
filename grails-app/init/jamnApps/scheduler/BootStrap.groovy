@@ -186,7 +186,7 @@ class BootStrap {
 			def service = ServiceType.findWhere(description:'Haircut')
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			new Appointment(
-				appointmentDate: sdf.parse("03/03/2016 11:00"),
+				appointmentDate: sdf.parse("07/14/2016 11:00"),
 				serviceProvider: serviceProvider,
 				client: client,
 				service: service,
@@ -199,7 +199,7 @@ class BootStrap {
 				reminderTextSent: true
 			).save()
 			new Appointment(
-				appointmentDate: sdf.parse("04/07/2016 13:30"),
+				appointmentDate: sdf.parse("07/15/2016 13:30"),
 				serviceProvider: serviceProvider,
 				client: client,
 				service: service,
