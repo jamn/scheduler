@@ -65,12 +65,13 @@ body{
 	display: block;
 	color: #01B9FF;
 }
-
 .history-table tr td:first-child {
-	width: 50%;
+	width: 20px;
 	border-right: 1px dashed #d6d6d6;
-	text-align: right;
 }
 .history-table tr td {
 	border-bottom: 1px solid #ddd;
+}
+.history-table a .glyphicon {
+	color: #ab0000;
 }

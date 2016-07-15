@@ -9,6 +9,7 @@ class UserController {
 
 	def history(){
 		def appointments = Appointment.findAllByClient(session.user)
+		appointments = appointments.sort{it.appointmentDate}
 		return [appointments:appointments]
 	}
 
