@@ -1,3 +1,5 @@
+<html>
+<head></head><body>
 	<h1>Block Off Time</h1>
 	<label id="chooseDateToBlockOffText" for="chooseDateToBlockOff">Choose a date:</label>
 	<br />
@@ -116,4 +118,5 @@
 		minDate: 0
 	});
 </script>
-	
+
+</body></html>

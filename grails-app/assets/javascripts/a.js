@@ -1,7 +1,3 @@
-$( document ).ready(function() {
-	getSection('calendar');
-});
-
 function getTimeSlotOptions(){
 	var sId = $('#services').val();
 	var aDate = $('#dateOfAppointment').val();
@@ -48,26 +44,18 @@ $(document).on("tap", ".main", function() {
 	}
 });
 
-$(document).on('tap', '.nav a', function(e) {
-	var section = $(this).attr("href").substring(1);
-	if (section === "logout") {
-		window.location.href = "/access/logout";
-	}
-	else if (section === "clientSite"){
-		window.location.href = "/book";
-	}
-	else {
-		getSection(section);
-		$(".navbar-toggle").click();
-	}
+$(document).on('click', '.nav a', function(e) {
+	$(".navbar-toggle").click();
 });
 
 function getSection(section){
 	$('#mask').fadeIn();
+	var calendarStartDate = $('.calendarStartDate').val();
+	console.log(calendarStartDate)
 	$.ajax({
 		type: "POST",
 		url: "/admin/getSection",
-		data: {section:section}
+		data: {section:section, calendarStartDate:'calendarStartDate'}
 	}).done(function(response) {
 		$('.active').removeClass("active");
 		$('a[href="#'+section+'"]').parent().addClass("active");
@@ -76,7 +64,7 @@ function getSection(section){
 	});
 }
 
-$(document).on('tap', '#addClient', function(e) {
+$(document).on('click', '#addClient', function(e) {
 	$.ajax({
 		type: "POST",
 		url: "/admin/getClientDataForm"
@@ -93,7 +81,7 @@ $(document).on('tap', '#addClient', function(e) {
 	});
 });
 
-$(document).on('tap', '#editClient', function(e) {
+$(document).on('click', '#editClient', function(e) {
 	var cId = $("#clientsDetailsSelector").val();
 	$.ajax({
 		type: "POST",
@@ -112,7 +100,7 @@ $(document).on('tap', '#editClient', function(e) {
 	});
 });
 
-$(document).on('tap', '.last-name-filter', function(e) {
+$(document).on('click', '.last-name-filter', function(e) {
 	var lastNameStartsWith = $(e.currentTarget).attr('value');
 	$("#clientsDetailsSelector").slideDown();
 	if (lastNameStartsWith === "Reset"){
@@ -140,7 +128,7 @@ function getClientSelectMenuData(lastNameStartsWith){
 
 }
 
-$(document).on('tap', '#saveClientButton', function(e) {
+$(document).on('click', '#saveClientButton', function(e) {
 	var email = $('#e').val();
 	var email2 = $('#e2').val();
 	var password = $('#p').val();
@@ -165,7 +153,7 @@ $(document).on('tap', '#saveClientButton', function(e) {
 	}
 });
 
-$(document).on('tap', '#cancelClientRegistrationButton', function(e) {
+$(document).on('click', '#cancelClientRegistrationButton', function(e) {
 	hideClientRegistrationForm();
 });
 
@@ -193,7 +181,7 @@ $(document).on('change', '#clientsDetailsSelector', function() {
 	});
 });
 
-$(document).on('tap', '#saveTextButton', function(e) {
+$(document).on('click', '#saveTextButton', function(e) {
 	var message = $('#homepageText').val();
 	$.ajax({
 		type: "POST",
@@ -202,7 +190,7 @@ $(document).on('tap', '#saveTextButton', function(e) {
 	});
 });
 
-$(document).on('tap', '#saveClientNotesButton', function(e) {
+$(document).on('click', '#saveClientNotesButton', function(e) {
 	var notes = encodeURIComponent($('#clientNotes').val());
 	$.ajax({
 		type: "POST",
@@ -213,7 +201,7 @@ $(document).on('tap', '#saveClientNotesButton', function(e) {
 
 
 
-$(document).on('tap', '#blockOffTimeButton', function(e) {
+$(document).on('click', '#blockOffTimeButton', function(e) {
 	var date = $('#chooseDateToBlockOff').val();
 	var fromHour = $('#fromHour').val();
 	var fromMinute = $('#fromMinute').val();
@@ -228,7 +216,7 @@ $(document).on('tap', '#blockOffTimeButton', function(e) {
 
 	$.ajax({
 		type: "POST",
-		url: "/admin/blockOffTime",
+		url: "/admin/saveBlockedTime",
 		data: { date:date, from:from, to:to}
 	}).done(function(response) {
 		var jsonResponse = JSON.parse(response);
@@ -245,7 +233,7 @@ $(document).on('tap', '#blockOffTimeButton', function(e) {
 
 
 
-$(document).on('tap', '#blockOffDaysButton', function(e) {
+$(document).on('click', '#blockOffDaysButton', function(e) {
 	var from = $('#fromWholeDay').val();
 	var to = $('#toWholeDay').val();
 
@@ -268,7 +256,7 @@ $(document).on('tap', '#blockOffDaysButton', function(e) {
 	});
 });
 
-$(document).on('tap', '.blocked-time', function(e) {
+$(document).on('click', '.blocked-time', function(e) {
 	var checkbox = $(this).find('input:checkbox');
 	var tableRow = $(this);
 	if (e.target.type !== 'checkbox') {
@@ -284,7 +272,7 @@ $(document).on('tap', '.blocked-time', function(e) {
 });
 
 
-$(document).on('tap', '#deleteBlockedTimeslotsButton', function(e) {
+$(document).on('click', '#deleteBlockedTimeslotsButton', function(e) {
 	var button = $('#deleteBlockedTimeslotsButton');
 	$(button).html($('#waitingSpinner').html());
 	$('.blocked-timeslots-table tr:hidden').remove();
@@ -310,7 +298,7 @@ $(document).on('tap', '#deleteBlockedTimeslotsButton', function(e) {
 	});
 });
 
-$(document).on('tap', '#recurringAppointment', function() {
+$(document).on('click', '#recurringAppointment', function() {
 	var opts = $(".recurringAppointmentAdminOptions");
 	if ($(opts).is(":visible")){
 		$(opts).fadeOut();
@@ -345,7 +333,7 @@ function getRescheduleOptions(appointmentId){
 			$('#dateOfRescheduledAppointment-'+appointmentId).on('change', function() {
 				getTimeSlotOptionsForRescheduledAppointment(appointmentId);
 			});
-			$('#rescheduleButton-'+appointmentId).on('tap', function() {
+			$('#rescheduleButton-'+appointmentId).on('click', function() {
 				var sId = $('#servicesForRescheduledAppointment-'+appointmentId).val();
 				var aDate = $('#dateOfRescheduledAppointment-'+appointmentId).val();
 				var sTime = $('#timeSlotsForRescheduledAppointment-'+appointmentId).val();

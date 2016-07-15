@@ -19,6 +19,11 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="${resource(dir:'images', file:'apple-icon-144x144.png')}" />
 
 	<script src="${resource(dir:'js', file:'jquery-1.10.2.min.js')}" type="text/javascript"></script>
+	<script src="${resource(dir:'js', file:'jquery-ui-1.10.3.custom.min.js')}" type="text/javascript"></script>
+	<script src="${resource(dir:'js', file:'bootstrap-3.2.0.min.js')}" type="text/javascript"></script>
+	<script src="${resource(dir:'js', file:'jquery.confirmon.js')}"></script>
+	<script src="${resource(dir:'js', file:'jquery-validate-min.js')}"></script>
+	<script src="${resource(dir:'js', file:'a.min.js')}?v${grailsApplication.metadata.'app.version'}" type="text/javascript"></script>
 
 <g:layoutHead />
 </head><body>
@@ -69,17 +74,5 @@
 	<div id="mask"><img class="loader" src="${resource(dir:'images',file:'loading.gif')}" /></div>
 	<div id="waitingSpinner" style="display:none;"><img width='20px' height'20px' src="${resource(dir:'images', file:'spinner.gif')}" class="spinner"></div> 
 
-	<script src="${resource(dir:'js', file:'jquery-ui-1.10.3.custom.min.js')}" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(document).bind('mobileinit',function(){
-			$.mobile.loadingMessage = false; 	// Hide the jquery mobile loading message.
-												// Must be done before loading jquery mobile.
-		});
-	</script>
-	<script src="${resource(dir:'js', file:'jquery.mobile-1.3.2.min.js')}" type="text/javascript"></script>
-	<script src="${resource(dir:'js', file:'bootstrap-3.2.0.min.js')}" type="text/javascript"></script>
-	<script src="${resource(dir:'js', file:'jquery.confirmon.js')}"></script>
-	<script src="${resource(dir:'js', file:'jquery-validate-min.js')}"></script>
-	<script src="${resource(dir:'js', file:'a.min.js')}?v${grailsApplication.metadata.'app.version'}" type="text/javascript"></script>
 
 </body></html>
