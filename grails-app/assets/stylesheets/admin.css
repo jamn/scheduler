@@ -512,6 +512,10 @@ select{
 	border-bottom: 2px solid #585858;
 }
 
+.ui-datepicker .ui-priority-secondary {
+	opacity: 1;
+}
+
 .calendar-appointment {
 	transition: all 0.3s ease;
 	z-index: 1;
