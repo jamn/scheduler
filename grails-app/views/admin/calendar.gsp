@@ -82,12 +82,12 @@
 		function plusOneWeek(){
 			$("#mask").fadeIn()
 			var nextWeek = selectedDate.setDate(selectedDate.getDate()+7)
-			document.location = "?startDate="+encodeURIComponent(nextWeek.format("mm/dd/yyyy"))
+			document.location = "?startDate="+encodeURIComponent(dateFormat(nextWeek, "mm/dd/yyy"))
 		}
 		function minusOneWeek(){
 			$("#mask").fadeIn()
 			var lastWeek = selectedDate.setDate(selectedDate.getDate()-7)
-			document.location = "?startDate="+encodeURIComponent(lastWeek.format("mm/dd/yyyy"))
+			document.location = "?startDate="+encodeURIComponent(dateFormat(lastWeek, "mm/dd/yyy"))
 		}
 	</script>
 
