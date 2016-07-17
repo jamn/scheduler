@@ -1,4 +1,4 @@
-/* Move down content because we have a fixed navbar that is 50px tall */
+ /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
   min-width: 360px;
@@ -493,7 +493,7 @@ select{
     margin-left: -48px;
 }
 .date-range-picker input {
-	width: 140px;
+	width: 100px;
     margin: auto;
     margin-bottom: 20px;
 }

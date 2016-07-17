@@ -20,7 +20,7 @@
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
 	h1 {
-		font-size: 1.8em;
+		/*font-size: 1.8em;*/
 		margin: 20px 0;
 	}
 	.logged-in-user {

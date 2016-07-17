@@ -13,28 +13,7 @@ class AdminService {
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MM/dd/yyyyhh:mma")
 	SimpleDateFormat dateFormatter3 = new SimpleDateFormat("MM/dd/yyyy")
 
-	private getCalendarStartRange(params = [:]){
-    	def tempStartDate
-    	def today = Calendar.getInstance()
-    	if (params.startDate) {
-    		try {
-    			tempStartDate = dateFormatter3.parse(params.startDate)	
-    		}
-    		catch(Exception e) {
-    			println "ERROR PARSING CALENDAR START DATE: " + e
-    			tempStartDate = new Date()
-    		}
-    	}
-    	else {
-    		tempStartDate = new Date()
-    	}
-
-    	def startDate = Calendar.getInstance()
-    	startDate.setTime(tempStartDate)
-    	def startRange = dateService.getDaysBetween(startDate, today)
-    	println "startRange: " + startRange
-    	return startRange
-    }
+	
 
     private Map getHomepageText(){
     	def homepageText = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")?.value ?: "ERROR: HOMEPAGE_MESSAGE record not found in the database. Tell Ben. He's good at fixing that stuff."
@@ -59,11 +38,26 @@ class AdminService {
     	return [services:services]
     }
 
-    private Map getUpcomingAppointments(params = [:]){
-    	def startDate = new Date()
-    	if (params.startDate){
-    		startDate = dateFormatter3.parse(params.startDate)
-    	}
+	private Date getStartDate(params = [:]){
+		def startDate
+		if (params.startDate){
+			startDate = dateFormatter3.parse(params.startDate)
+		}else{
+			startDate = new Date()
+		}
+		return startDate
+	}
+
+	private getCalendarStartRange(Date tempStartDate){
+		def today = Calendar.getInstance()
+		def startDate = Calendar.getInstance()
+		startDate.setTime(tempStartDate)
+		def startRange = dateService.getDaysBetween(startDate, today)
+		println "startRange: " + startRange
+		return startRange
+	}
+
+    private Map getUpcomingAppointments(Date startDate){
 		Calendar today = new GregorianCalendar()
 		today.setTime(startDate)
 		today.set(Calendar.HOUR_OF_DAY, 0)
@@ -71,7 +65,6 @@ class AdminService {
 		today.set(Calendar.SECOND, 0)
 		today.set(Calendar.MILLISECOND, 0)
 		def appointments = Appointment.executeQuery("from Appointment a where a.appointmentDate >= :today and a.booked = true and a.deleted = false", [today:today.getTime()])?.sort{it.appointmentDate}
-		println "appointments: " + appointments.size()
 		return [appointments:appointments]
     }
 

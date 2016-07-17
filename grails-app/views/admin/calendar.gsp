@@ -23,7 +23,7 @@
 			<li>
 				<ul>
 					<li><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" onclick="minusOneWeek();"></span></li>
-					<li><h1>July</h1></li>
+					<li><h1>${month}</h1></li>
 					<li><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" onclick="plusOneWeek();"></span></li>
 				</ul>
 			</li>
@@ -68,7 +68,7 @@
 
 
 	<script type="text/javascript">
-		var selectedDate = new Date('07/11/2016')
+		var selectedDate = new Date('${startDate}')
 		$(document).ready(function(){
 			$('#calendarStartDate').datepicker( {
 				onSelect: function(date) {
@@ -79,6 +79,16 @@
 			});
 			$('#calendarStartDate').datepicker("setDate", selectedDate)
 		})
+		function plusOneWeek(){
+			$("#mask").fadeIn()
+			var nextWeek = selectedDate.setDate(selectedDate.getDate()+7)
+			document.location = "?startDate="+encodeURIComponent(nextWeek.format("mm/dd/yyyy"))
+		}
+		function minusOneWeek(){
+			$("#mask").fadeIn()
+			var lastWeek = selectedDate.setDate(selectedDate.getDate()-7)
+			document.location = "?startDate="+encodeURIComponent(lastWeek.format("mm/dd/yyyy"))
+		}
 	</script>
 
 </body></html>	

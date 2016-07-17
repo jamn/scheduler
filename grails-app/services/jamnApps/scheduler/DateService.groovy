@@ -40,13 +40,13 @@ class DateService {
             dayTwo = (Calendar) day2.clone();
 
     if (dayOne.get(Calendar.YEAR) == dayTwo.get(Calendar.YEAR)) {
-        return Math.abs(dayOne.get(Calendar.DAY_OF_YEAR) - dayTwo.get(Calendar.DAY_OF_YEAR));
+        return dayOne.get(Calendar.DAY_OF_YEAR) - dayTwo.get(Calendar.DAY_OF_YEAR)
     } else {
         if (dayTwo.get(Calendar.YEAR) > dayOne.get(Calendar.YEAR)) {
             //swap them
-            Calendar temp = dayOne;
-            dayOne = dayTwo;
-            dayTwo = temp;
+            //Calendar temp = dayOne;
+            //dayOne = dayTwo;
+            //dayTwo = temp;
         }
         int extraDays = 0;
 
