@@ -6,5 +6,7 @@
 		<option value="${it?.id}">${it?.description}</option>
 	</g:each>
 </select>
-<select id="timeSlotsForRescheduledAppointment-${appointment.id}" class="form-control"></select>
+<select id="timeSlotsForRescheduledAppointment-${appointment.id}" class="form-control">
+	<option selected="selected">Choose a timeslot...</option>
+</select>
 <button type="button" class="btn green-button reschedule-button" id="rescheduleButton-${appointment.id}">Reschedule</button>

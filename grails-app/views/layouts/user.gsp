@@ -81,10 +81,11 @@
 		</div>
 
 		<div class="row footer">
-			<hr>
-			<p>Made in Kansas City</p>
-			<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
-
+			<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+				<hr>
+				<p>Made in Kansas City</p>
+				<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+			</div>
 		</div>
 
 

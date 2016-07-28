@@ -5,7 +5,6 @@ class UserInterceptor {
 
     boolean before() {
         def caller = request.getHeader('referer') ?: "/user"
-        println "UserInterceptor caller: " + caller
         session.caller = caller
         if (!session.user){
             redirect(controller:'book')

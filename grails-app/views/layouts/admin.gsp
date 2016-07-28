@@ -23,6 +23,7 @@
 	<script src="${resource(dir:'js', file:'bootstrap-3.2.0.min.js')}" type="text/javascript"></script>
 	<script src="${resource(dir:'js', file:'jquery.confirmon.js')}"></script>
 	<script src="${resource(dir:'js', file:'jquery-validate-min.js')}"></script>
+	<%-- http://blog.stevenlevithan.com/archives/date-time-format --%>
 	<script src="${resource(dir:'js', file:'date.format.js')}"></script>
 	<script src="${resource(dir:'js', file:'a.min.js')}?v${grailsApplication.metadata.'app.version'}" type="text/javascript"></script>
 

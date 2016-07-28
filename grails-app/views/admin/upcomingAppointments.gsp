@@ -10,7 +10,7 @@
 						<td<%if(it.client.isNewUser()){%> class="new-user"<%}%>>
 							<div class="col-xs-4">
 								<h2>${it.client.fullName}</h2>
-								<h4><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd @ hh:mm a [E]')}</h4>
+								<h4><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')}</h4>
 							</div>
 							<div class="col-xs-8 edit-appointment edit-appointment-${it.id}">
 								<div class="col-xs-4 center">

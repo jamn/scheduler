@@ -23,7 +23,7 @@
 			<li>
 				<ul>
 					<li><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" onclick="minusOneWeek();"></span></li>
-					<li><h1>${month}</h1></li>
+					<li><h1>${startDate.format('MMMM')}</h1></li>
 					<li><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" onclick="plusOneWeek();"></span></li>
 				</ul>
 			</li>

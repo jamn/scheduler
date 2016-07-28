@@ -27,16 +27,15 @@ class AdminController {
     def calendar(){
     	def startDate = adminService.getStartDate(params)
     	def startRange = adminService.getCalendarStartRange(startDate)
-    	Calendar c = Calendar.getInstance()
-    	c.setTime(startDate)
-    	def month = c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)
     	return adminService.getUpcomingAppointments(startDate) + 
     			adminService.getServiceProviderInfo() + 
-    			[startDate:startDate, startRange:startRange, month:month]
+    			[startDate:startDate, startRange:startRange]
     }
 
     def upcomingAppointments(){
-    	return adminService.getUpcomingAppointments() + adminService.getServiceProviderInfo()
+    	def startDate = adminService.getStartDate(params)
+    	println "startDate: " + startDate
+    	return adminService.getUpcomingAppointments(startDate) + adminService.getServiceProviderInfo()
     }
 
     def homepageMessage(){

@@ -4,6 +4,7 @@ body{
 }
 .page h1{
 	font-weight: 200;
+	margin-bottom: 0;
 }
 .handwriting {
 	font-family: 'Dancing Script', cursive;
@@ -47,12 +48,6 @@ body{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-.footer hr {
-	border-color: #aaa;
-	max-width: 637px;
-	margin: auto;
-	margin-top: 60px;
-}
 .footer .glyphicon,
 .footer p{
 	text-align: center;
@@ -66,12 +61,22 @@ body{
 	color: #01B9FF;
 }
 .history-table tr td:first-child {
-	width: 20px;
+	width: 100px;
 	border-right: 1px dashed #d6d6d6;
+	text-align: center;
 }
 .history-table tr td {
 	border-bottom: 1px solid #ddd;
+	vertical-align: middle !important;
 }
-.history-table a .glyphicon {
-	color: #ab0000;
+.history-table .btn-default[disabled] {
+	background-color: #ccc;
+	color: #757575;
+}
+p.no-appointments {
+	text-align: center;
+	margin-top: 90px;
+}
+.table-responsive {
+	border: none;
 }
