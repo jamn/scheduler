@@ -24,7 +24,9 @@ class BookInterceptor {
             'chooseTime': (serviceProvider && service),
             'holdTimeslot': (serviceProvider && service),
             'bookAppointment': (serviceProvider && service && serviceDate),
-            'confirmation': (serviceProvider && service && serviceDate)
+            'confirmation': (serviceProvider && service && serviceDate),
+            'cancelAppointment': true,
+            'confirmedCancelAppointment': true
         ]
     
         println "\n---------------------------------"

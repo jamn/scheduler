@@ -301,6 +301,15 @@ class BookController {
 		render(template: "cancelAppointmentConfirmation", model: [message: message, appointmentDeleted:appointmentDeleted])
 	}
 
+	def confirmedCancelAppointment(){
+		println "\n---- CANCEL APPOINTMENT CONFIRMED ----"
+		println new Date()
+		println "params: " + params
+		flash.success = "Appointment canceled."
+		flash.error = "There was an error cancelling this appointment."
+		redirect(controller: 'user', action:'history')
+	}
+
 
 
 

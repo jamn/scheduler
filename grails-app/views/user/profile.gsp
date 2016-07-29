@@ -4,7 +4,7 @@
 	<div class="col-xs-12">
 		<h1><span class="handwriting">Welcome,</span> ${session?.user?.fullName}</h1>
 	</div>
-	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 		<hr>
 		<div class="padded-box">
 			<form method="post" action="updateProfile">

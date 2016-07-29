@@ -59,7 +59,7 @@
 			<div class="page">
 
 				<g:if test="${flash.error}">
-					<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+					<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 						<div class="alert alert-danger alert-dismissible" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							<strong>Error!</strong> ${flash.error}
@@ -67,7 +67,7 @@
 					</div>
 				</g:if>
 				<g:if test="${flash.success}">
-					<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+					<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 						<div class="alert alert-success alert-dismissible" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							<strong>Success!</strong> ${flash.success}
@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="row footer">
-			<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 				<hr>
 				<p>Made in Kansas City</p>
 				<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>

@@ -1,7 +1,7 @@
 <html>
 <head></head><body>
 
-	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 		<form class="login-box" action="login">
 
 			<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${flash?.email}" />

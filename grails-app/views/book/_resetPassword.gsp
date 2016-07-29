@@ -69,7 +69,7 @@
 			<div class="page" page="services"></div>
 			<div class="page" page="timeSlots"></div>
 			<div class="page" page="loginForm">
-				<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+				<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 					<form class="reset-password-box">
 						<input placeholder="New Password" type="password" name="newPassword" 
 						id="newPassword" class="form-control">

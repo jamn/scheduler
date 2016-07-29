@@ -3,7 +3,7 @@
 
 	<div class="confirmation">
 		<g:if test="${passwordReset && success}">
-			<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 				<p>
 					Your password has been reset.
 				</p>
@@ -43,7 +43,7 @@
 				</div>
 			</g:if>
 
-			<div class="col-xs-12 col-sm-offset-3 col-sm-6 book-appointment-button">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 book-appointment-button">
 				<a href="${createLink(controller:'book', action:'chooseService')}"><div class="btn btn-default green-button">Book Another Appointment?</div></a>
 			</div>
 		</g:else>

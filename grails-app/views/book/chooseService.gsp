@@ -2,7 +2,7 @@
 <head></head><body>
 
 	<h1>Select A Service</h1>
-	<div class="col-xs-12 col-sm-offset-3 col-sm-6">
+	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 		<g:if test="${services.size() > 0}">
 			<g:each in="${services}" var="service">
 				<a href="${createLink(action:'saveServiceSelection', params:[id:service.id])}">
