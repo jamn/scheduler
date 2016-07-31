@@ -1,5 +1,5 @@
 <%if (appointments.size() > 0){%>
-	<table>
+	<table class="client-history-table">
 		<thead>
 			<tr>
 				<td style="width:206px;">Date:</td>
