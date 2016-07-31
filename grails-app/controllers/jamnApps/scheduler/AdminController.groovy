@@ -34,6 +34,8 @@ class AdminController {
     }
 
     def upcomingAppointments(){
+    	flash.error = 'Test'
+    	flash.success = 'Test'
     	def startDate = adminService.getStartDate(params)
     	return adminService.getUpcomingAppointments(startDate, session.user) + adminService.getServiceProviderInfo(session.user)
     }
@@ -364,6 +366,10 @@ class AdminController {
 				if (!appointment.hasErrors()){
 					emailService.sendCancellationNotices(appointment)
 					success = true
+					flash.success = "Appointment deleted."
+				}
+				else {
+					flash.error = "There was an error while attempting to delete the appointment. If the error persists please contact support."
 				}
 			}
 		}

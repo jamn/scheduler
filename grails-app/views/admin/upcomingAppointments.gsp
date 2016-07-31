@@ -144,7 +144,6 @@
 				}).done(function(response) {
 					var success = response.search('"success":false');
 					if (success === -1){
-						alert('*Appointment Deleted*');
 						location.reload();
 					}
 					else{
