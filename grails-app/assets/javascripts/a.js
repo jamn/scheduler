@@ -37,17 +37,6 @@ function getTimeSlotOptionsForRescheduledAppointment(aId){
 	}
 }
 
-$(document).on("tap", ".main", function() {
-	var navMenuExpanded = ($('.navbar-collapse').attr('class').indexOf("in") >= 0);
-	if(navMenuExpanded){
-		$(".navbar-toggle").click();
-	}
-});
-
-$(document).on('click', '.nav a', function(e) {
-	$(".navbar-toggle").click();
-});
-
 function getSection(section){
 	$('#mask').fadeIn();
 	var calendarStartDate = $('.calendarStartDate').val();

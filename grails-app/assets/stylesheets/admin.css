@@ -33,15 +33,6 @@ body {
 	text-align: center;
 }
 
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-.navbar-fixed-top {
-  border: 0;
-  background-color: #58585A;
-}
-
 .navbar .brand {
 	color: #EEE;
 	text-align: center;
@@ -60,66 +51,33 @@ body {
 }
 
 .navbar-inverse .navbar-nav>li>a {
-color: #999;
+	color: #999;
 }
-
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
-color: #FFF;
-background-color: #6F6F6F;
+.navbar-inverse .navbar-nav>.active>a, 
+.navbar-inverse .navbar-nav>.active>a:hover, 
+.navbar-inverse .navbar-nav>.active>a:focus {
+	color: #FFF;
+	background-color: #6F6F6F;
 }
-
+.navbar-collapse {
+	max-height: inherit !important;
+}
 .logged-in-user {
 	position: absolute;
 	right: 12px;
 	top: 12px;
 	color: #eee;
 }
-
 .logged-in-user a,
 .logged-in-user a:hover,
 .logged-in-user a:visited{
 	color: #eee;
 	text-decoration: underline;
 }
-
 .logged-in-user a:hover{
 	background-color: #747171;
 	text-decoration: none;
 }
-
-/*
- * Sidebar
- */
-
-/* Hide for mobile, show later */
-.sidebar {
-	display: none;
-}
-.navbar-nav {
-	display: initial;
-}
-.logged-in-user {
-	display: none;
-}
-
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-  color: #5C5B48;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #827D00;
-}
-
 
 /*
  * Main content
@@ -128,16 +86,13 @@ background-color: #6F6F6F;
 .main {
   padding: 20px;
 }
-
 .main .page-header {
   margin-top: 0;
 }
-
 .main .green-button,
 .main .white-button {
 	width: 100%
 }
-
 #log{
 	position: absolute;
 	top: 20px;
@@ -147,15 +102,12 @@ background-color: #6F6F6F;
 	color: #013BA3;
 	cursor: pointer;
 }
-
 #divider{
 	position: absolute;
 	top: 20px;
 	right: 88px;
 	font-size: 1.3em;
 }
-
-
 .logo-small{
 	margin: auto;
 	width: 216px;
@@ -170,7 +122,6 @@ background-color: #6F6F6F;
 	width: 240px;
 	height: 240px;
 }
-
 .login-box {
 	border: 1px solid #A2A2A2;
 	margin: auto;
@@ -179,40 +130,33 @@ background-color: #6F6F6F;
 	padding: 40px;
 	margin-bottom: 120px;
 }
-
 .login-box input{
 	font-size: 1.4em;
 	padding: 4px;
 }
-
 #loginButton{
 	margin: 10px 0;
 	width: 100%;
 	font-size: 1.7em;
 }
-
 h1{
 	margin: 24px 0;
 	font-size: 1.4em;
 	font-weight: bold;
 	color: #2E2E2E;
 }
-
 h2{
 	font-size: 1.2em;
 	font-weight: bold;
 }
-
 h3 {
 	background-color: #F4F4F4;
 	padding: 4px 2px;
 	border-bottom: 3px solid #EAEAEA;
 }
-
 b {
 	color: #333;
 }
-
 hr{
 	margin: 6px 0;
 	border: 0;
@@ -220,11 +164,6 @@ hr{
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
-
-ul li{
-	display: inline-block;
-}
-
 table tr td {
 	padding: 2px;
 	vertical-align: top;
@@ -236,14 +175,15 @@ table tr.edit-appointment td *{
 textarea{
 	font-size: 1em;
 }
-
 input,
 select{
 	font-size: 1.4em;
 	padding: 6px;
 	margin: 6px 2px 0px;
 }
-
+.main ul li{
+	display: inline-block;
+}
 .spacer {
 	margin: 0 4px;
 }
@@ -547,8 +487,19 @@ select{
     font-size: 1.5em;
     color: #383838;
 }
+#calendarTable .new-user-indicator{
+	background-color: #5c3fff;
+	height: 6px;
+	width: 6px;
+	position: absolute;
+	top: 4px;
+	left: 4px;
+}
 .calendar-key {
 	font-size: 1.2em;
+}
+.calendar-key ul {
+	padding: 0 8px;
 }
 .calendar-key .color-swatch {
 	width: 14px;

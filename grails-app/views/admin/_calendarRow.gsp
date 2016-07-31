@@ -26,11 +26,14 @@
 		</g:if>
 		<g:elseif test="${isBeginningOfAppointment}">
 			<td class="${calendarClass}" style="background-color:${appointment.service.calendarColor};" rowspan="${columnRowspanCount}">
-				<h6>
-					<g:if test="${!appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
+				<g:if test="${!appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
+					<h6>
 						${appointment.client.fullName}
+					</h6>
+					<g:if test="${appointment.client?.isNewUser()}">
+						<span class="new-user-indicator"></span>
 					</g:if>
-				</h6>
+				</g:if>
 				<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 				</div>

@@ -116,7 +116,7 @@ class BootStrap {
 				duration: dateService.getMillis([minutes:45]),
 				price: 10,
 				displayOrder: new Long(8),
-				calendarColor: '#a53956'
+				calendarColor: '#bb4141'
 			).save()
 			new ServiceType(
 				description: "Blocked Off Time",

@@ -30,46 +30,45 @@
 <g:layoutHead />
 </head><body>
 
-	<!-- HEADER NAVIGATION (MOBILE ONLY) -->
 
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
+
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
 			<div class="navbar-header">
-				<h1 class="brand">The Den Barbershop</h1>
-				<button type="button" class="navbar-toggle collapsed glyphicon glyphicon-th-large" data-toggle="collapse" data-target=".navbar-collapse" />
-				<!-- <g:img class="brand" dir="images" file="logo-large.png" /> -->
-				<div class="logged-in-user">Whaddup Ben | <a id="logout" href="${createLink(controller:'access', action:'logout')}">Logout</a></div>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">The Den Barbershop</a>
 			</div>
-
-			<div class="navbar-collapse collapse" style="height: 1px;">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="${(params.action=='calendar') ? 'active' : ''}"><a href="/admin/calendar">Calendar</a></li>
+					<li class="${(params.action=='upcomingAppointments') ? 'active' : ''}"><a href="/admin/upcomingAppointments">All Appointments</a></li>
+					<li class="${(params.action=='blockOffTime') ? 'active' : ''}"><a href="/admin/blockOffTime">Block Off Time</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="${(params.action=='bookAppointment') ? 'active' : ''}"><a href="/admin/bookAppointment">Book Appointment</a></li>
+							<li class="${(params.action=='clients') ? 'active' : ''}"><a href="/admin/clients">Clients</a></li>
+							<li class="${(params.action=='homepageMessage') ? 'active' : ''}"><a href="/admin/homepageMessage">Homepage Message</a></li>
+							<li><a href="/book">Client Site</a></li>
+							<li role="separator" class="divider"></li>
+							<li class="${(params.action=='log') ? 'active' : ''}"><a href="/admin/log">Log</a></li>
+						</ul>
+					</li>
+				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<g:render template="navigation" />
-					<li><a href="${createLink(controller:'access', action:'logout')}">Logout</a></li>
+					<li><a href="/access/logout">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
 				</ul>
-			</div>
+			</div><!--/.nav-collapse -->
 		</div>
-	</div>
+	</nav>
 
-
-	<div class="container-fluid">
-		<div class="row">
-
-			<!-- SIDEBAR NAVIGATION (>=768px) -->
-
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
-					<g:render template="navigation" />
-					<li><a href="${createLink(controller:'access', action:'logout')}">Logout</a></li>
-				</ul>
-			</div>
-
-			<!-- CONTENT -->
-
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<g:layoutBody />
-			</div>
-
-		</div>
+	<div class="container main">
+		<g:layoutBody />
 	</div>
 
 
