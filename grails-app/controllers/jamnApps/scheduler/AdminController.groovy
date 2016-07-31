@@ -34,8 +34,6 @@ class AdminController {
     }
 
     def upcomingAppointments(){
-    	flash.error = 'Test'
-    	flash.success = 'Test'
     	def startDate = adminService.getStartDate(params)
     	return adminService.getUpcomingAppointments(startDate, session.user) + adminService.getServiceProviderInfo(session.user)
     }

@@ -7,10 +7,10 @@
 			<g:each in="${appointments}">
 				<%if (it.service.description != 'Blocked Off Time'){%>
 					<tr class="appointment-data appointment-data-${it.id}" id="${it.id}">
-						<td style="background-color:${it.service.calendarColor};">
+						<td>
 							<div class="col-xs-4">
-								<h2>${it.client.fullName}<%if(it.client.isNewUser()){%>*<%}%></h2>
-								<h4><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')}</h4>
+								<h2>${it.client.fullName}<%if(it.client.isNewUser()){%> (**NEW**)<%}%></h2>
+								<h4 style="background-color:${it.service.calendarColor};"><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')}</h4>
 							</div>
 							<div class="col-xs-8 edit-appointment edit-appointment-${it.id}">
 								<div class="col-xs-4 center">

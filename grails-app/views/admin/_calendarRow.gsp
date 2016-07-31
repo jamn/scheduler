@@ -29,10 +29,10 @@
 				<g:if test="${!appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
 					<h6>
 						${appointment.client.fullName}
+						<g:if test="${appointment.client?.isNewUser()}">
+							(**NEW**)
+						</g:if>
 					</h6>
-					<g:if test="${appointment.client?.isNewUser()}">
-						<span class="new-user-indicator"></span>
-					</g:if>
 				</g:if>
 				<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

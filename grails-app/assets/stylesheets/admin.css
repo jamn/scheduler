@@ -494,6 +494,9 @@ select{
 	top: 4px;
 	left: 4px;
 }
+#calendarTable h6 {
+	margin: 0;
+}
 .calendar-key {
 	font-size: 1.2em;
 }
@@ -580,6 +583,9 @@ select{
 .appointments tr:not(:first-child) td {
 	border-top: 1px solid rgba(0,0,0,.02);
 }
+.appointment-data {
+	background-color: #f9f9f9;
+}
 .appointment-data .new-user {
 	background-color: #E1F4FA;
 }
@@ -645,6 +651,7 @@ select{
 
 .appointment-data h4 {
 	font-weight: 100;
+	padding: 4px;
 }
 
 .edit-appointment{
