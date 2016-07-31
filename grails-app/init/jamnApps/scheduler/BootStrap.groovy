@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat
 
 class BootStrap {
 
-	def superUser
 	def defaultServiceProvider
 	def defaultClient
 
@@ -14,23 +13,15 @@ class BootStrap {
 
 		if (User.count() == 0){
 			println "creating default users..."
-			superUser = new User()
-			superUser.username = "super-user"
-			superUser.password = "su"
-			superUser.isAdmin = true
-			superUser.firstName = "Super"
-			superUser.lastName = "User"
-			superUser.code = "su987123"
-			superUser.email = "su"
-			superUser.save(flush:true)
 
 			defaultServiceProvider = new User()
 			defaultServiceProvider.username = "default-service-provider"
-			defaultServiceProvider.password = "stylist"
+			defaultServiceProvider.password = "ds"
 			defaultServiceProvider.firstName = "Default"
 			defaultServiceProvider.lastName = "Service Provider"
-			defaultServiceProvider.email = "stylist"
+			defaultServiceProvider.email = "ds"
 			defaultServiceProvider.isServiceProvider = true
+			defaultServiceProvider.isAdmin = true
 			defaultServiceProvider.code = "dsp907201"
 			defaultServiceProvider.save(flush:true)
 

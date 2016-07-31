@@ -21,7 +21,7 @@
 <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'jquery-ui-1.10.3.custom.min.css')}" />
 <!-- <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'jquery.confirmon.css')}" /> -->
 
-<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'stylz-new.css')}?v${appVersion}" />
+<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'style.css')}?v${appVersion}" />
 <link media="handheld, only screen" href="${resource(dir:'css', file:'media.css')}?v${appVersion}" type="text/css" rel="stylesheet" />
 
 <link rel="apple-touch-icon" sizes="57x57" href="${resource(dir:'images', file:'apple-icon-57x57.png')}" />

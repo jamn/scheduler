@@ -33,12 +33,9 @@ body {
 	text-align: center;
 }
 
-.navbar .brand {
-	color: #EEE;
-	text-align: center;
-	width: 100%;
-	position: absolute;
-	top: -6px;
+.navbar-default .navbar-brand {
+	font-size: 1.6em;
+	color: #616161;
 }
 
 .navbar-inverse .navbar-toggle {
@@ -141,7 +138,6 @@ body {
 }
 h1{
 	margin: 24px 0;
-	font-size: 1.4em;
 	font-weight: bold;
 	color: #2E2E2E;
 }
@@ -362,7 +358,10 @@ select{
 	color: #000;
 	cursor: pointer;
 }
-
+#clientDetails .cancelled-appointment {
+	text-decoration: line-through;
+	color: #d63434;
+}
 .last-name-filter {
 	font-size: 1.7em;
 	color: #717171;

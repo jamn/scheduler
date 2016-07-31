@@ -53,25 +53,22 @@ class AdminService {
 		def startDate = Calendar.getInstance()
 		startDate.setTime(tempStartDate)
 		def startRange = dateService.getDaysBetween(startDate, today)
-		println "startRange: " + startRange
 		return startRange
 	}
 
-    private Map getUpcomingAppointments(Date startDate){
+    private Map getUpcomingAppointments(Date startDate, User serviceProvider){
 		Calendar today = new GregorianCalendar()
 		today.setTime(startDate)
 		today.set(Calendar.HOUR_OF_DAY, 0)
 		today.set(Calendar.MINUTE, 0)
 		today.set(Calendar.SECOND, 0)
 		today.set(Calendar.MILLISECOND, 0)
-		def appointments = Appointment.executeQuery("from Appointment a where a.appointmentDate >= :today and a.booked = true and a.deleted = false", [today:today.getTime()])?.sort{it.appointmentDate}
+		def appointments = Appointment.executeQuery("from Appointment a where a.appointmentDate >= :today and a.booked = true and a.deleted = false and a.serviceProvider = :serviceProvider", [today:today.getTime(), serviceProvider:serviceProvider])?.sort{it.appointmentDate}
 		return [appointments:appointments]
     }
 
-    private Map getServiceProviderInfo(){
-    	def serviceProvider = User.findByCode("dsp907201")
+    private Map getServiceProviderInfo(User serviceProvider){
     	def dayOfTheWeek = DayOfTheWeek.findByServiceProvider(serviceProvider)
-
     	def serviceProviderStartTime = dateService.get24HourTimeValues(dayOfTheWeek.startTime)
 		def serviceProviderEndTime = dateService.get24HourTimeValues(dayOfTheWeek.endTime)
 
@@ -114,7 +111,7 @@ class AdminService {
 	}
 
 	private List getAppointmentsForClient(User client){
-		return Appointment.findAllWhere(client:client, booked:true, deleted:false)?.sort{it.appointmentDate}?.reverse()
+		return Appointment.findAllWhere(client:client, booked:true)?.sort{it.appointmentDate}?.reverse()
 	}
 
 }

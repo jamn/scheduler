@@ -2,14 +2,14 @@
 	<table>
 		<thead>
 			<tr>
-				<td style="width:120px;">Date:</td>
+				<td style="width:206px;">Date:</td>
 				<td>Service:</td>
 			</tr>
 		</thead>
 		<tbody>
 			<g:each in="${appointments}" var="appointment">
-				<tr>
-					<td>${appointment.appointmentDate.format('MM/dd/yy')}</td>
+				<tr class="${(appointment.deleted) ? 'cancelled-appointment' : ''}">
+					<td>${appointment.appointmentDate.format('MM/dd/yy - hh:mma')}</td>
 					<td>${appointment.service.description}</td>
 				</tr>
 			</g:each>

@@ -10,8 +10,8 @@
 	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'bootstrap-3.2.0.min.css')}" >
 	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'jquery-ui-1.10.3.custom.min.css')}" />
 	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'jquery.confirmon.css')}" />
-	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'admin.css')}?v${grailsApplication.metadata.'app.version'}" />
-	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'admin-media.css')}?v${grailsApplication.metadata.'app.version'}" />
+	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'admin.css')}?v${appVersion}" />
+	<link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'admin-media.css')}?v${appVersion}" />
 
 	<link rel="apple-touch-icon" sizes="57x57" href="${resource(dir:'images', file:'apple-icon-57x57.png')}" />
 	<link rel="apple-touch-icon" sizes="72x72" href="${resource(dir:'images', file:'apple-icon-72x72.png')}" />
@@ -25,7 +25,7 @@
 	<script src="${resource(dir:'js', file:'jquery-validate-min.js')}"></script>
 	<%-- http://blog.stevenlevithan.com/archives/date-time-format --%>
 	<script src="${resource(dir:'js', file:'date.format.js')}"></script>
-	<script src="${resource(dir:'js', file:'a.min.js')}?v${grailsApplication.metadata.'app.version'}" type="text/javascript"></script>
+	<script src="${resource(dir:'js', file:'a.min.js')}?v${appVersion}" type="text/javascript"></script>
 
 <g:layoutHead />
 </head><body>
@@ -56,7 +56,7 @@
 							<li class="${(params.action=='homepageMessage') ? 'active' : ''}"><a href="/admin/homepageMessage">Homepage Message</a></li>
 							<li><a href="/book">Client Site</a></li>
 							<li role="separator" class="divider"></li>
-							<li class="${(params.action=='log') ? 'active' : ''}"><a href="/admin/log">Log</a></li>
+							<li class="${(params.action=='log') ? 'active' : ''}"><a href="/admin/log">Debug Log</a></li>
 						</ul>
 					</li>
 				</ul>

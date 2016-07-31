@@ -23,6 +23,9 @@
 		/*font-size: 1.8em;*/
 		margin: 20px 0;
 	}
+	.navbar-default .navbar-brand {
+		font-size: 1.3em;
+	}
 	.main {
 		padding: 20px 40px;
 	}
