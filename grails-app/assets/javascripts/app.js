@@ -17,7 +17,7 @@ $(document).ready(function(){
 		var button = $(event.relatedTarget)
 		var modal = $(this)
 		modal.find('.cancel-this-appointment').click(function(){
-			document.location = '/book/confirmedCancelAppointment?c='+button.data('appointmentCode')
+			document.location = '/book/confirmedCancelAppointment?c='+button.attr('data-appointmentCode')
 		})
 	})
 });

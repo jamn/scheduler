@@ -516,7 +516,8 @@ select{
 	opacity: 1;
 }
 
-.calendar-appointment {
+#calendarTable .editable-cell {
+	cursor: pointer;
 	transition: all 0.3s ease;
 	z-index: 1;
 	border: 1px solid rgba(0, 0, 0, 0.15);
@@ -536,31 +537,30 @@ select{
 	     -ms-flex-align: center;
 	        align-items: center;
 }
-.calendar-appointment:hover {
+#calendarTable .editable-cell:hover {
 	background-color: rgba(255, 255, 255, 0.74);
 	-webkit-transform: scale(1.3);
         -ms-transform: scale(1.3);
             transform: scale(1.3);
 }
-.calendar-appointment .glyphicon {
+#calendarTable .editable-cell .glyphicon {
     font-size: 1.5em;
     color: #383838;
 }
-.appointmentDetailsCallOut{
-	background-color: #EEE;
-	position: absolute;
-	width: 95px;
-	border-radius: 4px;
-	margin-top: 13px;
-	padding: 5px;
-	z-index: 100;
-	margin-left: -8px;
+.calendar-key {
+	font-size: 1.2em;
 }
-.booked .appointmentDetailsCallOut,
+.calendar-key .color-swatch {
+	width: 14px;
+	height: 14px;
+	float: left;
+	margin: 4px;
+}
+.available .glyphicon,
 .booked .glyphicon{
 	opacity: 0;
 }
-.booked:hover .appointmentDetailsCallOut,
+.available:hover .glyphicon,
 .booked:hover .glyphicon{
 	opacity: 1;
 }
@@ -573,7 +573,11 @@ select{
 	border-spacing: 1px;
 }
 #calendarTable tr {
-	height: 20px;
+	height: 30px;
+}
+#calendarTable tr td:first-child,
+#calendarTable tr td:last-child {
+	width: 80px;
 }
 #calendarTable tr td{
 	position: relative;
@@ -601,7 +605,7 @@ select{
 .available,
 .booked,
 .blocked-off{
-	width: 74px;
+	width: 100px;
 }
 
 .unavailable{
@@ -619,14 +623,9 @@ select{
 .booked {
 	border-right: 1px solid #ccc;
 }
-
-.booked{
-	background-color: #971111;
-	cursor: pointer;
-}
-
-.booked.new-user {
-	background-color: #cec771;
+.booked {
+	color: rgba(0,0,0,.75);
+	vertical-align: middle;
 }
 .appointments tr:not(:first-child) td {
 	border-top: 1px solid rgba(0,0,0,.02);
@@ -634,15 +633,9 @@ select{
 .appointment-data .new-user {
 	background-color: #E1F4FA;
 }
-
-.blocked-off{
-	background-color: #505050;
-}
-
 .blocked-timeslots-table {
 	width: 100%;
 }
-
 .blocked-timeslots-table thead {
 	font-size: 1.3em;
 	background-color: #EDEDED;

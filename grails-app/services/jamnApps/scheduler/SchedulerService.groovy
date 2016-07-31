@@ -249,13 +249,8 @@ class SchedulerService {
 		def cssClass = "available"
 		if(appointment){
 			cssClass = "booked"
-			if (appointment.client.isNewUser()){
-				cssClass += " new-user"
-			}
 		}else if(day == 1 || day == 7) {
 			cssClass = "unavailable"
-		}else if(appointment?.service?.description == "Blocked Off Time"){
-			cssClass = "blocked-off"
 		}
 		return cssClass
 	}

@@ -8,7 +8,7 @@ class UserController {
 	def userService
 
 	def history(){
-		def appointments = Appointment.findAllByClient(session.user)
+		def appointments = Appointment.findAllWhere(client:session.user, deleted:false)
 		appointments = appointments.sort{it.appointmentDate}
 		return [appointments:appointments]
 	}

@@ -237,19 +237,15 @@ class BookController {
 		println new Date()
 		println "params: " + params
 		if (params.a && params.cc){ // params.a = appointmentId | params.cc = clientCode
-			def appointment = Appointment.findWhere(id:params.a, deleted:false)
-			if (appointment){
+			def appointment = Appointment.findWhere(id:new Long(params.a), deleted:false)
+			if (appointment && appointment?.client?.code?.toUpperCase() == params.cc.toString().toUpperCase().trim()){
 				session.appointmentId = null
 				session.requestedDate = appointment.appointmentDate
-				session.serviceId = appointment?.service?.id ?: null
-				session.serviceProviderId = appointment?.serviceProvider?.id ?: null
-				if (appointment?.client?.code?.toUpperCase() == params.cc.toString().toUpperCase().trim()){
-					session.existingAppointmentId = appointment.id
-					println "session: " + session
-					def timeSlotsMap = getTimeSlots()
-					def message = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")?.value ?: "No messages found."
-					render (template: "modifyAppointment", model: [timeSlotsMap:timeSlotsMap, message:message, appointment:appointment])
-				}
+				session.service = appointment.service
+				session.serviceProvider = appointment.serviceProvider
+				session.existingAppointmentId = appointment.id
+				redirect(action:'chooseTime')
+				return
 			}
 			else{
 				println "ERROR: appointment doesn't exist"
@@ -258,6 +254,8 @@ class BookController {
 		else{
 			println "ERROR: required params not passed"
 		}
+		flash.error = "There was an error rescheduling your appointment. If the problem persists please email the shop."
+		redirect(controller:'user', action:'history')
 	}
 
 	def cancelAppointment(){
@@ -305,8 +303,21 @@ class BookController {
 		println "\n---- CANCEL APPOINTMENT CONFIRMED ----"
 		println new Date()
 		println "params: " + params
-		flash.success = "Appointment canceled."
-		flash.error = "There was an error cancelling this appointment."
+		if (params.c){
+			def appointment = Appointment.findByCode(params.c)
+			if (appointment){
+				appointment.deleted = true
+				appointment.save(flush:true)
+				if (appointment.hasErrors()){
+					println "ERROR: " + appointment.error
+					flash.error = "There was an error cancelling this appointment."
+				}
+				else{
+					flash.success = "Appointment canceled."
+					//emailService.sendCancellationNotices(appointment)
+				}
+			}
+		}
 		redirect(controller: 'user', action:'history')
 	}
 

@@ -52,6 +52,21 @@
 		<%}%>
 	</table>
 
+	<hr>
+
+	<div class="calendar-key">
+		<ul>
+			<g:each in="${allServices}" var="service">
+				<li>
+					<div class="color-swatch" style="background-color:${service.calendarColor};"></div> ${service.description}
+				</li>
+			</g:each>
+			<li>
+				<div class="color-swatch" style="background-color:#ccc;"></div> Unavailable
+			</li>
+		</ul>
+	</div>
+
 	<div class="modal fade" id="appointmentDetailsModal" tabindex="-1" role="dialog" aria-labelledby="appointmentDetailsModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -61,6 +76,20 @@
 				</div>
 				<div class="modal-body">
 					<span id="edit-appointment-options"></span> <img src="${resource(dir:'images', file:'spinner-gray.gif')}" class="spinner" style="display:none;">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="scheduleAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="scheduleAppointmentModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="rescheduleAppointmentModalLabel">Book Appointment</h4>
+				</div>
+				<div class="modal-body">
+					<img src="${resource(dir:'images', file:'spinner-gray.gif')}" class="spinner" style="display:none;">
 				</div>
 			</div>
 		</div>

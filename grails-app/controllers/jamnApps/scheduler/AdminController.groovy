@@ -27,9 +27,12 @@ class AdminController {
     def calendar(){
     	def startDate = adminService.getStartDate(params)
     	def startRange = adminService.getCalendarStartRange(startDate)
+    	def allServices = ServiceType.findAllByServiceProvider(session.user)
+    	println "allServices: " + allServices
+    	println "session.user: " + session.user
     	return adminService.getUpcomingAppointments(startDate) + 
     			adminService.getServiceProviderInfo() + 
-    			[startDate:startDate, startRange:startRange]
+    			[startDate:startDate, startRange:startRange, allServices:allServices]
     }
 
     def upcomingAppointments(){

@@ -334,30 +334,33 @@ function getRescheduleOptions(appointmentId){
 				getTimeSlotOptionsForRescheduledAppointment(appointmentId);
 			});
 			$('#rescheduleButton-'+appointmentId).on('click', function() {
-				var sId = $('#servicesForRescheduledAppointment-'+appointmentId).val();
-				var aDate = $('#dateOfRescheduledAppointment-'+appointmentId).val();
-				var sTime = $('#timeSlotsForRescheduledAppointment-'+appointmentId).val();
-				$('#rescheduleButton-'+appointmentId).html($('.spinner').html());
-				$.ajax({
-					type: "POST",
-					url: "/admin/rescheduleAppointment",
-					data: { aId:appointmentId, sId:sId, aDate:aDate, sTime:sTime }
-				}).done(function(response) {
-					var jsonResponse = JSON.parse(response);
-					if (jsonResponse.success === true){
-						$('#rescheduleButton-'+appointmentId).html('Success');
-						$('#rescheduleButton-'+appointmentId).removeClass('error-button');
-						setTimeout(function() {$('#rescheduleAppointmentModal').modal('toggle');},400);
-						setTimeout(function() {window.location.href = "./admin";},1250);
-					}else{
-						$('#rescheduleButton-'+appointmentId).html('Error');
-						$('#rescheduleButton-'+appointmentId).addClass('error-button');
-					}
-				});
+				rescheduleAppointment(appointmentId);
 			});
 		}
 	});
 }
 
+function rescheduleAppointment(appointmentId){
+	var sId = $('#servicesForRescheduledAppointment-'+appointmentId).val();
+	var aDate = $('#dateOfRescheduledAppointment-'+appointmentId).val();
+	var sTime = $('#timeSlotsForRescheduledAppointment-'+appointmentId).val();
+	$('#rescheduleButton-'+appointmentId).html($('.spinner').html());
+	$.ajax({
+		type: "POST",
+		url: "/admin/rescheduleAppointment",
+		data: { aId:appointmentId, sId:sId, aDate:aDate, sTime:sTime }
+	}).done(function(response) {
+		var jsonResponse = JSON.parse(response);
+		if (jsonResponse.success === true){
+			$('#rescheduleButton-'+appointmentId).html('Success');
+			$('#rescheduleButton-'+appointmentId).removeClass('error-button');
+			setTimeout(function() {$('#rescheduleAppointmentModal').modal('toggle');},400);
+			setTimeout(function() {window.location.href = "./admin";},1250);
+		}else{
+			$('#rescheduleButton-'+appointmentId).html('Error');
+			$('#rescheduleButton-'+appointmentId).addClass('error-button');
+		}
+	});
+}
 
 

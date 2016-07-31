@@ -17,7 +17,7 @@
 								<td>
 									<g:if test="${appointment.appointmentDate >= today}">
 										<button type="button" class="btn btn-danger" title="Cancel this appointment" data-toggle="modal" data-target="#cancelAppointmentModal" data-appointmentCode="${appointment.code}">Cancel</button>
-										<button type="button" class="btn btn-success" title="Reschedule this appointment" onclick="${createLink(controller:'book', action:'modifyAppointment')}">Reschedule</button>
+										<button type="button" class="btn btn-success" title="Reschedule this appointment" onclick="document.location='${createLink(controller:'book', action:'modifyAppointment')}?cc=${appointment.client.code}&a=${appointment.id}'">Reschedule</button>
 									</g:if>
 									<g:else>
 										<button type="button" class="btn btn-default" disabled="disabled">Cancel</button>

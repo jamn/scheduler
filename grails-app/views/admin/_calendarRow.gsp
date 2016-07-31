@@ -16,13 +16,23 @@
 			}
 		%>
 		<g:if test="${!appointment}">
-			<td class="${calendarClass}"></td>
+			<td class="${calendarClass}">
+				<g:if test="${calendarClass.toUpperCase() != 'UNAVAILABLE'}">
+					<div class="editable-cell" data-toggle="modal" data-target="#scheduleAppointmentModal">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</div>
+				</g:if>
+			</td>
 		</g:if>
 		<g:elseif test="${isBeginningOfAppointment}">
-			<td class="${calendarClass}" rowspan="${columnRowspanCount}">
-				<div class="calendar-appointment" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
+			<td class="${calendarClass}" style="background-color:${appointment.service.calendarColor};" rowspan="${columnRowspanCount}">
+				<h6>
+					<g:if test="${!appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
+						${appointment.client.fullName}
+					</g:if>
+				</h6>
+				<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
 					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-					<!-- <div id="appointment-${appointment?.id}" class="appointmentDetailsCallOut">${appointment?.service?.description}</div> -->
 				</div>
 			</td>
 		</g:elseif>

@@ -54,7 +54,8 @@ class BootStrap {
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:30]),
 				price: 10,
-				displayOrder: new Long(1)
+				displayOrder: new Long(1),
+				calendarColor: '#6cab99'
 			)
 			if (!newServiceType.save(flush:true)){
 				newServiceType.errors.allErrors.each(){
@@ -66,56 +67,64 @@ class BootStrap {
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:30]),
 				price: 10,
-				displayOrder: new Long(2)
+				displayOrder: new Long(2),
+				calendarColor: '#FFC200'
 			).save()
 			new ServiceType(
 				description: "Buzz Cut",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:15]),
 				price: 10,
-				displayOrder: new Long(3)
+				displayOrder: new Long(3),
+				calendarColor: '#4090FF'
 			).save()
 			new ServiceType(
 				description: "Boy's Cut",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:30]),
 				price: 10,
-				displayOrder: new Long(4)
+				displayOrder: new Long(4),
+				calendarColor: '#8aa9ff'
 			).save()
 			new ServiceType(
 				description: "Father & Son",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:45]),
 				price: 10,
-				displayOrder: new Long(5)
+				displayOrder: new Long(5),
+				calendarColor: '#d88b3c'
 			).save()
 			new ServiceType(
 				description: "Haircut & Color Camo",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:45]),
 				price: 10,
-				displayOrder: new Long(6)
+				displayOrder: new Long(6),
+				calendarColor: '#f3ea35'
 			).save()
 			new ServiceType(
 				description: "Haircut & Hot Towel Shave",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:60]),
 				price: 10,
-				displayOrder: new Long(7)
+				displayOrder: new Long(7),
+				calendarColor: '#7FD8FF'
 			).save()
 			new ServiceType(
 				description: "Haircut & Brow Detail",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:45]),
 				price: 10,
-				displayOrder: new Long(8)
+				displayOrder: new Long(8),
+				calendarColor: '#a53956'
 			).save()
 			new ServiceType(
 				description: "Blocked Off Time",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:15]),
 				price: 10,
-				display: false
+				display: false,
+				calendarColor: '#505050'
 			).save()
 		}
 
@@ -191,7 +200,7 @@ class BootStrap {
 				client: client,
 				service: service,
 				notes: 'Uses #2 guard on sides.',
-				code: '234lsSWkisisWkw992i21z',
+				code: '234lsSasdfasfasfw223ras',
 				booked: true,
 				sendEmailReminder: true,
 				reminderEmailSent: true,
