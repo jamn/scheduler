@@ -1,7 +1,7 @@
 <html>
 <head></head><body>
-
-	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+	<div class="clearfix"></div>
+	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
 		<form method="post" class="login-box" action="attemptLogin">
 
 			<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${flash?.email}" autofocus />

@@ -51,12 +51,11 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li class="${(params.action=='bookAppointment') ? 'active' : ''}"><a href="/admin/bookAppointment">Book Appointment</a></li>
 							<li class="${(params.action=='clients') ? 'active' : ''}"><a href="/admin/clients">Clients</a></li>
+							<li class="${(params.action=='bookAppointment') ? 'active' : ''}"><a href="/admin/bookAppointment">Book Appointment</a></li>
 							<li class="${(params.action=='homepageMessage') ? 'active' : ''}"><a href="/admin/homepageMessage">Homepage Message</a></li>
-							<li><a href="/book">Client Site</a></li>
 							<li role="separator" class="divider"></li>
-							<li class="${(params.action=='log') ? 'active' : ''}"><a href="/admin/log">Debug Log</a></li>
+							<li><a href="/book">Client Site</a></li>
 						</ul>
 					</li>
 				</ul>

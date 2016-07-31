@@ -42,7 +42,7 @@
 
 	<div class="container-fluid">
 		<div class="row header">
-			<div class=".col-xs-12">
+			<div class="col-xs-12">
 				<div id="headerLogoBoard" class="header-logo closed">
 					<img class="header-board" src="${resource(dir:'images',file:'header-board.png')}" />
 					<img class="logo link home-link" id="logoPlain" src="${resource(dir:'images',file:'logo-plain.png')}" />
@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="row footer">
-			<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
 				<hr>
 				<p>Made in Kansas City</p>
 				<span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>

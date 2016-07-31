@@ -173,8 +173,6 @@ textarea{
 }
 input,
 select{
-	font-size: 1.4em;
-	padding: 6px;
 	margin: 6px 2px 0px;
 }
 .main ul li{
@@ -285,8 +283,8 @@ select{
 
 .add-client {
 	position: absolute;
-	top: 10px;
-	left: 204px;
+	top: -3px;
+	left: 236px;
 	font-size: 1.4em;
 	border-radius: 100%;
 	padding: 6px 0 10px 0;
@@ -296,8 +294,8 @@ select{
 
 .add-client-label {
 	position: absolute;
-	top: 31px;
-	left: 242px;
+	top: 20px;
+	left: 272px;
 	font-size: 1em;
 	line-height: .5em;
 	color: #939393;
@@ -388,18 +386,32 @@ select{
 	margin-bottom: -1px;
 }
 
+.book-for-client .recurringAppointmentAdminOptions {
+	margin-left: 10px;
+}
+.book-for-client #recurringAppointmentAdmin ul {
+	margin-bottom: 0;
+	padding-left: 16px;
+}
+
+.block-off-time .form-control {
+	display: initial;
+	width: 80px;
+	text-align: center;
+}
 #chooseDateToBlockOffText{
 	margin-left: 6px;
 }
 
 #recurringAppointmentAdmin{
 	margin: 22px 0 26px -8px;
-	font-size: 1.2em;
+	font-size: 1em;
 }
 
 #recurringAppointment {
 	height: 30px;
 	width: 30px;
+	margin: 0;
 }
 
 #clients,
@@ -429,7 +441,7 @@ select{
     font-weight: 100;
     font-size: .7em;
     margin: 0;
-    margin-left: -48px;
+    margin-left: -12px;
 }
 .date-range-picker input {
 	width: 100px;
@@ -534,6 +546,9 @@ select{
 }
 #calendarTable tr td{
 	position: relative;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 .dateHeader{
 	background-color: #58585A;
