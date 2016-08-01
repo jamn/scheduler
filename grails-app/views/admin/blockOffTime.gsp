@@ -1,6 +1,6 @@
 <html>
 <head></head><body>
-	<div class="col-xs-12 col-sm-offset-1 col-sm-10 block-off-time">
+	<div class="block-off-time">
 		<h1>Block Off Time</h1>
 		<label id="chooseDateToBlockOffText" for="chooseDateToBlockOff">Choose a date:</label>
 		<br />

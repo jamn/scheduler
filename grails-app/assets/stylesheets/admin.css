@@ -411,7 +411,7 @@ select{
 }
 
 #recurringAppointmentAdmin{
-	margin: 22px 0 26px -8px;
+	margin: 14px 0 26px -8px;
 	font-size: 1em;
 }
 
@@ -419,6 +419,8 @@ select{
 	height: 30px;
 	width: 30px;
 	margin: 0;
+	top: 8px;
+	position: relative;
 }
 
 #clients,

@@ -1,6 +1,6 @@
 <html>
 <head></head><body>
-	<div class="col-xs-12 col-sm-offset-1 col-sm-10 book-for-client">
+	<div class="book-for-client">
 		<h1>Book for Client</h1>
 		<form>
 			<select class="form-control" id="clients">
