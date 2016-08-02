@@ -305,7 +305,7 @@ class AdminController {
 		if (params?.aDate && params?.sId){
 			def requestedDate = dateFormatter3.parse(params.aDate)
 			def service = ServiceType.get(new Long(params.sId))
-			def serviceProvider = User.findByCode("dsp907201")
+			def serviceProvider = User.get(session.user.id)
 			schedulerService.getTimeSlotsAvailableMap(requestedDate, serviceProvider, service)?.each(){ k,v ->
 				timeSlots += v
 			}
@@ -317,12 +317,19 @@ class AdminController {
 		println "\n" + new Date()
 		println "params: " + params
 		def appointment
+		def timeSlots = []
 		if (params?.aId){
 			appointment = Appointment.get(new Long(params.aId))
 		}
 		if (appointment){
+			def requestedDate = appointment.appointmentDate
+			def service = appointment.service
+			def serviceProvider = User.get(session.user.id)
+			schedulerService.getTimeSlotsAvailableMap(requestedDate, serviceProvider, service)?.each(){ k,v ->
+				timeSlots += v
+			}
 			def services = ServiceType.list().sort{it.displayOrder}.findAll{it.description != "Blocked Off Time"}
-			render (template: "rescheduleOptions", model: [appointment:appointment, services:services])
+			render (template: "rescheduleOptions", model: [appointment:appointment, services:services, timeSlots:timeSlots])
 		}else{
 			render "No appointment found"
 		}

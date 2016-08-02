@@ -37,22 +37,6 @@ function getTimeSlotOptionsForRescheduledAppointment(aId){
 	}
 }
 
-function getSection(section){
-	$('#mask').fadeIn();
-	var calendarStartDate = $('.calendarStartDate').val();
-	console.log(calendarStartDate)
-	$.ajax({
-		type: "POST",
-		url: "/admin/getSection",
-		data: {section:section, calendarStartDate:'calendarStartDate'}
-	}).done(function(response) {
-		$('.active').removeClass("active");
-		$('a[href="#'+section+'"]').parent().addClass("active");
-		$('.main').html(response);
-		$('#mask').fadeOut();
-	});
-}
-
 $(document).on('click', '#addClient', function(e) {
 	$.ajax({
 		type: "POST",
@@ -313,9 +297,11 @@ function getRescheduleOptions(appointmentId){
 		if (response.indexOf("ERROR") === -1){
 			$("#edit-appointment-options").html(response);
 			$('#dateOfRescheduledAppointment-'+appointmentId).datepicker( {
-				minDate: 0
+				minDate: 0,
+				showButtonPanel: true
 			});
-			$('#dateOfRescheduledAppointment-'+appointmentId).datepicker("setDate", new Date());
+			var date = $('#dateOfRescheduledAppointment-'+appointmentId).attr('date')
+			$('#dateOfRescheduledAppointment-'+appointmentId).datepicker("setDate", new Date(date));
 			$('#servicesForRescheduledAppointment-'+appointmentId).on('change', function() {
 				getTimeSlotOptionsForRescheduledAppointment(appointmentId);
 			});

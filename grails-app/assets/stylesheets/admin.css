@@ -705,9 +705,26 @@ select{
 	padding: 10px;
 	font-size: 1.3em;
 }
-
-
-
+#appointmentDetailsModal h1 {
+	margin: 0;
+	color: #504f4f;
+	font-weight: 200;
+	background-color: #eee;
+	padding: 0 4px;
+}
+#appointmentDetailsModal h2 {
+	margin-top: 4px;
+	margin-bottom: 0;
+	font-weight: 200;
+	background-color: #eee;
+	padding: 4px;
+}
+#appointmentDetailsModal hr {
+	margin: 20px 0;
+}
+#appointmentDetailsModal .cancelAppointmentButton {
+	margin: 0 0 6px 0;
+}
 
 
 

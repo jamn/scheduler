@@ -23,6 +23,9 @@
 		/*font-size: 1.8em;*/
 		margin: 20px 0;
 	}
+	h6, .h6 {
+		font-size: 11px;
+	}
 	.navbar-default .navbar-brand {
 		font-size: 1.3em;
 	}

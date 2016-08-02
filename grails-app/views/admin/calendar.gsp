@@ -72,7 +72,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="rescheduleAppointmentModalLabel">Reschedule Appointment</h4>
+					<h4 class="modal-title" id="rescheduleAppointmentModalLabel">Edit Appointment</h4>
 				</div>
 				<div class="modal-body">
 					<span id="edit-appointment-options"></span> <img src="${resource(dir:'images', file:'spinner-gray.gif')}" class="spinner" style="display:none;">
