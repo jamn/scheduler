@@ -1,6 +1,18 @@
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
-
+@media (min-width: 321px) {
+	.main {
+		padding: 20px 40px;
+	}
+}
+@media (min-width: 376px) {
+	#addClient {
+		right: 43px;
+	}
+	.add-client-label {
+		display: block;
+	}
+}
 @media (min-width: 500px) {
 	.edit-appointment .glyphicon-class {
 		font-size: 0.7em;
@@ -16,7 +28,6 @@
 		height: 50px;
 	}
 }
-
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
 	h1 {
@@ -37,6 +48,11 @@
 	}
 	#clientDetails > h2 {
 		font-size: 4em;
+	}
+}
+@media (min-width: 769px) {
+	.appointment-data .appointment-details {
+		font-size: 1em;
 	}
 }
 

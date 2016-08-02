@@ -330,7 +330,7 @@ function rescheduleAppointment(appointmentId){
 			$('#rescheduleButton-'+appointmentId).html('Success');
 			$('#rescheduleButton-'+appointmentId).removeClass('error-button');
 			setTimeout(function() {$('#rescheduleAppointmentModal').modal('toggle');},400);
-			setTimeout(function() {window.location.href = "./admin";},1250);
+			setTimeout(function() {window.location.reload();},1250);
 		}else{
 			$('#rescheduleButton-'+appointmentId).html('Error');
 			$('#rescheduleButton-'+appointmentId).addClass('error-button');

@@ -1,6 +1,6 @@
 <html>
 <head></head><body>
-	<div class="row">
+	<div class="row" style="position:relative;">
 		<h1 class="page-header">Client Details</h1>
 		<div id="addClient">
 			<div class="add-client green-button">+</div>

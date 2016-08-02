@@ -1,7 +1,6 @@
  /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
-  min-width: 360px;
 }
 
 /*
@@ -82,7 +81,6 @@ body {
 
 .main {
 	padding: 20px;
-	padding: 20px 40px;
 	border: none;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -284,22 +282,25 @@ select{
 .reset-search{
 	display: none;
 }
-
-.add-client {
+#addClient {
 	position: absolute;
 	top: -3px;
-	left: 236px;
+	right: 8px;
+}
+.add-client {
 	font-size: 1.4em;
 	border-radius: 100%;
 	padding: 6px 0 10px 0;
 	line-height: .5em;
 	width: 28px !important;
+	margin-left: 6px;
 }
 
 .add-client-label {
-	position: absolute;
-	top: 20px;
-	left: 272px;
+	display: none;
+	position: relative;
+	top: -25px;
+	left: 40px;
 	font-size: 1em;
 	line-height: .5em;
 	color: #939393;
@@ -613,6 +614,9 @@ select{
 .appointment-data .new-user {
 	background-color: #E1F4FA;
 }
+.appointment-data .appointment-details {
+	font-size: .7em;
+}
 .blocked-timeslots-table {
 	width: 100%;
 }
@@ -705,24 +709,24 @@ select{
 	padding: 10px;
 	font-size: 1.3em;
 }
-#appointmentDetailsModal h1 {
+#edit-appointment-options h1 {
 	margin: 0;
 	color: #504f4f;
 	font-weight: 200;
 	background-color: #eee;
 	padding: 0 4px;
 }
-#appointmentDetailsModal h2 {
+#edit-appointment-options h2 {
 	margin-top: 4px;
 	margin-bottom: 0;
 	font-weight: 200;
 	background-color: #eee;
 	padding: 4px;
 }
-#appointmentDetailsModal hr {
+#edit-appointment-options hr {
 	margin: 20px 0;
 }
-#appointmentDetailsModal .cancelAppointmentButton {
+#edit-appointment-options .cancelAppointmentButton {
 	margin: 0 0 6px 0;
 }
 

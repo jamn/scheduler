@@ -8,7 +8,7 @@
 				<%if (it.service.description != 'Blocked Off Time'){%>
 					<tr class="appointment-data appointment-data-${it.id}" id="${it.id}">
 						<td>
-							<div class="col-xs-4">
+							<div class="col-xs-4 appointment-details">
 								<h2>${it.client.fullName}<%if(it.client.isNewUser()){%> (**NEW**)<%}%></h2>
 								<h4 style="background-color:${it.service.calendarColor};"><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')}</h4>
 							</div>
@@ -69,15 +69,7 @@
 
 	<div class="modal fade" id="rescheduleAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="rescheduleAppointmentModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="rescheduleAppointmentModalLabel">Reschedule Appointment</h4>
-				</div>
-				<div class="modal-body">
-					<span id="edit-appointment-options"></span> <img src="${resource(dir:'images', file:'spinner-gray.gif')}" class="spinner" style="display:none;">
-				</div>
-			</div>
+			<div class="modal-content" id="edit-appointment-options"></div>
 		</div>
 	</div>
 

@@ -67,7 +67,7 @@
 	</nav>
 
 	<div class="container">
-		<div class="main">
+		<div class="main col-xs-12">
 			<div class="row">
 				<g:if test="${flash.error}">
 					<div class="alert alert-danger alert-dismissible" role="alert">
