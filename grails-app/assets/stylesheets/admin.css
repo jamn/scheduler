@@ -55,6 +55,16 @@ body {
 	color: #FFF;
 	background-color: #6F6F6F;
 }
+.navbar-default .navbar-nav>.active>a, 
+.navbar-default .navbar-nav>.active>a:hover, 
+.navbar-default .navbar-nav>.active>a:focus,
+.dropdown-menu>.active>a, 
+.dropdown-menu>.active>a:hover, 
+.dropdown-menu>.active>a:focus {
+	background-color: #eee;
+	color: #333;
+	text-decoration: underline;
+}
 .navbar-collapse {
 	max-height: inherit !important;
 }
@@ -729,8 +739,23 @@ select{
 #edit-appointment-options .cancelAppointmentButton {
 	margin: 0 0 6px 0;
 }
-
-
+.reschedule-button {
+	margin-bottom: 4px;
+}
+#cancelAppointmentModal h1 {
+	margin: 2px 0 23px 0;
+	text-align: center;
+	font-weight: 200;
+	font-size: 2.8em;
+	position: relative;
+	top: 14px;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+#cancelAppointmentModal .btn {
+	font-size: .5em;
+	padding: 14px 36px;
+	margin: 4px;
+}
 
 
 

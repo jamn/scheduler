@@ -26,17 +26,23 @@
 		</g:if>
 		<g:elseif test="${isBeginningOfAppointment}">
 			<td class="${calendarClass}" style="background-color:${appointment.service.calendarColor};" rowspan="${columnRowspanCount}">
-				<g:if test="${!appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
+				<g:if test="${appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
+					<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#cancelAppointmentModal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</div>
+				</g:if>
+				<g:else>
 					<h6>
 						${appointment.client.fullName}
 						<g:if test="${appointment.client?.isNewUser()}">
 							(**NEW**)
 						</g:if>
 					</h6>
-				</g:if>
-				<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
-					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-				</div>
+					<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					</div>
+				</g:else>
+				
 			</td>
 		</g:elseif>
 	</g:each>

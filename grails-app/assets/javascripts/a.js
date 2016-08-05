@@ -160,7 +160,19 @@ $(document).on('click', '#saveTextButton', function(e) {
 		type: "POST",
 		url: "/admin/saveHomepageMessage",
 		data: { m: message }
+	}).done(function(response) {
+		var jsonResponse = JSON.parse(response);
+		if (jsonResponse.success === true){
+			$('#saveTextButton').html("Success");
+			$('#saveTextButton').removeClass('error-button');
+		}
+		else{
+			$('#saveTextButton').html("Error");
+			$('#saveTextButton').addClass('error-button');
+		}
+		window.location.reload()
 	});
+
 });
 
 $(document).on('click', '#saveClientNotesButton', function(e) {
@@ -338,4 +350,10 @@ function rescheduleAppointment(appointmentId){
 	});
 }
 
-
+$('#cancelAppointmentModal').on('show.bs.modal', function (event) {
+	var calendarCell = $(event.relatedTarget)
+	var modal = $(this)
+	modal.find('.cancel-this-appointment').click(function(){
+		//document.location = '/book/confirmedCancelAppointment?c='+calendarCell.attr('id')
+	})
+});

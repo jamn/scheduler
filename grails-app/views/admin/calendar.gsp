@@ -88,6 +88,20 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="cancelAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="cancelAppointmentModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h1>Clear blocked time?</h1>
+					<h1>
+						<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-primary cancel-this-appointment">Yes</button>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<script type="text/javascript">
 		var selectedDate = new Date('${startDate}')

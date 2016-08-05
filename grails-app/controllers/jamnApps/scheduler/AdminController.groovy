@@ -18,6 +18,7 @@ class AdminController {
 	def schedulerService
 	def emailService
 	def userService
+	def utilService
 
 	/*********************************
 				NAVIGATION
@@ -67,17 +68,20 @@ class AdminController {
 	def saveHomepageMessage(){
 		println "\n" + new Date()
 		println "params: " + params
+		def success = false
 		def homepageText = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")
 		homepageText.value = params.m.replace("\r", "<br />").replace("\n", "<br />")
 		homepageText.save(flush:true)
 		if (homepageText.hasErrors()){
-			println "ERROR: new message not saved."
+			flash.error = "New homepage message not saved."
 			println homepageText.errors
 		}
 		else{
-			println "SAVED!"
+			flash.success = "The homepage message has been updated."
+			success = true
+			utilService.communicationBoardMessage = homepageText.value
 		}
-		return true
+		render ('{"success":'+success+'}') as JSON
 	}
 
 	def getClientsSelectMenu(){

@@ -45,7 +45,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="${(params.action=='calendar') ? 'active' : ''}"><a href="/admin/calendar">Calendar</a></li>
+					<li class="${(!params.action || params.action=='calendar') ? 'active' : ''}"><a href="/admin/calendar">Calendar</a></li>
 					<li class="${(params.action=='upcomingAppointments') ? 'active' : ''}"><a href="/admin/upcomingAppointments">All Appointments</a></li>
 					<li class="${(params.action=='blockOffTime') ? 'active' : ''}"><a href="/admin/blockOffTime">Block Off Time</a></li>
 					<li class="dropdown">
