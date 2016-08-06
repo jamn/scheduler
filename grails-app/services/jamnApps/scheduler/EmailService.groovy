@@ -65,9 +65,11 @@ class EmailService {
 	}
 
 	public sendCancellationNotices(Appointment appointment){
-		println "Sending cancellation notices: " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
-		sendCancellationNoticeToClient(appointment)
-		sendCancellationNoticeToServiceProvider(appointment)
+		if (!appointment.isBlockedTime()){
+			println "Sending cancellation notices: " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
+			sendCancellationNoticeToClient(appointment)
+			sendCancellationNoticeToServiceProvider(appointment)
+		}
 	}
 
 	private sendCancellationNoticeToClient(Appointment appointment){

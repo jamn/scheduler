@@ -23,6 +23,10 @@ class Appointment extends CoreObject {
     	sort appointmentDate: "desc"
     }
 
+    def isBlockedTime(){
+    	return service.description.toUpperCase().contains('BLOCKED')
+    }
+
 }
 
 /*

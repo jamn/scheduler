@@ -28,6 +28,22 @@ body {
 	outline: none 0px;
 }
 
+.alert {
+	z-index: 10000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+.error-button:hover,
+.error-button:focus {
+    color: #f1f1f1;
+}
+.confirmon-overlay,
+.confirmon-box {
+	z-index: 10000;
+}
 .center {
 	text-align: center;
 }
@@ -742,7 +758,7 @@ select{
 .reschedule-button {
 	margin-bottom: 4px;
 }
-#cancelAppointmentModal h1 {
+#clearBlockedTimeModal h1 {
 	margin: 2px 0 23px 0;
 	text-align: center;
 	font-weight: 200;
@@ -751,11 +767,31 @@ select{
 	top: 14px;
 	font-family: 'Source Sans Pro', sans-serif;
 }
-#cancelAppointmentModal .btn {
+#clearBlockedTimeModal .btn {
 	font-size: .5em;
 	padding: 14px 36px;
 	margin: 4px;
 }
-
-
+.reschedule-options button {
+	width: 100%;
+	font-size: 1.5em;
+	padding: 10px;
+}
+.reschedule-options .reschedule-button {
+	margin-top: 10px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+	background: #ffffff; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+}
+.reschedule-options .reschedule-button:hover {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e8e8e8+0,b5b5b5+100 */
+	background: #e8e8e8; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e8e8e8 0%, #b5b5b5 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #e8e8e8 0%,#b5b5b5 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #e8e8e8 0%,#b5b5b5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#b5b5b5',GradientType=0 ); /* IE6-9 */
+}
 

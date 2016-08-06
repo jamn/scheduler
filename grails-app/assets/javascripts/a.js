@@ -1,3 +1,22 @@
+$(document).ready(function(){
+	setTimeout(hideAlert, 2000);
+	$('#clearBlockedTimeModal').on('show.bs.modal', function (event) {
+		var calendarCell = $(event.relatedTarget)
+		var modal = $(this)
+		modal.find('.cancel-this-appointment').click(function(){
+			$.ajax({
+				type: "POST",
+				url: "/admin/cancelAppointment",
+				data: { c: calendarCell.attr('c') }
+			}).done(function() {
+				location.reload()
+			});
+		})
+	});
+});
+function hideAlert(){
+	$('.alert').slideUp()
+}
 function getTimeSlotOptions(){
 	var sId = $('#services').val();
 	var aDate = $('#dateOfAppointment').val();
@@ -350,10 +369,4 @@ function rescheduleAppointment(appointmentId){
 	});
 }
 
-$('#cancelAppointmentModal').on('show.bs.modal', function (event) {
-	var calendarCell = $(event.relatedTarget)
-	var modal = $(this)
-	modal.find('.cancel-this-appointment').click(function(){
-		//document.location = '/book/confirmedCancelAppointment?c='+calendarCell.attr('id')
-	})
-});
+

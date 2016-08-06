@@ -2,7 +2,7 @@
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	<h4 class="modal-title" id="rescheduleAppointmentModalLabel">${appointment.client.fullName}</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body reschedule-options">
 	<h2>${appointment.service.description}</h2>
 	<h1>${appointment.appointmentDate.format('EEE, MMM d @ hh:mm a')}</h1>
 	<br>
@@ -15,8 +15,8 @@
 		<g:render template="timeSlotOptions"/>
 	</select>
 
-	<button type="button" class="btn green-button reschedule-button" id="rescheduleButton-${appointment.id}">Reschedule</button>
-	<button type="button" class="btn white-button error-button cancelAppointmentButton" c="${appointment.code}">Cancel Appointment</button>
+	<button type="button" class="btn btn-default reschedule-button" id="rescheduleButton-${appointment.id}">Reschedule</button>
+	<button type="button" class="btn btn-default error-button cancelAppointmentButton" c="${appointment.code}">Cancel Appointment</button>
 </div>
 
 	

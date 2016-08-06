@@ -88,7 +88,7 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="cancelAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="cancelAppointmentModalLabel">
+	<div class="modal fade" id="clearBlockedTimeModal" tabindex="-1" role="dialog" aria-labelledby="clearBlockedTimeModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-body">

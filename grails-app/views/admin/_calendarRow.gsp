@@ -26,8 +26,8 @@
 		</g:if>
 		<g:elseif test="${isBeginningOfAppointment}">
 			<td class="${calendarClass}" style="background-color:${appointment.service.calendarColor};" rowspan="${columnRowspanCount}">
-				<g:if test="${appointment.service?.description?.toUpperCase()?.contains('BLOCKED')}">
-					<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#cancelAppointmentModal">
+				<g:if test="${appointment.isBlockedTime()}">
+					<div class="editable-cell" id="appointment-${appointment?.id}" c="${appointment.code}" data-toggle="modal" data-target="#clearBlockedTimeModal">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</div>
 				</g:if>

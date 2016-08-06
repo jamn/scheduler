@@ -375,7 +375,12 @@ class AdminController {
 				if (!appointment.hasErrors()){
 					emailService.sendCancellationNotices(appointment)
 					success = true
-					flash.success = "Appointment deleted."
+					if (appointment.isBlockedTime()){
+						flash.success = "Blocked time removed."
+					}
+					else{
+						flash.success = "Appointment deleted."
+					}
 				}
 				else {
 					flash.error = "There was an error while attempting to delete the appointment. If the error persists please contact support."
