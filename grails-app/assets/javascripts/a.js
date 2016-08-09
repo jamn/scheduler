@@ -1,13 +1,19 @@
 $(document).ready(function(){
 	setTimeout(hideAlert, 2000);
-	$('#clearBlockedTimeModal').on('show.bs.modal', function (event) {
-		var calendarCell = $(event.relatedTarget)
+	$('#scheduleAppointmentModal').on('show.bs.modal', function (event) {
 		var modal = $(this)
+		var clickTarget = $(event.relatedTarget)
+		var datetime = clickTarget.attr('datetime');
+		getScheduleAppointmentForm(datetime, modal)
+	});
+	$('#clearBlockedTimeModal').on('show.bs.modal', function (event) {
+		var modal = $(this)
+		var clickTarget = $(event.relatedTarget)
 		modal.find('.cancel-this-appointment').click(function(){
 			$.ajax({
 				type: "POST",
 				url: "/admin/cancelAppointment",
-				data: { c: calendarCell.attr('c') }
+				data: { c: clickTarget.attr('c') }
 			}).done(function() {
 				location.reload()
 			});
@@ -38,6 +44,18 @@ function getTimeSlotOptions(){
 	}
 }
 
+function getScheduleAppointmentForm(datetime, modal){
+	$.ajax({
+		type: "POST",
+		url: "/admin/getScheduleAppointmentForm",
+		data: { d:datetime }
+	}).done(function(response) {
+		if (response.indexOf("ERROR") === -1){
+			$(".modal-body").html(response);
+		}
+	});
+}
+
 function getTimeSlotOptionsForRescheduledAppointment(aId){
 	var sId = $('#servicesForRescheduledAppointment-'+aId).val();
 	var aDate = $('#dateOfRescheduledAppointment-'+aId).val();
@@ -55,11 +73,6 @@ function getTimeSlotOptionsForRescheduledAppointment(aId){
 		});
 	}
 }
-
-$(document).on('click', '.book-new-appointment', function(e) {
-	var datetime = $(e.currentTarget).attr('datetime');
-	alert(datetime)
-});
 
 $(document).on('click', '#addClient', function(e) {
 	$.ajax({

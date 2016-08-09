@@ -84,6 +84,13 @@ class AdminController {
 		render ('{"success":'+success+'}') as JSON
 	}
 
+	def getScheduleAppointmentForm(){
+		println "params: " + params
+		def datetime = dateFormatter2.parse(params.d) ?: new Date()
+		def model = adminService.getClients() + adminService.getServices() + [datetime:datetime]
+		render(template:"schedulingForm", model:model)
+	}
+
 	def getClientsSelectMenu(){
     	def clientData = getClients(params.lastNameStartsWith)
     	render(template:"clientsSelectMenu", model:clientData)
@@ -262,9 +269,11 @@ class AdminController {
 			success = schedulerService.bookForClient(params)
 		}
 		if (success){
+			flash.success = "Appointment scheduled."
 			render ('{"success":true}') as JSON
 		}
 		else{
+			flash.error "There was an error scheduling this appointment."
 			render ('{"success":false}') as JSON
 		}
 	}
