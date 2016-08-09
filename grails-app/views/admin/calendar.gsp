@@ -69,8 +69,7 @@
 
 	<div class="modal fade" id="appointmentDetailsModal" tabindex="-1" role="dialog" aria-labelledby="appointmentDetailsModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content" id="edit-appointment-options">
-			</div>
+			<div class="modal-content" id="edit-appointment-options"></div>
 		</div>
 	</div>
 
@@ -82,7 +81,7 @@
 					<h4 class="modal-title" id="rescheduleAppointmentModalLabel">Book Appointment</h4>
 				</div>
 				<div class="modal-body">
-					<img src="${resource(dir:'images', file:'spinner-gray.gif')}" class="spinner" style="display:none;">
+
 				</div>
 			</div>
 		</div>

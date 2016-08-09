@@ -18,7 +18,7 @@
 		<g:if test="${!appointment}">
 			<td class="${calendarClass}">
 				<g:if test="${calendarClass.toUpperCase() != 'UNAVAILABLE'}">
-					<div class="editable-cell" data-toggle="modal" data-target="#scheduleAppointmentModal">
+					<div class="editable-cell book-new-appointment" datetime="${dayOfWeek.getTime().format('MMddyyHHmm')}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 					</div>
 				</g:if>

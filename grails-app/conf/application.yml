@@ -11,25 +11,20 @@ dataSource:
     jmxExport: true
     driverClassName: com.mysql.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    username: root
-    password:
     #configClass: org.grails.plugin.multitenant.HibernateMultitenantConfiguration 
 
 environments:
     development:
         dataSource:
+            username: root
+            password:
             dbCreate: create-drop
             url: jdbc:mysql://localhost/scheduler?useOldAliasMetadataBehavior=true&autoReconnect=true
             #logSql: true
             #formatSql: true
-    test:
-        dataSource:
-            dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
-            dbCreate: update
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            dbCreate: create
             properties:
                 jmxEnabled: true
                 initialSize: 5

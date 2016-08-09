@@ -11,7 +11,7 @@ $(document).ready(function(){
 			}).done(function() {
 				location.reload()
 			});
-		})
+		});
 	});
 });
 function hideAlert(){
@@ -56,13 +56,18 @@ function getTimeSlotOptionsForRescheduledAppointment(aId){
 	}
 }
 
+$(document).on('click', '.book-new-appointment', function(e) {
+	var datetime = $(e.currentTarget).attr('datetime');
+	alert(datetime)
+});
+
 $(document).on('click', '#addClient', function(e) {
 	$.ajax({
 		type: "POST",
 		url: "/admin/getClientDataForm"
 	}).done(function(response) {
 		if (response.indexOf("ERROR") > -1){
-			alert('Dang... you broke it.');
+			alert('An error has occured. Please try again.');
 		}else{
 			$('#lastNameFilters').slideUp();
 			$('#clientsDetailsSelector').slideUp();
