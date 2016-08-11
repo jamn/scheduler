@@ -1,10 +1,9 @@
 ---
 applications:
-	production:
-		- name: schedule_pro
-			memory: 512MB
-			instances: 1
-			path: build/libs/scheduler-0.1.war
-			buildpack: java_buildpack
-			services:
-				- mysql
+  - name: schedule_pro
+    memory: 1G
+    instances: 1
+    path: build/libs/scheduler-0.1.war
+    buildpack: java_buildpack
+    services:
+      - mysql
