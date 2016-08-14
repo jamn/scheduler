@@ -90,10 +90,33 @@ class AdminService {
     private Map getServiceProviderAvailability(User serviceProvider){
     	def availability = [:]
     	def daysOfTheWeek = DayOfTheWeek.findAllByServiceProvider(serviceProvider)
-    	daysOfTheWeek?.each(){
-    		def startTime = dateService.getTimeOfDayString(it.startTime)
-    		def endTime = dateService.getTimeOfDayString(it.endTime)
-    		availability.put(it.name, [startTime:startTime, endTime:endTime, available:it.available])
+    	def serviceProviderStartTime
+		def serviceProviderEndTime
+		Calendar startTime
+		Calendar endTime
+		def startTimeString
+		def endTimeString
+    	daysOfTheWeek?.each(){ dayOfTheWeek ->
+
+			serviceProviderStartTime = dateService.get24HourTimeValues(dayOfTheWeek.startTime)
+			serviceProviderEndTime = dateService.get24HourTimeValues(dayOfTheWeek.endTime)
+
+			startTime = new GregorianCalendar()
+			startTime.set(Calendar.HOUR_OF_DAY, serviceProviderStartTime.hour.intValue())
+			startTime.set(Calendar.MINUTE, serviceProviderStartTime.minute.intValue())
+			startTime.set(Calendar.SECOND, 0)
+			startTime.set(Calendar.MILLISECOND, 0)
+
+			endTime = new GregorianCalendar()
+			endTime.set(Calendar.HOUR_OF_DAY, serviceProviderEndTime.hour.intValue())
+			endTime.set(Calendar.MINUTE, serviceProviderEndTime.minute.intValue())
+			endTime.set(Calendar.SECOND, 0)
+			endTime.set(Calendar.MILLISECOND, 0)
+
+			startTimeString = startTime.format('h:mm a')
+			endTimeString = endTime.format('h:mm a')
+
+    		availability.put(dayOfTheWeek.name, [startTime:startTimeString, endTime:endTimeString, available:dayOfTheWeek.available])
     	}
     	return [availability:availability]
     }

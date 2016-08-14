@@ -804,8 +804,7 @@ select{
 /* AVAILABILITY */
 .availability .day {
 	margin: 0 5px;
-	transition: background-color 0.5s ease;
-	transition: opacity 0.5s ease;
+	transition: all 0.5s ease;
 }
 .availability .day.available {
 	background-color: #bddbae;

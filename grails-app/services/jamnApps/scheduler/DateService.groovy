@@ -3,36 +3,8 @@ package jamnApps.scheduler
 class DateService {
 
 	static Long HOUR = 3600000
+	static Long HALF_HOUR = 1800000
 	static Long MINUTE = 60000
-
-	public String getTimeOfDayString(Long time){
-
-		def hours = 0
-		def minutes = 0
-		def amPmIndicator = "AM"
-		def timeString = ""
-
-		if (time % HOUR == 0){
-			hours = time / HOUR
-		}else{
-			minutes = time % HOUR
-			hours = (time - minutes) / HOUR
-		}
-
-		if (hours > 12){
-			hours = hours - 12
-			amPmIndicator = "PM"
-		}
-
-		if (minutes > 0){
-			timeString = hours + ":" + minutes + " " + amPmIndicator
-		}else{
-			timeString = hours + " " + amPmIndicator
-		}
-
-		return timeString
-
-	}
 
 	public static int getDaysBetween(day1, day2){
 
@@ -98,6 +70,14 @@ class DateService {
 		Calendar thirtyDaysAgo = new GregorianCalendar()
 		thirtyDaysAgo.add(Calendar.DAY_OF_YEAR, -120)
 		return thirtyDaysAgo.getTime()
+	}
+
+	public List getTimeSlots(){
+		Calendar cal = new GregorianCalendar()
+		cal.set(Calendar.HOUR_OF_DAY, 0)
+		cal.set(Calendar.MINUTE, 0)
+		cal.set(Calendar.SECOND, 0)
+		cal.set(Calendar.MILLISECOND, 0)
 	}
 
 }
