@@ -49,8 +49,8 @@ function getTimeSlotOptions(){
 function toggleAvailabilityForDay(day){
 	var checked = $('#'+day+'-available').is(':checked');
 	var icon = $('.day-'+day).find('.glyphicon');
-	var openTime = $('.day-'+day).find('#'+day+'-open');
-	var closeTime = $('.day-'+day).find('#'+day+'-close');
+	var openTime = $('.day-'+day).find('#'+day+'-open-timeslots');
+	var closeTime = $('.day-'+day).find('#'+day+'-close-timeslots');
 	if (checked){
 		$('.day-'+day).removeClass('unavailable');
 		$('.day-'+day).addClass('available');

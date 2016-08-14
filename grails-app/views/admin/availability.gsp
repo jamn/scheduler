@@ -21,13 +21,13 @@
 						<div class="col-xs-5">
 							<div class="form-group" class="open">
 								<label for="${lowercaseDayName}-open">Open</label>
-								<input type="text" class="form-control" id="${lowercaseDayName}-open" value="${day.value.startTime}" ${available ? '' : 'disabled="disabled"'}>
+								<g:select class="form-control" name="${lowercaseDayName}-open-timeslots" from="${timeSlots}" value="${day.value.startTime}" disabled="${!available}" />
 							</div>
 						</div>
 						<div class="col-xs-5">
 							<div class="form-group" class="close">
 								<label for="${lowercaseDayName}-close">Close</label>
-								<input type="text" class="form-control" id="${lowercaseDayName}-close" value="${day.value.endTime}" ${available ? '' : 'disabled="disabled"'}>
+								<g:select class="form-control" name="${lowercaseDayName}-close-timeslots" from="${timeSlots}" value="${day.value.endTime}" disabled="${!available}" />
 							</div>
 						</div>
 						<div class="col-xs-2">

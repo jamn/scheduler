@@ -19,6 +19,7 @@ class AdminController {
 	def emailService
 	def userService
 	def utilService
+	def dateService
 
 	/*********************************
 				NAVIGATION
@@ -56,7 +57,7 @@ class AdminController {
     }
 
     def availability(){
-    	return adminService.getServiceProviderAvailability(session.user)
+    	return adminService.getServiceProviderAvailability(session.user) + [timeSlots:dateService.getTimeSlots()]
     }
 
     def log(){
