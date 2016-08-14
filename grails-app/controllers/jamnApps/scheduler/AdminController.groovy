@@ -55,6 +55,10 @@ class AdminController {
     	return adminService.getClients()
     }
 
+    def availability(){
+    	return adminService.getServiceProviderAvailability(session.user)
+    }
+
     def log(){
     	return adminService.getLog()
     }

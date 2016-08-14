@@ -20,9 +20,11 @@ $(document).ready(function(){
 		});
 	});
 });
+
 function hideAlert(){
 	$('.alert').slideUp()
 }
+
 function getTimeSlotOptions(){
 	var sId = $('#services').val();
 	var aDate = $('#dateOfAppointment').val();
@@ -43,6 +45,40 @@ function getTimeSlotOptions(){
 		});
 	}
 }
+
+function toggleAvailabilityForDay(day){
+	var checked = $('#'+day+'-available').is(':checked');
+	var icon = $('.day-'+day).find('.glyphicon');
+	var openTime = $('.day-'+day).find('#'+day+'-open');
+	var closeTime = $('.day-'+day).find('#'+day+'-close');
+	if (checked){
+		$('.day-'+day).removeClass('unavailable');
+		$('.day-'+day).addClass('available');
+		icon.removeClass('glyphicon-ban-circle');
+		icon.addClass('glyphicon-ok-circle');
+		openTime.prop('disabled', false);
+		closeTime.prop('disabled', false);
+	}else{
+		$('.day-'+day).removeClass('available');
+		$('.day-'+day).addClass('unavailable');
+		icon.removeClass('glyphicon-ok-circle');
+		icon.addClass('glyphicon-ban-circle');
+		openTime.prop('disabled', true);
+		closeTime.prop('disabled', true);
+	}
+}
+
+$(document).on('click', '.availability .day-of-week', function(e) {
+	if (e.target.type !== 'checkbox') {
+		$(this).find('input:checkbox').trigger('click');
+	}
+});
+
+$(document).on('click', '.availability .glyphicon', function(e) {
+	if (e.target.type !== 'checkbox') {
+		$(this).closest('.day').find('input:checkbox').trigger('click');
+	}
+});
 
 function getScheduleAppointmentForm(datetime, modal){
 	$.ajax({

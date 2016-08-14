@@ -31,7 +31,7 @@
 		
 	</div>
 
-	<table id="calendarTable">
+	<table id="calendarTable" class="calendar-table">
 		<tr class="dateHeader">
 			<td></td>
 			<g:each in="${(0..6)}" var="i"> 

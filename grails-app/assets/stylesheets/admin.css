@@ -503,7 +503,7 @@ select{
 	opacity: 1;
 }
 
-#calendarTable .editable-cell {
+.calendar-table .editable-cell {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	z-index: 1;
@@ -524,17 +524,17 @@ select{
 	     -ms-flex-align: center;
 	        align-items: center;
 }
-#calendarTable .editable-cell:hover {
+.calendar-table .editable-cell:hover {
 	background-color: rgba(255, 255, 255, 0.74);
 	-webkit-transform: scale(1.3);
         -ms-transform: scale(1.3);
             transform: scale(1.3);
 }
-#calendarTable .editable-cell .glyphicon {
+.calendar-table .editable-cell .glyphicon {
     font-size: 1em;
     color: #383838;
 }
-#calendarTable .new-user-indicator{
+.calendar-table .new-user-indicator{
 	background-color: #5c3fff;
 	height: 6px;
 	width: 6px;
@@ -542,7 +542,7 @@ select{
 	top: 4px;
 	left: 4px;
 }
-#calendarTable h6 {
+.calendar-table h6 {
 	margin: 0;
 }
 .calendar-key {
@@ -557,15 +557,15 @@ select{
 	float: left;
 	margin: 4px;
 }
-.available .glyphicon,
-.booked .glyphicon{
+.calendar-table .available .glyphicon,
+.calendar-table .booked .glyphicon{
 	opacity: 0;
 }
-.available:hover .glyphicon,
-.booked:hover .glyphicon{
+.calendar-table .available:hover .glyphicon,
+.calendar-table .booked:hover .glyphicon{
 	opacity: 1;
 }
-#calendarTable{
+.calendar-table{
 	width: 100%;
 	text-align: center;
 	margin-bottom: 20px;
@@ -573,61 +573,61 @@ select{
 	box-shadow: 2px 2px 3px #EEE;
 	border-spacing: 1px;
 }
-#calendarTable tr {
+.calendar-table tr {
 	height: 30px;
 }
-#calendarTable tr td:first-child,
-#calendarTable tr td:last-child {
+.calendar-table tr td:first-child,
+.calendar-table tr td:last-child {
 	width: 80px;
 }
-#calendarTable tr td{
+.calendar-table tr td{
 	position: relative;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
-.dateHeader{
+.calendar-table .dateHeader{
 	background-color: #58585A;
 	color: #fff;
 }
-.dateHeader td {
+.calendar-table .dateHeader td {
 	padding: 6px;
 }
-.dateHeader .day {
+.calendar-table .dateHeader .day {
 	font-size: 1.2em;
 }
-.time{
+.calendar-table .time{
 	vertical-align: middle;
 }
 
-.halfHour td{
+.calendar-table .halfHour td{
 	border-top: 2px solid rgba(0, 0, 0, 0.05);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 }
 
-.unavailable,
-.available,
-.booked,
-.blocked-off{
+.calendar-table .unavailable,
+.calendar-table .available,
+.calendar-table .booked,
+.calendar-table .blocked-off{
 	width: 100px;
 }
 
-.unavailable{
+.calendar-table .unavailable{
 	background-color: #888;
 }
 
-.available{
+.calendar-table .available{
 	background-color: #858003;
 }
-.available:hover{
+.calendar-table .available:hover{
 	background-color: #aba74b;
 }
-.unavailable,
-.available,
-.booked {
+.calendar-table .unavailable,
+.calendar-table .available,
+.calendar-table .booked {
 	border-right: 1px solid #ccc;
 }
-.booked {
+.calendar-table .booked {
 	color: rgba(0,0,0,.75);
 	vertical-align: middle;
 }
@@ -795,3 +795,50 @@ select{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#b5b5b5',GradientType=0 ); /* IE6-9 */
 }
 
+
+
+
+
+
+
+/* AVAILABILITY */
+.availability .day {
+	margin: 0 5px;
+}
+.availability .day.available {
+	background-color: #bddbae;
+}
+.availability .day.unavailable {
+	background-color: #b1b1b1;
+	opacity: .4;
+}
+.availability .glyphicon {
+	font-size: 4em;
+	color: rgba(0, 0, 0, 0.3);
+	padding: 14px 2px;
+}
+.availability .day .day-of-week {
+	border-right: 1px solid rgba(0, 0, 0, 0.23);
+	background-color: rgba(255, 255, 255, 0.4);
+}
+.availability .day .day-of-week h2 {
+	font-size: 1.6em;
+	font-weight: 200;
+	text-align: center;
+	margin: 0;
+}
+.availability .day .day-of-week input[type=checkbox] {
+	margin: auto 39%;
+	margin-top: 10px;
+	height: 30px;
+	width: 30px;
+}
+.availability form .day + .day {
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.availability .day .hours,
+.availability .day .day-of-week {
+	padding: 10px;
+	min-height: 105px;
+}

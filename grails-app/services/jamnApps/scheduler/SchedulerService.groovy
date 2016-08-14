@@ -23,7 +23,7 @@ class SchedulerService {
 		Calendar endDate = new GregorianCalendar()
 		endDate.setTime(requestedDate)
 		
-		def serviceProviderDayOfTheWeek = serviceProvider?.daysOfTheWeek?.find{it.dayOfTheWeek == startDate.get(Calendar.DAY_OF_WEEK)}
+		def serviceProviderDayOfTheWeek = serviceProvider?.daysOfTheWeek?.find{it.value == startDate.get(Calendar.DAY_OF_WEEK)}
 		println "serviceProviderDayOfTheWeek: " + serviceProviderDayOfTheWeek
 
 		def dayIsAvailableByDefault = serviceProviderDayOfTheWeek?.available

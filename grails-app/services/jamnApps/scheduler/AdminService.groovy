@@ -87,6 +87,17 @@ class AdminService {
 		return [startTime:startTime, endTime:endTime]
     }
 
+    private Map getServiceProviderAvailability(User serviceProvider){
+    	def availability = [:]
+    	def daysOfTheWeek = DayOfTheWeek.findAllByServiceProvider(serviceProvider)
+    	daysOfTheWeek?.each(){
+    		def startTime = dateService.getTimeOfDayString(it.startTime)
+    		def endTime = dateService.getTimeOfDayString(it.endTime)
+    		availability.put(it.name, [startTime:startTime, endTime:endTime, available:it.available])
+    	}
+    	return [availability:availability]
+    }
+
     private Map getBlockedOffTimes(){
     	Calendar today = new GregorianCalendar()
 		today.set(Calendar.HOUR_OF_DAY, 0)
