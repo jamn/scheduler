@@ -46,25 +46,23 @@ function getTimeSlotOptions(){
 	}
 }
 
-function toggleAvailabilityForDay(day){
-	var checked = $('#'+day+'-available').is(':checked');
-	var icon = $('.day-'+day).find('.glyphicon');
-	var openTime = $('.day-'+day).find('#'+day+'-open-timeslots');
-	var closeTime = $('.day-'+day).find('#'+day+'-close-timeslots');
+function toggleAvailabilityForDay(dayIndex){
+	console.log(dayIndex);
+	var checked = $('#available-'+dayIndex).is(':checked');
+	var icon = $('.day-'+dayIndex).find('.glyphicon');
+	var times = $('.day-'+dayIndex).find('select');
 	if (checked){
-		$('.day-'+day).removeClass('unavailable');
-		$('.day-'+day).addClass('available');
+		$('.day-'+dayIndex).removeClass('unavailable');
+		$('.day-'+dayIndex).addClass('available');
 		icon.removeClass('glyphicon-ban-circle');
 		icon.addClass('glyphicon-ok-circle');
-		openTime.prop('disabled', false);
-		closeTime.prop('disabled', false);
+		times.prop('disabled', false);
 	}else{
-		$('.day-'+day).removeClass('available');
-		$('.day-'+day).addClass('unavailable');
+		$('.day-'+dayIndex).removeClass('available');
+		$('.day-'+dayIndex).addClass('unavailable');
 		icon.removeClass('glyphicon-ok-circle');
 		icon.addClass('glyphicon-ban-circle');
-		openTime.prop('disabled', true);
-		closeTime.prop('disabled', true);
+		times.prop('disabled', true);
 	}
 }
 

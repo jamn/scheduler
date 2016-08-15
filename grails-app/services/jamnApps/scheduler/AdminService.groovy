@@ -13,7 +13,41 @@ class AdminService {
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MM/dd/yyyyhh:mma")
 	SimpleDateFormat dateFormatter3 = new SimpleDateFormat("MM/dd/yyyy")
 
-	
+	private Boolean updateAvailabilityForServiceProvider(serviceProvider, params = [:]){
+		def success = false
+		def updatedTimesMap = [:]
+		for (int i = 1; i <= 7; i++) {
+			def startTime = params["startTime-"+i]
+			def endTime = params["endTime-"+i]
+			def startTimeInMillis = dateService.getMillisForTimeString(startTime)
+			def endTimeInMillis = dateService.getMillisForTimeString(endTime)
+			updatedTimesMap.put(i,[startTime:startTimeInMillis, endTime:endTimeInMillis])
+		}
+		def timesMap
+		def dayAvailable
+		DayOfTheWeek.findAllByServiceProvider(serviceProvider).each(){ day ->
+			timesMap = updatedTimesMap.get(day?.dayIndex?.intValue())
+			dayAvailable = params["available-"+day?.dayIndex]
+			if (dayAvailable){
+				day.available = true
+				day.startTime = new Long(timesMap.startTime)
+				day.endTime = new Long(timesMap.endTime)
+				
+			}
+			else {
+				day.available = false
+			}
+			try {
+				day.save(flush:true)
+				success = true
+			}
+			catch(Exception e) {
+				println "ERROR: " + e
+				success = false
+			}
+		}
+		return success
+	}
 
     private Map getHomepageText(){
     	def homepageText = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")?.value ?: "ERROR: HOMEPAGE_MESSAGE record not found in the database. Tell Ben. He's good at fixing that stuff."
@@ -116,7 +150,7 @@ class AdminService {
 			startTimeString = startTime.format('h:mm a')
 			endTimeString = endTime.format('h:mm a')
 
-    		availability.put(dayOfTheWeek.name, [startTime:startTimeString, endTime:endTimeString, available:dayOfTheWeek.available])
+    		availability.put(dayOfTheWeek.name, [startTime:startTimeString, endTime:endTimeString, available:dayOfTheWeek.available, dayIndex:dayOfTheWeek.dayIndex])
     	}
     	return [availability:availability]
     }

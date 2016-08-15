@@ -1,10 +1,25 @@
 package jamnApps.scheduler
 
+import java.text.SimpleDateFormat
+
 class DateService {
 
 	static Long HOUR = 3600000
 	static Long HALF_HOUR = 1800000
 	static Long MINUTE = 60000
+
+	SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a")
+
+	public getMillisForTimeString(timeString){
+		def millis
+		if (timeString){
+			Date date = timeFormatter.parse(timeString)
+			Calendar cal = new GregorianCalendar()
+			cal.setTime(date)
+			millis = (cal.get(Calendar.HOUR_OF_DAY) * HOUR) + (cal.get(Calendar.MINUTE) * MINUTE)
+		}
+		return millis
+	}
 
 	public static int getDaysBetween(day1, day2){
 
@@ -75,16 +90,16 @@ class DateService {
 	public List getTimeSlots(){
 		def timeSlots = []
 		Calendar cal = new GregorianCalendar()
+		// start at 6AM
 		cal.set(Calendar.HOUR_OF_DAY, 6)
 		cal.set(Calendar.MINUTE, 0)
 		cal.set(Calendar.SECOND, 0)
 		cal.set(Calendar.MILLISECOND, 0)
-
-		for (int i = 0; i <= 60; i++) {
+		// got till 10PM
+		for (int i = 0; i <= 64; i++) {
 			timeSlots.add(cal.format('h:mm a'))
 			cal.add(Calendar.MINUTE, 15)
 		}
-		println "timeSlots: " + timeSlots
 		return timeSlots
 	}
 

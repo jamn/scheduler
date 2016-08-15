@@ -3,31 +3,31 @@
 	<div class="availability">
 		<h1>Availability</h1>
 		<hr />
-		<form>
+		<form method="post" action="${createLink(controller:'admin', action:'updateAvailability')}">
 			<g:each in="${availability}" var="day">
-				<g:set var="lowercaseDayName" value="${day.key.toLowerCase()}" />
-				<g:set var="available" value="${day.value.available}" />
-				<div class="row day day-${lowercaseDayName} ${available ? 'available' : 'unavailable'}">
+				<g:set var="available" value="${day?.value?.available}" />
+				<g:set var="dayIndex" value="${day?.value?.dayIndex}" />
+				<div class="row day day-${dayIndex} ${available ? 'available' : 'unavailable'}">
 					<div class="col-xs-3 day-of-week">
 						<h2>${day.key}</h2>
 						<g:if test="${available}">
-							<input type="checkbox" id="${lowercaseDayName}-available" onclick="toggleAvailabilityForDay('${lowercaseDayName}')" checked="checked">
+							<input type="checkbox" value="available" id="available-${dayIndex}" name="available-${dayIndex}" onclick="toggleAvailabilityForDay('${dayIndex}')" checked="checked">
 						</g:if>
 						<g:else>
-							<input type="checkbox" id="${lowercaseDayName}-available" onclick="toggleAvailabilityForDay('${lowercaseDayName}')">
+							<input type="checkbox" value="available" id="available-${dayIndex}" name="available-${dayIndex}" onclick="toggleAvailabilityForDay('${dayIndex}')">
 						</g:else>
 					</div>
 					<div class="col-xs-9 hours">
 						<div class="col-xs-5">
 							<div class="form-group" class="open">
-								<label for="${lowercaseDayName}-open">Open</label>
-								<g:select class="form-control" name="${lowercaseDayName}-open-timeslots" from="${timeSlots}" value="${day.value.startTime}" disabled="${!available}" />
+								<label for="startTime-${dayIndex}">Open</label>
+								<g:select class="form-control" name="startTime-${dayIndex}" from="${timeSlots}" value="${day.value.startTime}" disabled="${!available}" />
 							</div>
 						</div>
 						<div class="col-xs-5">
 							<div class="form-group" class="close">
-								<label for="${lowercaseDayName}-close">Close</label>
-								<g:select class="form-control" name="${lowercaseDayName}-close-timeslots" from="${timeSlots}" value="${day.value.endTime}" disabled="${!available}" />
+								<label for="endTime-${dayIndex}">Close</label>
+								<g:select class="form-control" name="endTime-${dayIndex}" from="${timeSlots}" value="${day.value.endTime}" disabled="${!available}" />
 							</div>
 						</div>
 						<div class="col-xs-2">

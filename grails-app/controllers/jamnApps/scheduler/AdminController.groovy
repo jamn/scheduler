@@ -425,4 +425,17 @@ class AdminController {
 		render (template: "clientHistory", model: [appointments:appointments])
 	}
 
+	def updateAvailability(){
+		println "\n" + new Date()
+		println "params: " + params
+		def success = adminService.updateAvailabilityForServiceProvider(session.user, params)
+		if (success){
+			flash.success = "Availability updated."
+		}
+		else{
+			flash.error = "An error occured attempting to update availability."
+		}
+		redirect(action:'availability')
+	}
+
 }
