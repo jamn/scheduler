@@ -6,8 +6,7 @@
 		<%
 			def dayOfWeek = days[i]
 			def appointment = schedulerService.findAppointment(appointments, dayOfWeek)
-			def javaDayOfWeekIndex = dayOfWeek.get(Calendar.DAY_OF_WEEK)
-			def calendarClass = schedulerService.getCalendarClass(appointment, javaDayOfWeekIndex)
+			def calendarClass = schedulerService.getCalendarClass(appointment, dayOfWeek, serviceProviderAvailability)
 			def columnRowspanCount = 1
 			def isBeginningOfAppointment = true
 			if (appointment){

@@ -23,7 +23,7 @@ class SchedulerService {
 		Calendar endDate = new GregorianCalendar()
 		endDate.setTime(requestedDate)
 		
-		def serviceProviderDayOfTheWeek = serviceProvider?.daysOfTheWeek?.find{it.value == startDate.get(Calendar.DAY_OF_WEEK)}
+		def serviceProviderDayOfTheWeek = serviceProvider?.daysOfTheWeek?.find{it.dayIndex == startDate.get(Calendar.DAY_OF_WEEK)}
 		println "serviceProviderDayOfTheWeek: " + serviceProviderDayOfTheWeek
 
 		def dayIsAvailableByDefault = serviceProviderDayOfTheWeek?.available
@@ -245,12 +245,27 @@ class SchedulerService {
 		println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
 	}
 
-	public getCalendarClass(appointment,day){
+	public getNumberOfRowsForCalendar(startTime, endTime){
+		def startMillis = dateService.getMillisForTimeString(startTime.format('h:mm a'))
+		def endMillis = dateService.getMillisForTimeString(endTime.format('h:mm a'))
+		def test = ((endMillis / HOUR) - (startMillis / HOUR)) * 2
+		return test
+	}
+
+	public getCalendarClass(appointment, dayOfWeek, serviceProviderAvailability){
+		//println "\ndayOfWeek: " + dayOfWeek.format('EEE MM/dd/yy h:mm a') + "("+dayOfWeek.getTimeInMillis()+")"
+		//println "serviceProviderAvailability: " + serviceProviderAvailability
+		def config = serviceProviderAvailability.get(dayOfWeek.format('EEEE'))
+		//println "config: " + config
+		//println config.dayIndex + " - config startTime: " + config.startTimeCal.format('EEE MM/dd/yy h:mm a') + "("+config.startTimeCal.getTimeInMillis()+")"
+		//println config.dayIndex + " - config endTime: " + config.endTimeCal.format('EEE MM/dd/yy h:mm a') + "("+config.endTimeCal.getTimeInMillis()+")"
 		def cssClass = "available"
 		if(appointment){
 			cssClass = "booked"
-		}else if(day == 1 || day == 7) {
-			cssClass = "unavailable"
+		}else if(config.available == false || 
+			config.startTimeCal.getTimeInMillis() > dayOfWeek.getTimeInMillis() || 
+			config.endTimeCal.getTimeInMillis() < dayOfWeek.getTimeInMillis()) {
+				cssClass = "unavailable"
 		}
 		return cssClass
 	}

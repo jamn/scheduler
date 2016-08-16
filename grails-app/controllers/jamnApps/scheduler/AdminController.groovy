@@ -30,9 +30,31 @@ class AdminController {
     	def startDate = adminService.getStartDate(params)
     	def startRange = adminService.getCalendarStartRange(startDate)
     	def allServices = ServiceType.findAllByServiceProvider(session.user)
-    	return adminService.getUpcomingAppointments(startDate, session.user) + 
-    			adminService.getServiceProviderInfo(session.user) + 
-    			[startDate:startDate, startRange:startRange, allServices:allServices]
+    	Map serviceProviderAvailability = adminService.getServiceProviderAvailability(session.user)
+    	Map upcomingAppointments = adminService.getUpcomingAppointments(startDate, session.user)
+    	def startTime
+    	def endTime
+    	def days = []
+    	serviceProviderAvailability.each(){ k,v ->
+			v.startTimeCal.add(Calendar.DAY_OF_WEEK, (startRange + v.dayIndex.intValue() - 2))
+			//v.endTimeCal.add(Calendar.DAY_OF_WEEK, (startRange + v.dayIndex.intValue() - 2))
+    		if (!startTime || startTime.getTimeInMillis() > v.startTimeCal.getTimeInMillis()){
+				startTime = v.startTimeCal
+			}
+			if (!endTime || endTime.getTimeInMillis() < v.endTimeCal.getTimeInMillis()){
+    			endTime = v.endTimeCal
+			}
+    	}
+		for ( i in 0..6 ){
+			Calendar cal = new GregorianCalendar()
+			cal.setTime(startTime.getTime())
+			cal.add(Calendar.DAY_OF_WEEK, i+startRange)
+			days[i] = cal
+		}
+		endTime.add(Calendar.DAY_OF_WEEK, startRange)
+    	def numberOfRows = schedulerService.getNumberOfRowsForCalendar(startTime, endTime)
+
+    	return upcomingAppointments + [days:days, serviceProviderAvailability:serviceProviderAvailability, startDate:startDate, startTime:startTime, endTime:endTime, allServices:allServices, numberOfRows:numberOfRows]
     }
 
     def upcomingAppointments(){
@@ -57,7 +79,8 @@ class AdminController {
     }
 
     def availability(){
-    	return adminService.getServiceProviderAvailability(session.user) + [timeSlots:dateService.getTimeSlots()]
+    	return  [timeSlots:dateService.getTimeSlots(),
+    				availability:adminService.getServiceProviderAvailability(session.user)]
     }
 
     def log(){
@@ -426,8 +449,8 @@ class AdminController {
 	}
 
 	def updateAvailability(){
-		println "\n" + new Date()
-		println "params: " + params
+		println "\nUPDATING AVAILABILITY"
+		println "" + new Date()
 		def success = adminService.updateAvailabilityForServiceProvider(session.user, params)
 		if (success){
 			flash.success = "Availability updated."
@@ -435,6 +458,7 @@ class AdminController {
 		else{
 			flash.error = "An error occured attempting to update availability."
 		}
+		println "success: " + success
 		redirect(action:'availability')
 	}
 

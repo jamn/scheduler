@@ -1,15 +1,6 @@
 <html>
 <head></head><body>
-	<%
-		def days = []
-		for ( i in 0..6 ){
-			Calendar cal = new GregorianCalendar()
-			cal.setTime(startTime.getTime())
-			cal.add(Calendar.DAY_OF_WEEK, i+startRange)
-			days[i] = cal
-		}
-		endTime.add(Calendar.DAY_OF_WEEK, startRange)
-	%>
+
 	<g:set var="schedulerService" bean="schedulerService"/>
 
 	<div class="row date-range-picker">
@@ -42,11 +33,11 @@
 			</g:each>
 			<td></td>
 		</tr>
-		<% while (days[0] < endTime){ %>
+		<% for (i=0; i<numberOfRows; i++){ %>
 			<g:each in="${['halfHour','fifteen']}">
 				<g:render template="calendarRow" model="['appointments':appointments, 'days':days, 'rowClass':it]" />
-				<%for ( i in 0..6 ){
-					days[i].add(Calendar.MINUTE, 15)
+				<%for ( j in 0..6 ){
+					days[j].add(Calendar.MINUTE, 15)
 				}%>
 			</g:each>
 		<%}%>
