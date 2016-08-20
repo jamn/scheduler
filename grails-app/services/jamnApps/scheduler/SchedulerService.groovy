@@ -306,8 +306,8 @@ class SchedulerService {
 		def appointment
 		appointments.each(){
 			DateTime appointmentStart = new DateTime(it.appointmentDate)
-			DateTime appointmentEnd = new DateTime(it.appointmentDate)
-			appointmentEnd.plusMillis(new BigDecimal(it.service.duration).intValueExact())
+			DateTime tempAppointmentEnd = new DateTime(it.appointmentDate)
+			DateTime appointmentEnd = tempAppointmentEnd.plusMillis(new BigDecimal(it.service.duration).intValueExact())
 			if (calendarTimeslot >= appointmentStart && calendarTimeslot < appointmentEnd){
 				appointment = it
 			}

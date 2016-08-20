@@ -39,8 +39,9 @@ class AdminController {
     }
 
     def upcomingAppointments(){
-    	def startDate = adminService.getStartDate(params)
-    	return adminService.getUpcomingAppointments(startDate, session.user) + adminService.getServiceProviderAvailability(session.user)
+    	List serviceProviderAvailability = adminService.getServiceProviderAvailability(session.user)
+    	def startDate = adminService.getStartDate(params, serviceProviderAvailability)
+    	return adminService.getUpcomingAppointments(startDate, session.user)
     }
 
     def homepageMessage(){
