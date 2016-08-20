@@ -14,7 +14,7 @@
 			<li>
 				<ul>
 					<li><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" onclick="minusOneWeek();"></span></li>
-					<li><h1>${startDate.format('MMMM')}</h1></li>
+					<li><h1>${startDate.toString('MMMM')}</h1></li>
 					<li><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" onclick="plusOneWeek();"></span></li>
 				</ul>
 			</li>
@@ -27,17 +27,17 @@
 			<td></td>
 			<g:each in="${(0..6)}" var="i"> 
 				<td>
-					<span class="day">${days[i].getTime().format('EEE')}</span><br>
-					${days[i].getTime().format('dd')}
+					<span class="day">${days[i].toString('EEE')}</span><br>
+					${days[i].toString('dd')}
 				</td>
 			</g:each>
 			<td></td>
 		</tr>
 		<% for (i=0; i<numberOfRows; i++){ %>
 			<g:each in="${['halfHour','fifteen']}">
-				<g:render template="calendarRow" model="['appointments':appointments, 'days':days, 'rowClass':it]" />
+				<g:render template="calendarRow" model="['appointments':appointments, 'rowClass':it]" />
 				<%for ( j in 0..6 ){
-					days[j].add(Calendar.MINUTE, 15)
+					days[j].plusMinutes(15)
 				}%>
 			</g:each>
 		<%}%>
@@ -47,7 +47,7 @@
 
 	<div class="calendar-key">
 		<ul>
-			<g:each in="${allServices}" var="service">
+			<g:each in="${services}" var="service">
 				<li>
 					<div class="color-swatch" style="background-color:${service.calendarColor};"></div> ${service.description}
 				</li>

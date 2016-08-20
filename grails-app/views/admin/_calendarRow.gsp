@@ -1,6 +1,6 @@
-<tr class="${rowClass}" time="${days[0].getTime().format('hh:mm a')}">
+<tr class="${rowClass}" time="${days[0].toString('hh:mm a')}">
 	<g:if test="${rowClass == 'halfHour'}">
-		<td rowspan="2" class="time">${days[0].getTime().format('hh:mm a')}</td>
+		<td rowspan="2" class="time">${days[0].toString('hh:mm a')}</td>
 	</g:if>
 	<g:each in="${0..6}" var="i"> 
 		<%
@@ -17,7 +17,7 @@
 		<g:if test="${!appointment}">
 			<td class="${calendarClass}">
 				<g:if test="${calendarClass.toUpperCase() != 'UNAVAILABLE'}">
-					<div class="editable-cell book-new-appointment" data-toggle="modal" data-target="#scheduleAppointmentModal" datetime="${dayOfWeek.getTime().format('MM/dd/yyyyhh:mma')}">
+					<div class="editable-cell book-new-appointment" data-toggle="modal" data-target="#scheduleAppointmentModal" datetime="${dayOfWeek.toString('MM/dd/yyyyhh:mma')}">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 					</div>
 				</g:if>
@@ -46,6 +46,6 @@
 		</g:elseif>
 	</g:each>
 	<g:if test="${rowClass == 'halfHour'}">
-		<td rowspan="2" class="time">${days[0].getTime().format('hh:mm a')}</td>
+		<td rowspan="2" class="time">${days[0].toString('hh:mm a')}</td>
 	</g:if>
 </tr>

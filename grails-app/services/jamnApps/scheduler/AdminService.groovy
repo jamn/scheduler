@@ -1,6 +1,8 @@
 package jamnApps.scheduler
 
 import java.text.SimpleDateFormat
+import org.joda.time.format.*
+import org.joda.time.*
 
 class AdminService {
 
@@ -12,6 +14,7 @@ class AdminService {
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("EE dd MMM yyyy @ hh:mm a")
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MM/dd/yyyyhh:mma")
 	SimpleDateFormat dateFormatter3 = new SimpleDateFormat("MM/dd/yyyy")
+	DateTimeFormatter dateFormatter4 = DateTimeFormat.forPattern("MM/dd/yyyy")
 
 	private Boolean updateAvailabilityForServiceProvider(serviceProvider, params = [:]){
 		def success = false
@@ -72,12 +75,12 @@ class AdminService {
     	return [services:services]
     }
 
-	private Date getStartDate(params = [:]){
-		def startDate
+	private DateTime getStartDate(params = [:]){
+		DateTime startDate
 		if (params.startDate){
-			startDate = dateFormatter3.parse(params.startDate)
+			startDate = dateFormatter4.parseDateTime(params.startDate)
 		}else{
-			startDate = new Date()
+			startDate = new DateTime()
 		}
 		return startDate
 	}
@@ -90,53 +93,18 @@ class AdminService {
 		return startRange
 	}
 
-    private Map getUpcomingAppointments(Date startDate, User serviceProvider){
-		Calendar today = new GregorianCalendar()
-		today.setTime(startDate)
-		today.set(Calendar.HOUR_OF_DAY, 0)
-		today.set(Calendar.MINUTE, 0)
-		today.set(Calendar.SECOND, 0)
-		today.set(Calendar.MILLISECOND, 0)
-		def appointments = Appointment.executeQuery("from Appointment a where a.appointmentDate >= :today and a.booked = true and a.deleted = false and a.serviceProvider = :serviceProvider", [today:today.getTime(), serviceProvider:serviceProvider])?.sort{it.appointmentDate}
+    private Map getUpcomingAppointments(DateTime startDate, User serviceProvider){
+		def appointments = Appointment.executeQuery("from Appointment a where a.appointmentDate >= :today and a.booked = true and a.deleted = false and a.serviceProvider = :serviceProvider", [today:startDate.toDate(), serviceProvider:serviceProvider])?.sort{it.appointmentDate}
 		return [appointments:appointments]
     }
 
-    private Map getServiceProviderAvailability(User serviceProvider){
-    	def availability = [:]
-    	def daysOfTheWeek = DayOfTheWeek.findAllByServiceProvider(serviceProvider)
-    	def serviceProviderStartTime
-		def serviceProviderEndTime
-		Calendar startTime
-		Calendar endTime
-		def startTimeString
-		def endTimeString
-    	daysOfTheWeek?.each(){ dayOfTheWeek ->
-
-			serviceProviderStartTime = dateService.get24HourTimeValues(dayOfTheWeek.startTime)
-			serviceProviderEndTime = dateService.get24HourTimeValues(dayOfTheWeek.endTime)
-
-			startTime = new GregorianCalendar()
-			startTime.set(Calendar.HOUR_OF_DAY, serviceProviderStartTime.hour.intValue())
-			startTime.set(Calendar.MINUTE, serviceProviderStartTime.minute.intValue())
-			startTime.set(Calendar.SECOND, 0)
-			startTime.set(Calendar.MILLISECOND, 0)
-
-			endTime = new GregorianCalendar()
-			endTime.set(Calendar.HOUR_OF_DAY, serviceProviderEndTime.hour.intValue())
-			endTime.set(Calendar.MINUTE, serviceProviderEndTime.minute.intValue())
-			endTime.set(Calendar.SECOND, 0)
-			endTime.set(Calendar.MILLISECOND, 0)
-
-			startTimeString = startTime.format('h:mm a')
-			endTimeString = endTime.format('h:mm a')
-
-    		availability.put(dayOfTheWeek.name, [startTime:startTimeString, 
-    												endTime:endTimeString, 
-    												available:dayOfTheWeek.available, 
-    												dayIndex:dayOfTheWeek.dayIndex,
-    												startTimeCal:startTime,
-    												endTimeCal:endTime
-    											])
+    private List getServiceProviderAvailability(User serviceProvider){
+    	def availability = []
+    	try {
+    		availability = DayOfTheWeek.findAllByServiceProvider(serviceProvider)
+    	}
+    	catch(Exception e) {
+			println "ERROR: " + e    		
     	}
     	return availability
     }

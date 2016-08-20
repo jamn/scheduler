@@ -3,6 +3,7 @@ package jamnApps.scheduler
 import org.apache.commons.lang.RandomStringUtils
 import java.text.SimpleDateFormat
 import grails.converters.JSON
+import org.joda.time.*
 
 
 class AdminController {
@@ -13,6 +14,7 @@ class AdminController {
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("EE dd MMM yyyy @ hh:mm a")
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MM/dd/yyyyhh:mma")
 	SimpleDateFormat dateFormatter3 = new SimpleDateFormat("MM/dd/yyyy")
+	SimpleDateFormat dateFormatter4 = new SimpleDateFormat("H:m")
 
 	def adminService
 	def schedulerService
@@ -28,38 +30,17 @@ class AdminController {
 
     def calendar(){
     	def startDate = adminService.getStartDate(params)
-    	def startRange = adminService.getCalendarStartRange(startDate)
-    	def allServices = ServiceType.findAllByServiceProvider(session.user)
-    	Map serviceProviderAvailability = adminService.getServiceProviderAvailability(session.user)
+    	def services = ServiceType.findAllByServiceProvider(session.user)
     	Map upcomingAppointments = adminService.getUpcomingAppointments(startDate, session.user)
-    	def startTime
-    	def endTime
-    	def days = []
-    	serviceProviderAvailability.each(){ k,v ->
-			v.startTimeCal.add(Calendar.DAY_OF_WEEK, (startRange + v.dayIndex.intValue() - 2))
-			//v.endTimeCal.add(Calendar.DAY_OF_WEEK, (startRange + v.dayIndex.intValue() - 2))
-    		if (!startTime || startTime.getTimeInMillis() > v.startTimeCal.getTimeInMillis()){
-				startTime = v.startTimeCal
-			}
-			if (!endTime || endTime.getTimeInMillis() < v.endTimeCal.getTimeInMillis()){
-    			endTime = v.endTimeCal
-			}
-    	}
-		for ( i in 0..6 ){
-			Calendar cal = new GregorianCalendar()
-			cal.setTime(startTime.getTime())
-			cal.add(Calendar.DAY_OF_WEEK, i+startRange)
-			days[i] = cal
-		}
-		endTime.add(Calendar.DAY_OF_WEEK, startRange)
-    	def numberOfRows = schedulerService.getNumberOfRowsForCalendar(startTime, endTime)
-
-    	return upcomingAppointments + [days:days, serviceProviderAvailability:serviceProviderAvailability, startDate:startDate, startTime:startTime, endTime:endTime, allServices:allServices, numberOfRows:numberOfRows]
+    	List serviceProviderAvailability = adminService.getServiceProviderAvailability(session.user)
+    	def numberOfRows = schedulerService.getNumberOfRowsForCalendar(serviceProviderAvailability)
+    	def days = schedulerService.getDaysForCalendar(startDate)
+    	return upcomingAppointments + [startDate:startDate, services:services, serviceProviderAvailability:serviceProviderAvailability, numberOfRows:numberOfRows, days:days]
     }
 
     def upcomingAppointments(){
     	def startDate = adminService.getStartDate(params)
-    	return adminService.getUpcomingAppointments(startDate, session.user) + adminService.getServiceProviderInfo(session.user)
+    	return adminService.getUpcomingAppointments(startDate, session.user) + adminService.getServiceProviderAvailability(session.user)
     }
 
     def homepageMessage(){

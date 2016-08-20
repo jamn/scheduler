@@ -3,6 +3,7 @@ package jamnApps.scheduler
 import java.text.SimpleDateFormat
 import org.apache.commons.lang.RandomStringUtils
 import groovy.sql.Sql
+import org.joda.time.*
 
 class SchedulerService {
 
@@ -245,28 +246,45 @@ class SchedulerService {
 		println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
 	}
 
-	public getNumberOfRowsForCalendar(startTime, endTime){
-		def startMillis = dateService.getMillisForTimeString(startTime.format('h:mm a'))
-		def endMillis = dateService.getMillisForTimeString(endTime.format('h:mm a'))
-		def test = ((endMillis / HOUR) - (startMillis / HOUR)) * 2
-		return test
+	public List getDaysForCalendar(DateTime startDate){
+		// SETUP DateTime INSTANCES FOR EACH DAY ON THE CALENDAR
+    	// THESE WILL BE USED TO ITERATE OVER WHEN BUILDING THE CALENDAR
+		def days = []
+		for ( i in 0..6 ){
+			days[i] = startDate.plusDays(i)
+		}
+		return days
 	}
 
-	public getCalendarClass(appointment, dayOfWeek, serviceProviderAvailability){
+	public Long getNumberOfRowsForCalendar(serviceProviderAvailability){
+		def earliestStartMillis
+		def latestEndMillis
+		serviceProviderAvailability.each(){
+			if (!earliestStartMillis || earliestStartMillis > it.startTime){
+				earliestStartMillis = it.startTime
+			}
+			if (!latestEndMillis || latestEndMillis < it.endTime){
+				latestEndMillis = it.endTime
+			}
+    	}
+		return ((latestEndMillis / HOUR) - (earliestStartMillis / HOUR)) * 2
+	}
+
+	public String getCalendarClass(appointment, DateTime dayOfWeek, serviceProviderAvailability){
 		//println "\ndayOfWeek: " + dayOfWeek.format('EEE MM/dd/yy h:mm a') + "("+dayOfWeek.getTimeInMillis()+")"
 		//println "serviceProviderAvailability: " + serviceProviderAvailability
-		def config = serviceProviderAvailability.get(dayOfWeek.format('EEEE'))
+		def config = serviceProviderAvailability.find{it.name == dayOfWeek.toString('EEEE')}
 		//println "config: " + config
 		//println config.dayIndex + " - config startTime: " + config.startTimeCal.format('EEE MM/dd/yy h:mm a') + "("+config.startTimeCal.getTimeInMillis()+")"
 		//println config.dayIndex + " - config endTime: " + config.endTimeCal.format('EEE MM/dd/yy h:mm a') + "("+config.endTimeCal.getTimeInMillis()+")"
 		def cssClass = "available"
 		if(appointment){
 			cssClass = "booked"
-		}else if(config.available == false || 
-			config.startTimeCal.getTimeInMillis() > dayOfWeek.getTimeInMillis() || 
-			config.endTimeCal.getTimeInMillis() < dayOfWeek.getTimeInMillis()) {
-				cssClass = "unavailable"
-		}
+		}//else if(config.available == false || 
+		// 	config.startTimeCal.getTimeInMillis() > dayOfWeek.getTimeInMillis() || 
+		// 	config.endTimeCal.getTimeInMillis() < dayOfWeek.getTimeInMillis()) {
+		// 		cssClass = "unavailable"
+		// }
 		return cssClass
 	}
 
@@ -281,24 +299,21 @@ class SchedulerService {
 	public isBeginningOfAppointment(appointment, calendarTimeslot){
 		Boolean isBeginningOfAppointment = true
 		if (appointment && calendarTimeslot){
-			Calendar appointmentStart = new GregorianCalendar()
-			appointmentStart.setTime(appointment.appointmentDate)
-			if (calendarTimeslot.getTime() != appointmentStart.getTime()){
+			DateTime appointmentStart = new DateTime(appointment.appointmentDate)
+			if (calendarTimeslot != appointmentStart){
 				isBeginningOfAppointment = false
 			}
 		}
 		return isBeginningOfAppointment
 	}
 
-	public findAppointment(appointments, calendarTimeslot){
+	public findAppointment(appointments, DateTime calendarTimeslot){
 		def appointment
 		appointments.each(){
-			Calendar appointmentStart = new GregorianCalendar()
-			appointmentStart.setTime(it.appointmentDate)
-			Calendar appointmentEnd = new GregorianCalendar()
-			appointmentEnd.setTime(it.appointmentDate)
-			appointmentEnd.add(Calendar.MILLISECOND, new BigDecimal(it.service.duration).intValueExact())
-			if (calendarTimeslot.getTime() >= appointmentStart.getTime() && calendarTimeslot.getTime() < appointmentEnd.getTime()){
+			DateTime appointmentStart = new DateTime(it.appointmentDate)
+			DateTime appointmentEnd = new DateTime(it.appointmentDate)
+			appointmentEnd.plusMillis(new BigDecimal(it.service.duration).intValueExact())
+			if (calendarTimeslot >= appointmentStart && calendarTimeslot < appointmentEnd){
 				appointment = it
 			}
 		}
