@@ -130,7 +130,7 @@ class BootStrap {
 			def serviceProvider = User.findWhere(username:'default-service-provider')
 			new DayOfTheWeek(
 				name: 'Sunday',
-				dayIndex: 1,
+				dayIndex: 0,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,
@@ -138,7 +138,7 @@ class BootStrap {
 			).save()
 			new DayOfTheWeek(
 				name: 'Monday',
-				dayIndex: 2,
+				dayIndex: 1,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,
@@ -146,7 +146,7 @@ class BootStrap {
 			).save()
 			new DayOfTheWeek(
 				name: 'Tuesday',
-				dayIndex: 3,
+				dayIndex: 2,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,
@@ -154,7 +154,7 @@ class BootStrap {
 			).save()
 			new DayOfTheWeek(
 				name: 'Wednesday',
-				dayIndex: 4,
+				dayIndex: 3,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,
@@ -162,7 +162,7 @@ class BootStrap {
 			).save()
 			new DayOfTheWeek(
 				name: 'Thursday',
-				dayIndex: 5,
+				dayIndex: 4,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,
@@ -170,7 +170,7 @@ class BootStrap {
 			).save()
 			new DayOfTheWeek(
 				name: 'Friday',
-				dayIndex: 6,
+				dayIndex: 5,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,
@@ -178,7 +178,7 @@ class BootStrap {
 			).save()
 			new DayOfTheWeek(
 				name: 'Saturday',
-				dayIndex: 7,
+				dayIndex: 6,
 				available: true,
 				startTime: 36000000,
 				endTime: 68400000,

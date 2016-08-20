@@ -71,7 +71,7 @@
 			minDate: 0,
 			beforeShowDay: function(date) {
 			 	var day = date.getDay();
-			 	return [(day != 6 && day != 0)];
+			 	return [${availability}.indexOf(day) > -1];
 			}
 		});
 		$('#chooseDate').datepicker("setDate", selectedDate)

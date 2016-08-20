@@ -55,9 +55,12 @@ class BookController {
 		def selectedDate
 		def service = session.service
 		def serviceProvider = User.get(session.serviceProvider.id)
-		session.serviceProvider = serviceProvider
+		def availability = DayOfTheWeek.findAllWhere(serviceProvider:serviceProvider, available:true)?.collect{ it.dayIndex }
+		
 		Boolean dontRenderTemplate = false
 		Boolean renderDatePicker = false
+
+		session.serviceProvider = serviceProvider
 
 		if (params?.date){
 			selectedDate = dateFormatter3.parse(params?.date)
@@ -75,7 +78,7 @@ class BookController {
 
 		if (selectedDate && serviceProvider && service){
 			timeSlotsMap = schedulerService.getTimeSlotsAvailableMap(selectedDate, serviceProvider, service)
-			return [selectedDate:selectedDate, timeSlotsMap:timeSlotsMap]
+			return [selectedDate:selectedDate, timeSlotsMap:timeSlotsMap, availability:availability]
 		}
 		else {
 			println "ERROR: unable to process params -> " + params

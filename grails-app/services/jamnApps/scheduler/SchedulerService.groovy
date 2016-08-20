@@ -23,10 +23,14 @@ class SchedulerService {
 		startDate.setTime(requestedDate)
 		Calendar endDate = new GregorianCalendar()
 		endDate.setTime(requestedDate)
-		
-		def serviceProviderDayOfTheWeek = serviceProvider?.daysOfTheWeek?.find{it.dayIndex == startDate.get(Calendar.DAY_OF_WEEK)}
-		println "serviceProviderDayOfTheWeek: " + serviceProviderDayOfTheWeek
-
+		def serviceProviderDayOfTheWeek
+		serviceProvider?.daysOfTheWeek?.each(){
+			def dayIndex = it.dayIndex ? it.dayIndex : 7
+			if(dayIndex == startDate.get(Calendar.DAY_OF_WEEK)){
+				serviceProviderDayOfTheWeek = it
+			}
+		}
+		println "serviceProviderDayOfTheWeek: " + serviceProviderDayOfTheWeek.name
 		def dayIsAvailableByDefault = serviceProviderDayOfTheWeek?.available
 		def dayIsNotBlockedOff = DayOff.findWhere(serviceProvider:serviceProvider, dayOffDate:requestedDate) ? false : true
 
