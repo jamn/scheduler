@@ -75,13 +75,27 @@ class AdminService {
     	return [services:services]
     }
 
-	private DateTime getStartDate(params = [:]){
+	private DateTime getStartDate(params = [:], serviceProviderAvailability){
 		DateTime startDate
+		def tempStartDate
+
+		// GET EARLIEST START TIME
+		def earliestStartMillis
+		serviceProviderAvailability.each(){
+			if (!earliestStartMillis || earliestStartMillis > it.startTime){
+				earliestStartMillis = it.startTime
+			}
+    	}
+
+    	// FIND THE START DATE
 		if (params.startDate){
-			startDate = dateFormatter4.parseDateTime(params.startDate)
+			tempStartDate = dateFormatter4.parseDateTime(params.startDate)
 		}else{
-			startDate = new DateTime()
+			tempStartDate = new DateTime()
 		}
+
+		// SET IT TO THE START TIME
+		startDate = tempStartDate?.withMillisOfDay(earliestStartMillis.intValue())
 		return startDate
 	}
 

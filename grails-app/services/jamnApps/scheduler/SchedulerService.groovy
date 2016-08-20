@@ -271,20 +271,15 @@ class SchedulerService {
 	}
 
 	public String getCalendarClass(appointment, DateTime dayOfWeek, serviceProviderAvailability){
-		//println "\ndayOfWeek: " + dayOfWeek.format('EEE MM/dd/yy h:mm a') + "("+dayOfWeek.getTimeInMillis()+")"
-		//println "serviceProviderAvailability: " + serviceProviderAvailability
-		def config = serviceProviderAvailability.find{it.name == dayOfWeek.toString('EEEE')}
-		//println "config: " + config
-		//println config.dayIndex + " - config startTime: " + config.startTimeCal.format('EEE MM/dd/yy h:mm a') + "("+config.startTimeCal.getTimeInMillis()+")"
-		//println config.dayIndex + " - config endTime: " + config.endTimeCal.format('EEE MM/dd/yy h:mm a') + "("+config.endTimeCal.getTimeInMillis()+")"
+		DayOfTheWeek config = serviceProviderAvailability.find{it.name == dayOfWeek.toString('EEEE')}
 		def cssClass = "available"
 		if(appointment){
 			cssClass = "booked"
-		}//else if(config.available == false || 
-		// 	config.startTimeCal.getTimeInMillis() > dayOfWeek.getTimeInMillis() || 
-		// 	config.endTimeCal.getTimeInMillis() < dayOfWeek.getTimeInMillis()) {
-		// 		cssClass = "unavailable"
-		// }
+		}else if(config && (config.available == false || 
+		 	config.startTime > dayOfWeek.getMillisOfDay() || 
+		 	config.endTime < dayOfWeek.getMillisOfDay())) {
+		 		cssClass = "unavailable"
+		 }
 		return cssClass
 	}
 

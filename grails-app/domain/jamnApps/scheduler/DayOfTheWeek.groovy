@@ -1,5 +1,7 @@
 package jamnApps.scheduler
 
+import org.joda.time.LocalTime
+
 class DayOfTheWeek extends CoreObject {
 
 	String name // Sunday, Monday, etc.
@@ -9,5 +11,16 @@ class DayOfTheWeek extends CoreObject {
 	Boolean available = false
 
 	static belongsTo = [serviceProvider: User]
+
+	static transients = ['startTimeString', 'endTimeString']
+
+	String getStartTimeString(){
+		return LocalTime.fromMillisOfDay(startTime).toString('h:mm a')
+	}
+
+	String getEndTimeString(){
+		return LocalTime.fromMillisOfDay(endTime).toString('h:mm a')
+	}
+
 
 }

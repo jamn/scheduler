@@ -5,11 +5,11 @@
 		<hr />
 		<form method="post" action="${createLink(controller:'admin', action:'updateAvailability')}">
 			<g:each in="${availability}" var="day">
-				<g:set var="available" value="${day?.value?.available}" />
-				<g:set var="dayIndex" value="${day?.value?.dayIndex}" />
+				<g:set var="available" value="${day?.available}" />
+				<g:set var="dayIndex" value="${day?.dayIndex}" />
 				<div class="row day day-${dayIndex} ${available ? 'available' : 'unavailable'}">
 					<div class="col-xs-3 day-of-week">
-						<h2>${day.key}</h2>
+						<h2>${day.name}</h2>
 						<g:if test="${available}">
 							<input type="checkbox" value="available" id="available-${dayIndex}" name="available-${dayIndex}" onclick="toggleAvailabilityForDay('${dayIndex}')" checked="checked">
 						</g:if>
@@ -21,13 +21,13 @@
 						<div class="col-xs-5">
 							<div class="form-group" class="open">
 								<label for="startTime-${dayIndex}">Open</label>
-								<g:select class="form-control" name="startTime-${dayIndex}" from="${timeSlots}" value="${day.value.startTime}" disabled="${!available}" />
+								<g:select class="form-control" name="startTime-${dayIndex}" from="${timeSlots}" value="${day.startTimeString}" disabled="${!available}" />
 							</div>
 						</div>
 						<div class="col-xs-5">
 							<div class="form-group" class="close">
 								<label for="endTime-${dayIndex}">Close</label>
-								<g:select class="form-control" name="endTime-${dayIndex}" from="${timeSlots}" value="${day.value.endTime}" disabled="${!available}" />
+								<g:select class="form-control" name="endTime-${dayIndex}" from="${timeSlots}" value="${day.endTimeString}" disabled="${!available}" />
 							</div>
 						</div>
 						<div class="col-xs-2">

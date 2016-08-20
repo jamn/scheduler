@@ -35,9 +35,9 @@
 		</tr>
 		<% for (i=0; i<numberOfRows; i++){ %>
 			<g:each in="${['halfHour','fifteen']}">
-				<g:render template="calendarRow" model="['appointments':appointments, 'rowClass':it]" />
+				<g:render template="calendarRow" model="['rowClass':it]" />
 				<%for ( j in 0..6 ){
-					days[j].plusMinutes(15)
+					days[j] = days[j].plusMinutes(15)
 				}%>
 			</g:each>
 		<%}%>
