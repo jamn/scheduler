@@ -379,21 +379,6 @@ function getRescheduleOptions(appointmentId){
 	}).done(function(response) {
 		if (response.indexOf("ERROR") === -1){
 			$("#edit-appointment-options").html(response);
-			$('#dateOfRescheduledAppointment-'+appointmentId).datepicker( {
-				minDate: 0,
-				showButtonPanel: true
-			});
-			var date = $('#dateOfRescheduledAppointment-'+appointmentId).attr('date')
-			$('#dateOfRescheduledAppointment-'+appointmentId).datepicker("setDate", new Date(date));
-			$('#servicesForRescheduledAppointment-'+appointmentId).on('change', function() {
-				getTimeSlotOptionsForRescheduledAppointment(appointmentId);
-			});
-			$('#dateOfRescheduledAppointment-'+appointmentId).on('change', function() {
-				getTimeSlotOptionsForRescheduledAppointment(appointmentId);
-			});
-			$('#rescheduleButton-'+appointmentId).on('click', function() {
-				rescheduleAppointment(appointmentId);
-			});
 		}
 	});
 }

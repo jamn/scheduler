@@ -25,7 +25,7 @@ class SchedulerService {
 		endDate.setTime(requestedDate)
 		def serviceProviderDayOfTheWeek
 		serviceProvider?.daysOfTheWeek?.each(){
-			def dayIndex = it.dayIndex ? it.dayIndex : 7
+			def dayIndex = it.dayIndex + 1
 			if(dayIndex == startDate.get(Calendar.DAY_OF_WEEK)){
 				serviceProviderDayOfTheWeek = it
 			}

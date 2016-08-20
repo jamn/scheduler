@@ -79,7 +79,11 @@
 	});
 
 	$('#dateOfAppointment').datepicker( {
-		minDate: 0
+		minDate: 0,
+		beforeShowDay: function(date) {
+		 	var day = date.getDay();
+		 	return [${availability}.indexOf(day) > -1];
+		}
 	});
 	$('#dateOfAppointment').datepicker("setDate", new Date("${datetime}"));
 	$('#bookForClientButton').confirmOn({

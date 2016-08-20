@@ -97,7 +97,9 @@ class AdminController {
 	def getScheduleAppointmentForm(){
 		println "params: " + params
 		def datetime = dateFormatter2.parse(params.d) ?: new Date()
-		def model = adminService.getClients() + adminService.getServices() + [datetime:datetime]
+		def serviceProvider = User.get(session.user.id)
+		def availability = DayOfTheWeek.findAllWhere(serviceProvider:serviceProvider, available:true)?.collect{ it.dayIndex }
+		def model = adminService.getClients() + adminService.getServices() + [datetime:datetime, availability:availability]
 		render(template:"schedulingForm", model:model)
 	}
 
@@ -352,7 +354,8 @@ class AdminController {
 				timeSlots += v
 			}
 			def services = ServiceType.list().sort{it.displayOrder}.findAll{it.description != "Blocked Off Time"}
-			render (template: "rescheduleOptions", model: [appointment:appointment, services:services, timeSlots:timeSlots])
+			def availability = DayOfTheWeek.findAllWhere(serviceProvider:serviceProvider, available:true)?.collect{ it.dayIndex }
+			render (template: "rescheduleOptions", model: [appointment:appointment, services:services, timeSlots:timeSlots, availability:availability])
 		}else{
 			render "No appointment found"
 		}
