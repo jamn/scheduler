@@ -5,6 +5,7 @@ import org.apache.commons.lang.RandomStringUtils
 import java.text.SimpleDateFormat
 import grails.converters.JSON
 import groovy.sql.Sql
+import jamnApps.scheduler.S3Sample
 
 class BookController {
 

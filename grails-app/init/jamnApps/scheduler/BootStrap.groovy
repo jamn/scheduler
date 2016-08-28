@@ -4,12 +4,46 @@ import java.text.SimpleDateFormat
 
 class BootStrap {
 
+	def defaultCompany
 	def defaultServiceProvider
 	def defaultClient
 
 	def init = { servletContext ->
 		
 		def dateService = new DateService()
+
+		if (Company.count() == 0){
+			println "creating default company..."
+
+			defaultCompany = new Company()
+			defaultCompany.name = "The Den Barbershop"
+			defaultCompany.address1 = "123 Main Street"
+			defaultCompany.city = "Kansas City`"
+			defaultCompany.state = "MO"
+			defaultCompany.zip = "64108"
+			defaultCompany.email = "info@thedenbarbershop-kc.com"
+			defaultCompany.phone = "816-000-0000"
+		}
+
+		if (ImageType.count() == 0 && Image.count == 0) {
+			def imageType = new ImageType()
+			imageType.description = "Homepage-Image"
+
+			def imageType2 = new ImageType()
+			imageType2.description = "Logo"
+
+			def image = new Image()
+			image.type = imageType
+			image.url = "https://schedulepro.s3-us-west-2.amazonaws.com/customerName_5927c911-de61-40ac-9592-6a4411fb07cf"
+			image.uuid = "5927c911-de61-40ac-9592-6a4411fb07cf"
+			image.company = defaultCompany
+
+			new ApplicationProperty(
+				name:"HOMEPAGE_IMAGE_URL", 
+				value:image.url
+			).save()
+		}
+
 
 		if (User.count() == 0){
 			println "creating default users..."

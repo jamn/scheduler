@@ -27,7 +27,8 @@ class BookInterceptor {
             'confirmation': (serviceProvider && service && serviceDate),
             'cancelAppointment': true,
             'confirmedCancelAppointment': true,
-            'modifyAppointment': true
+            'modifyAppointment': true,
+            'testS3': true
         ]
     
         println "\n---------------------------------"

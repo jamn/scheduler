@@ -216,6 +216,12 @@ select{
 	min-height: 200px;
 }
 
+.homepage-image-container img {
+	max-width: 300px;
+	max-height: 300px;
+	border: 1px solid #cbcbcb;
+}
+
 .green-button {
 	background-color: #827D00;
 	background: -moz-linear-gradient(top,  rgba(130,125,0,0.9) 0%, rgba(130,125,0,1) 100%); /* FF3.6+ */

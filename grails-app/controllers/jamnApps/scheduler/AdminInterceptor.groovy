@@ -4,6 +4,8 @@ package jamnApps.scheduler
 class AdminInterceptor {
 
     boolean before() {
+        println "\n" + new Date()
+        println "params: " + params
         def clientName = request.serverName
         if (clientName.contains(".")) {
             clientName = clientName.substring(0, clientName.indexOf("."))

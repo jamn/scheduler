@@ -22,6 +22,7 @@ class AdminController {
 	def userService
 	def utilService
 	def dateService
+	def amazonWebService
 
 	/*********************************
 				NAVIGATION
@@ -44,7 +45,7 @@ class AdminController {
     	return adminService.getUpcomingAppointments(startDate, session.user)
     }
 
-    def homepageMessage(){
+    def homepageConfig(){
     	return adminService.getHomepageText()
     }
 
@@ -76,8 +77,6 @@ class AdminController {
 	********************************/
 
 	def saveHomepageMessage(){
-		println "\n" + new Date()
-		println "params: " + params
 		def success = false
 		def homepageText = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")
 		homepageText.value = params.m.replace("\r", "<br />").replace("\n", "<br />")
@@ -92,6 +91,15 @@ class AdminController {
 			utilService.communicationBoardMessage = homepageText.value
 		}
 		render ('{"success":'+success+'}') as JSON
+	}
+
+	def saveLogo(){
+	}
+
+	def saveHomepageImage(){
+		def file = request.getFile('homepageImage')
+		def url = amazonWebService.saveFile(file)
+		redirect(action:'homepageConfig')
 	}
 
 	def getScheduleAppointmentForm(){
@@ -109,8 +117,6 @@ class AdminController {
     }
 
 	def getClientDetails(){
-		println "\n" + new Date()
-		println "params: " + params
 		if (params?.cId){
 			def client = User.get(params.cId)
 			session.editClient = client
@@ -123,8 +129,6 @@ class AdminController {
 	}
 
 	def getClientDataForm(){
-		println "\n" + new Date()
-		println "params: " + params
     	def client
     	def submitText = "Register Client"
     	if (params?.cId){
@@ -137,8 +141,6 @@ class AdminController {
     }
 
 	def saveClientNotes(){
-		println "\n" + new Date()
-		println "params: " + params
 		if (params?.n){
 			def coder = new org.apache.commons.codec.net.URLCodec()
 			def client = User.get(session.editClient.id)
@@ -152,8 +154,6 @@ class AdminController {
 	}
 
 	def saveBlockedTime(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		Boolean appointmentFailedToSave = false
 		try {
@@ -198,8 +198,6 @@ class AdminController {
 	}
 
 	def blockOffWholeDay(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		Boolean dayOffFailedToSave = false
 		try {
@@ -248,8 +246,6 @@ class AdminController {
 	}
 
 	def clearBlockedTime(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		def deletedTimeslots = []
 		def timeSlotsToDelete = params?.blockedOffTime ?: []
@@ -274,8 +270,6 @@ class AdminController {
 	}
 
 	def bookForClient(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		if (params?.cId && params?.sId && params?.aDate && params?.sTime){
 			success = schedulerService.bookForClient(params)
@@ -291,8 +285,6 @@ class AdminController {
 	}
 
 	def rescheduleAppointment(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		if (params?.aId && params?.sId && params?.aDate && params?.sTime){
 			try {
@@ -324,8 +316,6 @@ class AdminController {
 	}
 
 	def getTimeSlotOptions(){
-		println "\n" + new Date()
-		println "params: " + params
 		def timeSlots = []
 		if (params?.aDate && params?.sId){
 			def requestedDate = dateFormatter3.parse(params.aDate)
@@ -339,8 +329,6 @@ class AdminController {
 	}
 
 	def getRescheduleOptions(){
-		println "\n" + new Date()
-		println "params: " + params
 		def appointment
 		def timeSlots = []
 		if (params?.aId){
@@ -362,8 +350,6 @@ class AdminController {
 	}
 
 	def saveClient(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 
 		if (params?.cId) {
@@ -385,8 +371,6 @@ class AdminController {
 	}
 
 	def cancelAppointment(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		if (params.c){ // params.c = appointment.code
 			def appointment = Appointment.findByCode(params.c.trim())
@@ -413,8 +397,6 @@ class AdminController {
 	}
 
 	def emailClient(){
-		println "\n" + new Date()
-		println "params: " + params
 		Boolean success = false
 		if (params?.e?.size() > 0 && params.m?.size() > 0){
 			success = emailService.sendEmail(params.e, params.m)
@@ -423,8 +405,6 @@ class AdminController {
 	}
 
 	def getClientHistory(){
-		println "\n" + new Date()
-		println "params: " + params
 		def appointments = []
 		if (params?.cId){
 			def client = User.get(params.cId)

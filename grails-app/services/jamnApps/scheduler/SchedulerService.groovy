@@ -7,6 +7,20 @@ import org.joda.time.*
 
 class SchedulerService {
 
+	/*******************************************************
+
+		Day			| Database	| Cal/DateTime	| 	JS
+		--------------------------------------------------
+		Sunday		|	0		|		1		|	0
+		Monday		|	1		|		2		|	1
+		Tuesday		|	2		|		3		|	2
+		Wednesday	|	3		|		4		|	3
+		Thursday	|	4		|		5		|	4
+		Friday		|	5		|		6		|	5
+		Saturday	|	6		|		7		|	6
+		--------------------------------------------------
+	*********************************************************/
+
 	static Long HOUR = 3600000
 	static Long MINUTE = 60000
 
