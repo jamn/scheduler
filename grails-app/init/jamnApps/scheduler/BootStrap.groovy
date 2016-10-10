@@ -25,17 +25,10 @@ class BootStrap {
 			defaultCompany.phone = "816-000-0000"
 		}
 
-		if (ImageType.count() == 0 && Image.count == 0) {
-			def imageType = new ImageType()
-			imageType.description = "Homepage-Image"
-
-			def imageType2 = new ImageType()
-			imageType2.description = "Logo"
-
+		if (Image.count == 0) {
 			def image = new Image()
-			image.type = imageType
 			image.url = "https://schedulepro.s3-us-west-2.amazonaws.com/customerName_5927c911-de61-40ac-9592-6a4411fb07cf"
-			image.uuid = "5927c911-de61-40ac-9592-6a4411fb07cf"
+			image.uuid = "customerName_5927c911-de61-40ac-9592-6a4411fb07cf"
 			image.company = defaultCompany
 
 			new ApplicationProperty(

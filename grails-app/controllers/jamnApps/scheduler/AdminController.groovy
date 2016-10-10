@@ -98,7 +98,13 @@ class AdminController {
 
 	def saveHomepageImage(){
 		def file = request.getFile('homepageImage')
-		def url = amazonWebService.saveFile(file)
+		def results = amazonWebService.saveFile(file)
+		if (results.success){
+			def homepageImage = ApplicationProperty.findByName("HOMEPAGE_IMAGE_URL")
+			homepageImage.value = results.url
+			homepageImage.save()
+			utilService.resetApplicationPropertyVariables()
+		}
 		redirect(action:'homepageConfig')
 	}
 
@@ -111,8 +117,20 @@ class AdminController {
 		render(template:"schedulingForm", model:model)
 	}
 
+	def importClients(){
+		def clientsFile = request.getFile('clientsFile')
+		if (clientsFile.empty) {
+			flash.error = 'File cannot be empty.'
+			redirect(action: 'homepageConfig')
+			return
+		}else{
+			adminService.importClients(clientsFile)
+		}
+		redirect(action: 'clients')
+	}
+
 	def getClientsSelectMenu(){
-    	def clientData = getClients(params.lastNameStartsWith)
+    	def clientData = adminService.getClients(params.lastNameStartsWith)
     	render(template:"clientsSelectMenu", model:clientData)
     }
 

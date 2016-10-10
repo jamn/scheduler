@@ -3,6 +3,8 @@ package jamnApps.scheduler
 import java.text.SimpleDateFormat
 import org.joda.time.format.*
 import org.joda.time.*
+import org.apache.commons.lang.RandomStringUtils
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest.StandardMultipartFile
 
 class AdminService {
 
@@ -148,6 +150,45 @@ class AdminService {
 
 	private List getAppointmentsForClient(User client){
 		return Appointment.findAllWhere(client:client, booked:true)?.sort{it.appointmentDate}?.reverse()
+	}
+
+	private importClients(StandardMultipartFile clientsFile){
+		def convertedFile = multipartToFile(clientsFile)
+		def newClient
+		def count = 0
+		convertedFile.splitEachLine(","){ data ->
+			if (count > 0){
+				newClient = new User()
+				newClient.username = data[3]?.trim()
+				newClient.password = "!Atlantis3"
+				newClient.firstName = data[1]?.trim()?.capitalize()
+				newClient.lastName = data[2]?.trim()?.capitalize()
+				newClient.email = data[3]?.trim()
+				newClient.phone = data[7]?.trim()
+				newClient.address1 = data[5]?.trim()
+				newClient.address2 = data[6]?.trim()
+				newClient.city = data[10]?.trim()?.capitalize()
+				newClient.state = data[11]?.trim()?.capitalize()
+				newClient.zip = data[12] ? data[12]?.trim()?.toLong() : null
+				newClient.isClient = true
+				newClient.code = RandomStringUtils.random(8, true, true)
+				newClient.dateCreated = data[0] ? dateFormatter3.parse(data[0]?.trim()) : new Date()
+				newClient.birthday = data[4] ? dateFormatter3.parse(data[4]?.trim()) : null
+				newClient.notes = data[13]?.trim()
+				newClient.save()
+			}
+			count++
+		}
+
+	}
+
+	private File multipartToFile(StandardMultipartFile file) throws IllegalStateException, IOException {
+		File convFile = new File(file.getOriginalFilename())
+		convFile.createNewFile() 
+		FileOutputStream fos = new FileOutputStream(convFile) 
+		fos.write(file.getBytes())
+		fos.close() 
+		return convFile
 	}
 
 }

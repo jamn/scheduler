@@ -19,6 +19,11 @@ class UtilService {
 		return homepageImageUrl
 	}
 
+	def resetApplicationPropertyVariables(){
+		communicationBoardMessage = null
+		homepageImageUrl = null
+	}
+
 	def resetSession(){
 		session.invalidate()
 	}

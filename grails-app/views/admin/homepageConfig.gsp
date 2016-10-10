@@ -27,4 +27,11 @@
 		<input id="logo" name="logo" type="file" class="file">
 		<input type="submit" name="saveLogo" value="Save" class="btn green-button">
 	</form>
+
+	<form method="POST" enctype="multipart/form-data" action="importClients">
+		<h1 class="page-header">Import Clients</h1>
+		<label class="control-label">Select .csv file</label>
+		<input id="clientsFile" name="clientsFile" type="file" class="file">
+		<input type="submit" name="importClients" value="Import Clients" class="btn green-button">
+	</form>
 </body></html>

@@ -51,9 +51,9 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
 						<ul class="dropdown-menu">
+							<li class="${(params.action=='homepageConfig') ? 'active' : ''}"><a href="/admin/homepageConfig">Site Config</a></li>
 							<li class="${(params.action=='clients') ? 'active' : ''}"><a href="/admin/clients">Clients</a></li>
 							<li class="${(params.action=='bookAppointment') ? 'active' : ''}"><a href="/admin/bookAppointment">Book Appointment</a></li>
-							<li class="${(params.action=='homepageConfig') ? 'active' : ''}"><a href="/admin/homepageConfig">Homepage Config</a></li>
 							<li class="${(params.action=='availability') ? 'active' : ''}"><a href="/admin/availability">Availability</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="/book">Client Site</a></li>

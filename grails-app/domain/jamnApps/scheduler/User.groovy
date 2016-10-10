@@ -10,10 +10,19 @@ class User extends CoreObject {
 	String lastName
 	String email
     String phone
-	String code // users initials or some short code to pass as a URL param
+	String address1
+    String address2
+    String city
+    String state
+    Long zip
+
+    String code // users initials or some short code to pass as a URL param
     String passwordResetCode
     Date passwordResetCodeDateCreated
+    
     String notes
+    Date birthday
+
     Boolean isAdmin = false
     Boolean isServiceProvider = false
     Boolean isClient = false
@@ -26,10 +35,16 @@ class User extends CoreObject {
 		firstName(nullable:true)
 		lastName(nullable:true)
         email(nullable:true)
+        address1(nullable:true)
+        address2(nullable:true)
+        city(nullable:true)
+        state(nullable:true)
+        zip(nullable:true)
 		phone(nullable:true)
         passwordResetCode(nullable:true)
         passwordResetCodeDateCreated(nullable:true)
         notes(nullable:true)
+        birthday(nullable:true)
     }
 
     def transients = [
