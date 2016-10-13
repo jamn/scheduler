@@ -129,6 +129,19 @@ class AdminController {
 		redirect(action: 'clients')
 	}
 
+	def importAppointments(){
+		def appointmentsFile = request.getFile('appointmentsFile')
+		if (appointmentsFile?.empty) {
+			flash.error = 'File cannot be empty.'
+			redirect(action: 'homepageConfig')
+			return
+		}else{
+			def serviceProvider = User.get(session.user.id)
+			adminService.importAppointments(appointmentsFile, serviceProvider)
+		}
+		redirect(action: 'calendar')
+	}
+
 	def getClientsSelectMenu(){
     	def clientData = adminService.getClients(params.lastNameStartsWith)
     	render(template:"clientsSelectMenu", model:clientData)

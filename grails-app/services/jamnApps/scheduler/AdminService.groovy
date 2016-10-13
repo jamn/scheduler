@@ -17,6 +17,7 @@ class AdminService {
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MM/dd/yyyyhh:mma")
 	SimpleDateFormat dateFormatter3 = new SimpleDateFormat("MM/dd/yyyy")
 	DateTimeFormatter dateFormatter4 = DateTimeFormat.forPattern("MM/dd/yyyy")
+	DateTimeFormatter dateFormatter5 = DateTimeFormat.forPattern("yyyyMMdd'T'HHmmssZ")
 
 	private Boolean updateAvailabilityForServiceProvider(serviceProvider, params = [:]){
 		def success = false
@@ -154,32 +155,94 @@ class AdminService {
 
 	private importClients(StandardMultipartFile clientsFile){
 		def convertedFile = multipartToFile(clientsFile)
-		def newClient
 		def count = 0
 		convertedFile.splitEachLine(","){ data ->
 			if (count > 0){
-				newClient = new User()
-				newClient.username = data[3]?.trim()
-				newClient.password = "!Atlantis3"
-				newClient.firstName = data[1]?.trim()?.capitalize()
-				newClient.lastName = data[2]?.trim()?.capitalize()
-				newClient.email = data[3]?.trim()
-				newClient.phone = data[7]?.trim()
-				newClient.address1 = data[5]?.trim()
-				newClient.address2 = data[6]?.trim()
-				newClient.city = data[10]?.trim()?.capitalize()
-				newClient.state = data[11]?.trim()?.capitalize()
-				newClient.zip = data[12] ? data[12]?.trim()?.toLong() : null
-				newClient.isClient = true
-				newClient.code = RandomStringUtils.random(8, true, true)
-				newClient.dateCreated = data[0] ? dateFormatter3.parse(data[0]?.trim()) : new Date()
-				newClient.birthday = data[4] ? dateFormatter3.parse(data[4]?.trim()) : null
-				newClient.notes = data[13]?.trim()
-				newClient.save()
+				new User(
+					username: data[3]?.trim(),
+					password: "!Atlantis3",
+					firstName: data[1]?.trim()?.capitalize(),
+					lastName: data[2]?.trim()?.capitalize(),
+					email: data[3]?.trim(),
+					phone: data[7]?.trim(),
+					address1: data[5]?.trim(),
+					address2: data[6]?.trim(),
+					city: data[10]?.trim()?.capitalize(),
+					state: data[11]?.trim()?.capitalize(),
+					zip: data[12] ? data[12]?.trim()?.toLong() : null,
+					isClient: true,
+					code: RandomStringUtils.random(8, true, true),
+					dateCreated: data[0] ? dateFormatter3.parse(data[0]?.trim()) : new Date(),
+					birthday: data[4] ? dateFormatter3.parse(data[4]?.trim()) : null,
+					notes: data[13]?.trim()
+				).save()
 			}
 			count++
 		}
 
+	}
+
+	private importAppointments(StandardMultipartFile appointmentsFile, User serviceProvider){
+		def convertedFile = multipartToFile(appointmentsFile)
+		def count = 0
+		def key
+		def value
+		def newEvent = false
+		def appointmentDate
+		def clientName
+		def client
+		def serviceName
+		def service
+		def summarySeperatorIndex
+		println "here"
+		convertedFile.splitEachLine(':'){ data ->
+			key = data[0]
+			value = data[1]
+			if (key == "DTSTART"){
+				println "-----------------"
+				appointmentDate = dateFormatter5.parseDateTime(value)
+			}
+			println "key: " + key
+			println "value: " + value
+			if (key == "SUMMARY"){
+				if (value != "Personal Time Off"){
+					summarySeperatorIndex = value.indexOf('-')
+					clientName = value.substring(0,summarySeperatorIndex - 1)?.split()
+					serviceName = value.substring(summarySeperatorIndex + 2)
+				}
+				else {
+					serviceName = "Blocked Off Time"
+				}
+				println "clientName: " + clientName
+				println "serviceName: " + serviceName
+				if (clientName){
+						client = User.findWhere(firstName:clientName[0], lastName:clientName[1])
+					}
+				if (serviceName){
+					service = ServiceType.findWhere(description:serviceName)
+				}
+			}
+			if (key == "END" && value == "VEVENT"){
+				println "appointmentDate: " + appointmentDate
+				println "client: " + client
+				println "service: " + service
+				if (appointmentDate && client && service && serviceProvider){
+					new Appointment(
+						appointmentDate: appointmentDate,
+						serviceProvider: serviceProvider,
+						client: client,
+						service: service,
+						code: RandomStringUtils.random(14, true, true),
+						booked: true,
+						sendEmailReminder: false,
+						sendTextReminder: false
+					).save()
+					appointmentDate = null
+					client = null
+					service = null
+				}
+			}
+		}
 	}
 
 	private File multipartToFile(StandardMultipartFile file) throws IllegalStateException, IOException {

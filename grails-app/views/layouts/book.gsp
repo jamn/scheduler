@@ -13,7 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <html><head>
 <meta charset="UTF-8">
-<title><g:layoutTitle default="SchedulePro" /></title>
+<title><g:layoutTitle default="The Den Barbershop - Kansas City" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
 
