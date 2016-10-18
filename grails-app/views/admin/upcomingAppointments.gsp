@@ -52,7 +52,7 @@
 							<label for="message-text" class="control-label">Message:</label>
 							<textarea class="form-control" id="messageText"></textarea>
 						</div>
-						<button id="emailClientButton" type="button" class="btn green-button">Send message</button>
+						<button id="emailClientButton" type="button" class="btn green-button" onclick="sendClientEmail();">Send message</button>
 					</form>
 					<h1>History</h1>
 					<div class="client-history"></div>
@@ -60,9 +60,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
 
 
 
@@ -99,6 +96,10 @@
 		});
 
 		$('#emailClientButton').on('tap', function() {
+			sendClientEmail()
+		});
+
+		function sendClientEmail(){
 			var e = $('.modal-body #clientEmail').val();
 			var m = $('.modal-body #messageText').val();
 			$('#emailClientButton').html($('.spinner').html());
@@ -118,8 +119,7 @@
 					$('#emailClientButton').addClass('error-button');
 				}
 			});
-		});
-
+		}
 
 		$('.cancelAppointmentButton').confirmOn({
 			classPrepend: 'confirmon',

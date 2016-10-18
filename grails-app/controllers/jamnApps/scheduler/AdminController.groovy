@@ -24,6 +24,11 @@ class AdminController {
 	def dateService
 	def amazonWebService
 
+	def test(){
+		emailService.sendMailUsingSendGrid()
+		render "done"
+	}
+
 	/*********************************
 				NAVIGATION
 	**********************************/
@@ -386,7 +391,7 @@ class AdminController {
 		if (params?.cId) {
 			def existingClient = User.get(params.cId)
 			if (existingClient) {
-				success = userService.updateClient(existingClient, params)
+				success = userService.updateExistingClient(existingClient, params)
 			}
 		}
 		else {

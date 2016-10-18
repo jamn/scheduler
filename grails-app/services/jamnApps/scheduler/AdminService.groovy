@@ -189,32 +189,30 @@ class AdminService {
 		def value
 		def newEvent = false
 		def appointmentDate
+		def dateCreated
 		def clientName
 		def client
 		def serviceName
 		def service
 		def summarySeperatorIndex
-		println "here"
 		convertedFile.splitEachLine(':'){ data ->
 			key = data[0]
 			value = data[1]
 			if (key == "DTSTART"){
-				println "-----------------"
 				appointmentDate = dateFormatter5.parseDateTime(value)
+				//appointmentDate = appointmentDate.withZone(DateTimeZone.forID("America/Chicago"));
 			}
-			println "key: " + key
-			println "value: " + value
+			if (key == "DTSTAMP"){
+				dateCreated = dateFormatter5.parseDateTime(value)
+			}
 			if (key == "SUMMARY"){
-				if (value != "Personal Time Off"){
+				if (value == "Personal Time Off"){
+					serviceName = "Blocked Off Time"
+				}else{
 					summarySeperatorIndex = value.indexOf('-')
 					clientName = value.substring(0,summarySeperatorIndex - 1)?.split()
 					serviceName = value.substring(summarySeperatorIndex + 2)
 				}
-				else {
-					serviceName = "Blocked Off Time"
-				}
-				println "clientName: " + clientName
-				println "serviceName: " + serviceName
 				if (clientName){
 						client = User.findWhere(firstName:clientName[0], lastName:clientName[1])
 					}
@@ -223,10 +221,7 @@ class AdminService {
 				}
 			}
 			if (key == "END" && value == "VEVENT"){
-				println "appointmentDate: " + appointmentDate
-				println "client: " + client
-				println "service: " + service
-				if (appointmentDate && client && service && serviceProvider){
+				if (appointmentDate && client && service && serviceProvider && dateCreated){
 					new Appointment(
 						appointmentDate: appointmentDate,
 						serviceProvider: serviceProvider,
@@ -235,9 +230,11 @@ class AdminService {
 						code: RandomStringUtils.random(14, true, true),
 						booked: true,
 						sendEmailReminder: false,
-						sendTextReminder: false
+						sendTextReminder: false,
+						dateCreated: dateCreated
 					).save()
 					appointmentDate = null
+					dateCreated = null
 					client = null
 					service = null
 				}
