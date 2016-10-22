@@ -28,7 +28,8 @@ class BookInterceptor {
             'cancelAppointment': true,
             'confirmedCancelAppointment': true,
             'modifyAppointment': true,
-            'testS3': true
+            'sendPasswordResetEmail': true,
+            'resetPasswordEmailSentConfirmation': true
         ]
     
         println "\n---------------------------------"

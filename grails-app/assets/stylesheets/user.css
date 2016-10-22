@@ -32,15 +32,14 @@ body{
 	width: 300px;
 }
 .header .logo {
-    margin: 14px;
-    width: 228px;
+    width: 216px;
     padding: initial;
     background-color: #FFF;
     border-radius: 4px;
     padding: 10px;
     position: absolute;
-    top: 63px;
-    left: 21px;
+    top: 80px;
+    left: 40px;
     border: 1px solid #CACACA;
 }
 .header .user-links {

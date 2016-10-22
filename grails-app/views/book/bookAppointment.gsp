@@ -5,7 +5,7 @@
 	<g:set var="buttonId" value="${cancelAppointment ? 'cancelAppointmentLoginButton' : 'loginButton'}" />
 
 	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-		<form method="post" class="login-box" action="confirmation">
+		<form method="post" class="login-box" action="confirmation" id="loginForm">
 
 			<g:set var="plural" value="${session?.bookedAppointments?.size() > 1 ? 's' : ''}" />
 

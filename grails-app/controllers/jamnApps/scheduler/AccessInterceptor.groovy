@@ -5,7 +5,8 @@ class AccessInterceptor {
 
     boolean before() {
         def caller = params?.caller ?: request.getHeader('referer')
-        if (!caller.contains('login')){
+        if (caller && !caller?.contains('login')){
+            //println "caller: " + caller
             session.caller = caller
         }
         true

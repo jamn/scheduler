@@ -8,13 +8,7 @@
 
 			<input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" />
 
-			<div class="reset-password-links">
-				<span id="registerLink">New Client?</span>
-				<span class="left-divider"> | </span>
-				<span id="resetPassword">Reset Password</span>
-				<span class="right-divider"> | </span>
-				<span id="showLoginForm">Login Form</span>
-			</div>
+			<a href="resetPassword" style="padding:6px;">Reset Password</a>
 
 			<input type="submit" class="btn green-button login-button" id="loginButton" value="Login" onclick="showMask()" />
 

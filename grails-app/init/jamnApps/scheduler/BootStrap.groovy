@@ -53,13 +53,13 @@ class BootStrap {
 			defaultServiceProvider.save(flush:true)
 
 			defaultClient = new User()
-			defaultClient.username = "default-client"
+			defaultClient.username = "bjacobi"
 			defaultClient.password = "ben"
-			defaultClient.firstName = "Default"
-			defaultClient.lastName = "Client"
-			defaultClient.email = "ben"
+			defaultClient.firstName = "Ben"
+			defaultClient.lastName = "Jacobi"
+			defaultClient.email = "bjacobi@gmail.com"
 			defaultClient.isClient = true
-			defaultClient.code = "dc12391"
+			defaultClient.code = "bj33201871"
 			defaultClient.save(flush:true)
 			
 		}
