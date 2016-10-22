@@ -350,13 +350,15 @@ body {
 }
 
 .errorDetails{
-	width: 304px;
-	padding: 6px;
-	color: red;
-	font-style: .8em;
-	margin: auto;
-	text-align: center;
-	margin-top: 8px;
+    /* width: 304px; */
+    padding-top: 14px;
+    padding-bottom: 20px;
+    color: #f00;
+    font-style: .8em;
+    /* margin: auto; */
+    text-align: center;
+    /* margin-top: 8px; */
+    display: none;
 }
 
 #showLoginForm,

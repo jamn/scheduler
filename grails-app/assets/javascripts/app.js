@@ -46,7 +46,7 @@ function showRegistrationForm() {
 	$('.reminders').slideDown();
 	togglePhoneNumber();
 
-	$('#loginForm').attr("action", "attemptLogin")
+	$('#loginForm').attr("action", "/access/registerNewUser")
 }
 
 function showResetPasswordForm() {
@@ -72,7 +72,7 @@ function showResetPasswordForm() {
 	$('#loginButton').removeClass('errorButton');
 	$('#loginButton').attr("value", "Send Reset Email");
 
-	$('#loginForm').attr("action", "sendPasswordResetEmail")
+	$('#loginForm').attr("action", "/access/sendPasswordResetEmail")
 }
 
 function showLoginForm() {
@@ -97,7 +97,7 @@ function showLoginForm() {
 	$('.reminders').slideDown();
 	togglePhoneNumber();
 	
-	$('#loginForm').attr("action", "attemptLogin")
+	$('#loginForm').attr("action", "/access/attemptLogin")
 }
 
 function logout() {

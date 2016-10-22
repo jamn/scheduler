@@ -32,10 +32,10 @@ class BookInterceptor {
             'resetPasswordEmailSentConfirmation': true
         ]
     
-        println "\n---------------------------------"
-        println "requestedAction: " + requestedAction
-        println "readyTo: " + readyTo
-        println "---------------------------------"
+        //println "\n---------------------------------"
+        //println "requestedAction: " + requestedAction
+        //println "readyTo: " + readyTo
+        //println "---------------------------------"
 
         if (readyTo[requestedAction]){
             return true

@@ -2,6 +2,8 @@
 
 <input type="hidden" name="loggedIn" id="loggedIn" value="${loggedIn}" />
 
+<div class="errorDetails">${error}</div>
+
 <g:if test="${!cancelAppointment}">
 	<input class="form-control" placeholder="Phone" type="text" name="phoneNumber" id="phoneNumber" value="${client?.phone}" autofocus="autofocus" />
 </g:if>

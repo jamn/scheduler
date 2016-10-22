@@ -25,21 +25,9 @@ class UserService {
 		if (!existingUser && params?.email?.size() > 1 && params?.password?.size() > 1){
 			existingUser = User.findByEmail(params.email.toLowerCase())
 			if (!existingUser){
-				if (params?.firstName?.size() > 1 && params?.lastName?.size() > 1){
-					println "CREATING NEW USER"
-					def newClient = createNewClient(params)
-					if (newClient.hasErrors()){
-						println "ERROR: " + newClient.errors
-						results['error'] = true
-						results['errorDetails'] = "There was an error creating a new user. Please try again."
-					}else{
-						results['user'] = newClient
-					}
-				}else{
-					println "NO USER FOUND"
-					results['error'] = true
-					results['errorDetails'] = "Email was not found."
-				}
+				println "NO USER FOUND"
+				results['error'] = true
+				results['errorDetails'] = "Email was not found."
 			}else{
 				if (existingUser.password == params.password){
 					println "USER LOGGED IN CORRECTLY"

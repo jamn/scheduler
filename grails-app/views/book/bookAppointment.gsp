@@ -43,7 +43,6 @@
 
 			<input type="submit" class="btn green-button login-button" id="${buttonId}" value="${formAction} Appointment${plural}" onclick="showMask()" />
 			
-			<div class="errorDetails">${error}</div>
 
 		</form>
 
@@ -51,6 +50,9 @@
 	</div>
 
 	<script type="text/javascript">
+		<g:if test="${error}">
+			$('.errorDetails').fadeIn();
+		</g:if>
 		$('#textMessageReminder').click(function() {
 			togglePhoneNumber();
 		});

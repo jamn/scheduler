@@ -149,8 +149,7 @@ class BookController {
 		println "\n---- GETTING BOOK APPOINTMENT/LOGIN SCREEN ----"
 		println new Date()
 		def loginResults = userService.loginUser(request, params)
-		def error = params?.error
-		println "params: " + params
+		def error = flash?.error
 		if (loginResults?.user){
 			session.user = loginResults.user
 		}
@@ -178,7 +177,8 @@ class BookController {
 				client = loginResults.user
 				session.user = client
 			}else{
-				redirect(action:"bookAppointment", params:[error:loginResults.errorDetails])
+				flash.error = loginResults.errorDetails
+				redirect(action:"bookAppointment")
 				return
 			}
 		}

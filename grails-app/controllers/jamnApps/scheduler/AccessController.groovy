@@ -46,69 +46,37 @@ class AccessController {
 	def logout(){
 		println "session: " + session
 		session.user = null
-		if (session.caller.contains('confirmation') || session.caller.contains('admin')){
+		if (session.caller.contains('confirmation') || session.caller.contains('admin') || session.caller.contains('attemptPasswordReset')){
 			session.caller = '/book'
 		}
 		//response.deleteCookie('scheduler-1')
 		redirect(uri:session.caller)
 	}
 
-	def checkCredentials(){
-		def user
-		def loggedIn = false
-		def loggedInCookieId = request.getCookie('scheduler-1')
-		if (loggedInCookieId){
-			println "EXISTING loggedInCookieId: " + loggedInCookieId
-			loggedIn = true
-			def loginLog = LoginLog.findByLoggedInCookieId(loggedInCookieId)
-			//def fourMonthsAgo = dateService.getDateFourMonthsAgo()
-			//println "Four Months Ago: " + fourMonthsAgo
-			if (loginLog.user){
-			//if (loginLog.user && loginLog?.dateCreated > fourMonthsAgo){
-				//println "last login was less than four months ago"
-				user = loginLog.user
-			}else if (!loginLog){
-				response.deleteCookie('scheduler-1')
-			}else{
-				println "last login was more than four months ago"
-			}
-		}
-		if (!user){
-			user = User.findWhere(
-				username: params.u,
-				password: params.p,
-				deleted: false
-			)
-		}
-		println 'user: ' + user?.getFullName()
-		if (user?.isAdmin){
-			redirect (controller:'admin', action:'index')
-		}
-		else{
-			redirect(controller:'book', action:'bookAppointment')
-		}
-	}
-
 	def registerNewUser(){
-		if (params?.email || params?.password){
-			def loginResults = userService.loginUser(request, params)
-			if (loginResults?.user){
-				session.user = loginResults.user
-				println "LOGGED IN, REDIRECTING TO: " + session.caller ?: '/book'
-				if (session.caller){
-					redirect(uri:session.caller)
-					return
-				}else{
-					redirect(controller:'book')
-					return
-				}
+		println "\n---- REGISTERING NEW USER ----"
+		println new Date()
+		println "params: " + params
+		Boolean error = false
+		if (params?.email?.size() > 1 && params?.password?.size() > 1 && params?.firstName?.size() > 1 && params?.lastName?.size() > 1){
+			println "CREATING NEW USER"
+			def newClient = userService.createNewClient(params)
+			if (newClient.hasErrors()){
+				println "ERROR: " + newClient.errors
+				flash.error = "There was an unexpected error creating your new account. Please try again."
+				error = true
+			}else{
+				session.user = newClient
 			}
-			flash.error = loginResults?.errorDetails
 		}else{
-			flash.error = 'Email/password required.'
+			flash.error = 'Email, password, first name, and last name are required to create a new account.'
+			error = true
 		}
-		flash.email = params?.email
-		redirect(action:'login')
+		if (error){
+			redirect(controller:'book', action:'bookAppointment')
+		}else{
+			redirect(controller:'book', action:'confirmation')
+		}
 	}
 
 

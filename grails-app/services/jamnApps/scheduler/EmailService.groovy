@@ -15,7 +15,7 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointments[0].client.email}"
 		def subject = "Appointment Booked @ The Den Barbershop"
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/assets/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>I have you down for the following appointment(s):</p><ul>"
+		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/assets/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>The following appointment(s) have been scheduled for you:</p><ul>"
 		appointments.each(){ appointment ->
 			println "    - " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('E MM/dd @ hh:mm a')
 			body += "<li>A <b>${appointment.service.description}</b> on ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/>"
@@ -88,7 +88,7 @@ class EmailService {
 		def from = "${appointment.client.email}"
 		def to = "kalin@thedenbarbershop-kc.com"
 		def subject = "** Appointment Cancelled ** [${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}]"
-		def emailBody = "<p><img style='height:120px;width:120px;' src='${getLink()}/assets/logo.png'></p><p><b>Client:</b> ${appointment.client.firstName} ${appointment.client.lastName}<br/><b>Time:</b> ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/><b>Service:</b> ${appointment.service.description}</p>"
+		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/assets/logo.png'></p><p><b>Client:</b> ${appointment.client.firstName} ${appointment.client.lastName}<br/><b>Time:</b> ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/><b>Service:</b> ${appointment.service.description}</p>"
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
