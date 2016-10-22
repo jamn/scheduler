@@ -13,7 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <html><head>
 <meta charset="UTF-8">
-<title><g:layoutTitle default="The Den Barbershop - Kansas City" /></title>
+<title><g:layoutTitle default="The Den Barbershop :: KC" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'bootstrap-3.2.0.min.css')}" >

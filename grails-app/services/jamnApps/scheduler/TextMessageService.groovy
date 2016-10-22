@@ -1,40 +1,46 @@
 package jamnApps.scheduler
 
-//import com.twilio.sdk.TwilioRestClient
-//import com.twilio.sdk.TwilioRestException
-//import com.twilio.sdk.resource.factory.MessageFactory
-//import com.twilio.sdk.resource.instance.Message
-//import org.apache.http.NameValuePair
-//import org.apache.http.message.BasicNameValuePair
+import com.twilio.Twilio
+import com.twilio.rest.api.v2010.account.Message
+import com.twilio.type.PhoneNumber
  
 class TextMessageService {
 
-	//static final String ACCOUNT_SID = "ACb0f0b0592fc4feee469fc6213ddc454d"
-	//static final String AUTH_TOKEN = "fbdb7ce5679ea26e65b8768681d9bf40"
+	static final String ACCOUNT_SID = "AC698b760c0ae5de295ecc4d99ee0014de"
+	static final String AUTH_TOKEN = "410d76c16d6e4ea879ae44a171011e1d"
 
-	/*static void sendReminder(Appointment appointment) throws TwilioRestException {
-		
+	public static void sendReminder(Appointment appointment){	
 		def phone = appointment.client?.phone?.replaceAll("-","")?.replaceAll(" ","")?.replaceAll("___-___-____","")
-		
 		if (!appointment.reminderTextSent && (phone?.size() == 10 && !phone.contains('0000000000'))) {
 			def appointmentDate = appointment.appointmentDate.format('hh:mm a')
+			def to = "+1" + phone
+			def from = "+18163262006"
 			def body = "Reminder: Your appointment for a ${appointment.service.description} @ The Den is tomorrow at ${appointmentDate}."
-			
-			// Build a filter for the MessageList
-			List<NameValuePair> params = new ArrayList<NameValuePair>()
-			params.add(new BasicNameValuePair("Body", body))
-			params.add(new BasicNameValuePair("To", "+1"+phone))
-			params.add(new BasicNameValuePair("From", "+18163262006"))
-
-			TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-			MessageFactory messageFactory = client.getAccount().getMessageFactory()
-			Message message = messageFactory.create(params)
-			
-			println "Reminder text sent. (${message.getSid()})"
-			
+			sendMessage(to,from,body)
 			appointment.reminderTextSent = true
 			appointment.save()
 		}
+	}
 
-	}*/
+	public static void test(){
+		def to = "+19132055949"
+		def from = "+18162664723"
+		def body = "Reminder: Your appointment for a Haircut @ The Den is tomorrow at 4:30 PM."
+		sendMessage(to,from,body)
+	}
+
+	private static void sendMessage(to, from, messageBody){
+		try {
+			Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+			Message message = Message.creator(
+				new PhoneNumber(to),
+				new PhoneNumber(from), 
+				messageBody
+			).create();
+			println "Text sent through Twilio. (${message.getSid()})"
+		}
+		catch(Exception e) {
+			println "ERROR: " + e
+		}
+	}
 }

@@ -23,9 +23,10 @@ class AdminController {
 	def utilService
 	def dateService
 	def amazonWebService
+	def textMessageService
 
 	def test(){
-		emailService.sendMailUsingSendGrid()
+		textMessageService.test()
 		render "done"
 	}
 
