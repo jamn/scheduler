@@ -2,19 +2,23 @@
 
 <input type="hidden" name="loggedIn" id="loggedIn" value="${loggedIn}" />
 
-<div class="errorDetails">${error}</div>
+<div class="error-details">${error}</div>
 
-<g:if test="${!cancelAppointment}">
-	<input class="form-control" placeholder="Phone" type="text" name="phoneNumber" id="phoneNumber" value="${client?.phone}" autofocus="autofocus" />
-</g:if>
+<div class="password-reset-instructions">Send a password reset link to:</div>
 
-<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${client?.email}" />
+<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${client?.email}" autofocus="autofocus"/>
 
 <input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" value="${client?.password}" />
 
-<input placeholder="First Name" type="text" name="first-name" id="firstName" class="form-control new-user">
+<g:if test="${!cancelAppointment}">
+	<input class="form-control new-user" placeholder="Phone" type="text" name="phoneNumber" id="phoneNumber" value="${client?.phone}" />
 
-<input placeholder="Last Name" type="text" name="last-name" id="lastName" class="form-control new-user"><br>
+	<input placeholder="First Name" type="text" name="first-name" id="firstName" class="form-control new-user">
+
+	<input placeholder="Last Name" type="text" name="last-name" id="lastName" class="form-control new-user">
+</g:if>
+
+<br>
 
 <g:if test="${!cancelAppointment}">
 	<label class="reminders">		

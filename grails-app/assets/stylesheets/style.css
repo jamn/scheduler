@@ -349,15 +349,11 @@ body {
 	display: none;
 }
 
-.errorDetails{
-    /* width: 304px; */
+.error-details{
     padding-top: 14px;
     padding-bottom: 20px;
     color: #f00;
-    font-style: .8em;
-    /* margin: auto; */
     text-align: center;
-    /* margin-top: 8px; */
     display: none;
 }
 
@@ -366,7 +362,12 @@ body {
 	display: none;
 }
 
-.no-show-policy {
+.password-reset-instructions {
+	display: none;
+}
+
+.no-show-policy,
+.password-reset-instructions {
 	background-color: #DBDBDB;
 	padding: 10px;
 	margin-bottom: 14px;

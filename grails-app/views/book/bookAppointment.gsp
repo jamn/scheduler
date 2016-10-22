@@ -51,7 +51,7 @@
 
 	<script type="text/javascript">
 		<g:if test="${error}">
-			$('.errorDetails').fadeIn();
+			$('.error-details').fadeIn();
 		</g:if>
 		$('#textMessageReminder').click(function() {
 			togglePhoneNumber();

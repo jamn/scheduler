@@ -39,5 +39,5 @@
 			</div>
 		</div>
 	</form>
-	<div class="errorDetails"></div>
+	<div class="error-details"></div>
 </div>

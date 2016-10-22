@@ -26,12 +26,12 @@ class AccessController {
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.user){
 				session.user = loginResults.user
-				println "LOGGED IN, REDIRECTING TO: " + session.caller ?: '/book'
+				println "LOGGED IN, REDIRECTING TO: " + session.caller ?: '/book/confirmation'
 				if (session.caller){
 					redirect(uri:session.caller)
 					return
 				}else{
-					redirect(controller:'book')
+					redirect(controller:'book', action:'confirmation')
 					return
 				}
 			}
@@ -46,7 +46,7 @@ class AccessController {
 	def logout(){
 		println "session: " + session
 		session.user = null
-		if (session.caller.contains('confirmation') || session.caller.contains('admin') || session.caller.contains('attemptPasswordReset')){
+		if (session.caller?.contains('confirmation') || session.caller?.contains('admin') || session.caller?.contains('attemptPasswordReset')){
 			session.caller = '/book'
 		}
 		//response.deleteCookie('scheduler-1')

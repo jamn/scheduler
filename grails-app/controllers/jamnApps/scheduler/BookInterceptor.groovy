@@ -29,7 +29,10 @@ class BookInterceptor {
             'confirmedCancelAppointment': true,
             'modifyAppointment': true,
             'sendPasswordResetEmail': true,
-            'resetPasswordEmailSentConfirmation': true
+            'resetPasswordEmailSentConfirmation': true,
+            'confirmAppointmentCancellation': true,
+            'cancelAttemptToCancelAppointment': true,
+            'cancelAppointmentConfirmation':true
         ]
     
         //println "\n---------------------------------"

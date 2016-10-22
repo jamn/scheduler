@@ -29,6 +29,7 @@ function showMask(){
 
 function showRegistrationForm() {
 	$('.right-divider').show();
+	
 	$('#password-Book').show();
 	$('#resetPassword').show();
 	$('#showLoginForm').show();
@@ -37,16 +38,14 @@ function showRegistrationForm() {
 	$('#registerLink').hide();
 
 	$('.new-user').slideDown();
-
-	$('.errorDetails').slideUp();
+	$('.error-details').slideUp();
+	$('.password-reset-instructions').slideUp();
 
 	$('#loginButton').removeClass('errorButton');
 	$('#loginButton').attr("value", "Register & Book");
+	$('#loginForm').attr("action", "/access/registerNewUser")
 
 	$('.reminders').slideDown();
-	togglePhoneNumber();
-
-	$('#loginForm').attr("action", "/access/registerNewUser")
 }
 
 function showResetPasswordForm() {
@@ -54,25 +53,20 @@ function showResetPasswordForm() {
 	$('.left-divider').show();
 
 	$('#password-Book').hide();
-
 	$('#resetPassword').hide();
-
 	$('#registerLink').show();
-
 	$('#showLoginForm').show();
 
 	$('.new-user').slideUp();
-	
-	$('.errorDetails').slideUp();
-
-	$('#phoneNumber').slideUp();
-
-	$('.reminders').slideUp();
+	$('.error-details').slideUp();
+	$('.password-reset-instructions').slideDown();
 
 	$('#loginButton').removeClass('errorButton');
 	$('#loginButton').attr("value", "Send Reset Email");
-
 	$('#loginForm').attr("action", "/access/sendPasswordResetEmail")
+
+	$('.reminders').slideUp();
+
 }
 
 function showLoginForm() {
@@ -80,24 +74,19 @@ function showLoginForm() {
 	$('.left-divider').show();
 
 	$('#password-Book').show();
-
 	$('#resetPassword').show();
-	
 	$('#registerLink').show();
-	
 	$('#showLoginForm').hide();
 	
 	$('.new-user').slideUp();
-
-	$('.errorDetails').slideUp();
+	$('.error-details').slideUp();
+	$('.password-reset-instructions').slideUp();
 
 	$('#loginButton').removeClass('errorButton');
 	$('#loginButton').attr("value", "Book Appointment");
+	$('#loginForm').attr("action", "/access/attemptLogin")
 
 	$('.reminders').slideDown();
-	togglePhoneNumber();
-	
-	$('#loginForm').attr("action", "/access/attemptLogin")
 }
 
 function logout() {
@@ -107,10 +96,3 @@ function logout() {
 	$("#loggedIn").val("false");
 }
 
-function togglePhoneNumber(){
-	if( $('#textMessageReminder').is(':checked')) {
-		$("#phoneNumber").slideDown();
-	} else {
-		$("#phoneNumber").slideUp();
-	}
-}

@@ -274,33 +274,37 @@ class BookController {
 				println "appointment(${appointment?.id}): " + appointment?.client?.getFullName() + " | " + appointment?.service?.description + " on " + appointment?.appointmentDate?.format('MM/dd/yy @ hh:mm a [E]')
 			}
 		}
-
-		println "session: " + session
-
-		def message = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")?.value ?: "No messages found."
-		render (template: "cancelAppointment", model: [message: message])
+		render (view: "cancelAppointment")
 	}
 
 	def confirmAppointmentCancellation(){
 		println "\n---- CANCEL APPOINTMENT CONFIRMED ----"
 		println new Date()
 		println "params: " + params
-		Boolean appointmentDeleted = false
 		if (session?.appointmentToDelete){
-			def appointment = session.appointmentToDelete
+			def appointment = Appointment.get(session.appointmentToDelete.id)
 			appointment.deleted = true
 			appointment.save(flush:true)
 			if (appointment.hasErrors()){
 				println "ERROR: " + appointment.error
 			}
 			else{
-				appointmentDeleted = true
+				flash.appointmentDeleted = true
 				session.appointmentToDelete = null
 				emailService.sendCancellationNotices(appointment)
 			}
 		}
-		def message = ApplicationProperty.findByName("HOMEPAGE_MESSAGE")?.value ?: "No messages found."
-		render(template: "cancelAppointmentConfirmation", model: [message: message, appointmentDeleted:appointmentDeleted])
+		redirect(action:"cancelAppointmentConfirmation")
+	}
+
+	def cancelAppointmentConfirmation(){
+		println "flash: " + flash
+		return [appointmentDeleted:flash.appointmentDeleted]
+	}
+
+	def cancelAttemptToCancelAppointment(){
+		session?.appointmentToDelete = null
+		redirect(action:'index')
 	}
 
 	def confirmedCancelAppointment(){
