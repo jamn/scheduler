@@ -42,25 +42,25 @@ class BootStrap {
 			println "creating default users..."
 
 			defaultServiceProvider = new User()
-			defaultServiceProvider.username = "default-service-provider"
-			defaultServiceProvider.password = "ds"
-			defaultServiceProvider.firstName = "Default"
-			defaultServiceProvider.lastName = "Service Provider"
-			defaultServiceProvider.email = "ds"
+			defaultServiceProvider.username = "kpfanmiller"
+			defaultServiceProvider.password = "kjp620300"
+			defaultServiceProvider.firstName = "Kalin"
+			defaultServiceProvider.lastName = "Pfanmiller"
+			defaultServiceProvider.email = "kalin@thedenbarbershop-kc.com"
 			defaultServiceProvider.isServiceProvider = true
 			defaultServiceProvider.isAdmin = true
-			defaultServiceProvider.code = "dsp907201"
+			defaultServiceProvider.code = "kp907201"
 			defaultServiceProvider.save(flush:true)
 
-			defaultClient = new User()
-			defaultClient.username = "bjacobi"
-			defaultClient.password = "ben"
-			defaultClient.firstName = "Ben"
-			defaultClient.lastName = "Jacobi"
-			defaultClient.email = "bjacobi@gmail.com"
-			defaultClient.isClient = true
-			defaultClient.code = "bj33201871"
-			defaultClient.save(flush:true)
+			// defaultClient = new User()
+			// defaultClient.username = "bjacobi"
+			// defaultClient.password = "ben"
+			// defaultClient.firstName = "Ben"
+			// defaultClient.lastName = "Jacobi"
+			// defaultClient.email = "bjacobi@gmail.com"
+			// defaultClient.isClient = true
+			// defaultClient.code = "bj33201871"
+			// defaultClient.save(flush:true)
 			
 		}
 
@@ -154,7 +154,7 @@ class BootStrap {
 		}
 
 		if (DayOfTheWeek.count() == 0){
-			def serviceProvider = User.findWhere(username:'default-service-provider')
+			def serviceProvider = User.findWhere(username:'kpfanmiller')
 			new DayOfTheWeek(
 				name: 'Sunday',
 				dayIndex: 0,
@@ -214,36 +214,36 @@ class BootStrap {
 		}
 
 		if (Appointment.count() == 0){
-			def serviceProvider = User.findWhere(username:'default-service-provider')
-			def client = User.findWhere(username:'default-client')
-			def service = ServiceType.findWhere(description:'Haircut')
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			new Appointment(
-				appointmentDate: sdf.parse("07/14/2016 11:00"),
-				serviceProvider: serviceProvider,
-				client: client,
-				service: service,
-				notes: 'Uses #2 guard on sides.',
-				code: '234lsSasdfasfasfw223ras',
-				booked: true,
-				sendEmailReminder: true,
-				reminderEmailSent: true,
-				sendTextReminder: true,
-				reminderTextSent: true
-			).save()
-			new Appointment(
-				appointmentDate: sdf.parse("07/15/2016 13:30"),
-				serviceProvider: serviceProvider,
-				client: client,
-				service: service,
-				notes: 'Uses #2 guard on sides.',
-				code: '234lsSWkisisWkw992i21z',
-				booked: true,
-				sendEmailReminder: true,
-				reminderEmailSent: true,
-				sendTextReminder: true,
-				reminderTextSent: true
-			).save()
+			// def serviceProvider = User.findWhere(username:'kpfanmiller')
+			// def client = User.findWhere(username:'default-client')
+			// def service = ServiceType.findWhere(description:'Haircut')
+			// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			// new Appointment(
+			// 	appointmentDate: sdf.parse("07/14/2016 11:00"),
+			// 	serviceProvider: serviceProvider,
+			// 	client: client,
+			// 	service: service,
+			// 	notes: 'Uses #2 guard on sides.',
+			// 	code: '234lsSasdfasfasfw223ras',
+			// 	booked: true,
+			// 	sendEmailReminder: true,
+			// 	reminderEmailSent: true,
+			// 	sendTextReminder: true,
+			// 	reminderTextSent: true
+			// ).save()
+			// new Appointment(
+			// 	appointmentDate: sdf.parse("07/15/2016 13:30"),
+			// 	serviceProvider: serviceProvider,
+			// 	client: client,
+			// 	service: service,
+			// 	notes: 'Uses #2 guard on sides.',
+			// 	code: '234lsSWkisisWkw992i21z',
+			// 	booked: true,
+			// 	sendEmailReminder: true,
+			// 	reminderEmailSent: true,
+			// 	sendTextReminder: true,
+			// 	reminderTextSent: true
+			// ).save()
 		}
 
 	}

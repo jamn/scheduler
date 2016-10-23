@@ -1,0 +1,19 @@
+<p>
+	I am now welcoming new clients!<br>
+	(If you have a problem scheduling please email me <a href="mailto:kalin@thedenbarbershop-kc.com" class="ui-link">kalin@thedenbarbershop-kc.com</a>)
+</p>
+<p>
+	<u>New Client Pricing:</u>
+</p>
+<p>
+	</p><ul>
+		<li>Haircut: $35</li>
+		<li>Buzz cut: $18</li>
+		<li>Hot Towel Shave: $40</li>
+		<li>Brow Wax: $10</li>
+		<li>Beard Trim: starting at $15</li>
+	</ul>
+<p></p>
+<p>
+	There will be a $20 charge at your following visit if you cancel within 4 hours of your appointment. Unless previous arrangements have been made, anything past 10 minutes late will be considered a no show and you will need to reschedule.
+</p>

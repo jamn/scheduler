@@ -16,31 +16,16 @@ class BookInterceptor {
         
         //steps (in order) and requirements for each
         def readyTo = [
-            'index': true, //prevents an endless loop
-            'login': true,
-            'logout': true,
-            'chooseService': true,
             'saveServiceSelection': serviceProvider ? true : false,
             'chooseTime': (serviceProvider && service),
             'holdTimeslot': (serviceProvider && service),
             'bookAppointment': (serviceProvider && service && serviceDate),
             'confirmation': (serviceProvider && service && serviceDate),
-            'cancelAppointment': true,
-            'confirmedCancelAppointment': true,
-            'modifyAppointment': true,
-            'sendPasswordResetEmail': true,
-            'resetPasswordEmailSentConfirmation': true,
-            'confirmAppointmentCancellation': true,
-            'cancelAttemptToCancelAppointment': true,
-            'cancelAppointmentConfirmation':true
         ]
-    
-        //println "\n---------------------------------"
-        //println "requestedAction: " + requestedAction
-        //println "readyTo: " + readyTo
-        //println "---------------------------------"
+        
+        def protectedActions = readyTo.keySet()
 
-        if (readyTo[requestedAction]){
+        if (requestedAction == 'index' || !protectedActions.contains(requestedAction) || readyTo[requestedAction]){
             return true
         }else{
             redirect(action:'index')

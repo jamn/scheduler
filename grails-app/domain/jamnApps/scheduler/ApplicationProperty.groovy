@@ -7,6 +7,10 @@ class ApplicationProperty extends CoreObject {
 
     static constraints = {
 		name(unique:true,nullable:false)
-		value(nullable:false, size: 1..2000)
+		value(nullable:false)
+    }
+
+    static mapping = {
+    	value type: "text"
     }
 }
