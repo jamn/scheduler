@@ -25,8 +25,10 @@ class AdminController {
 	def amazonWebService
 	def textMessageService
 
-	def test(){
-		textMessageService.test()
+	def sendClientsEmail(){
+		if (params?.pw == 'doit'){
+			emailService.sendClientsEmail()
+		}
 		render "done"
 	}
 

@@ -7,6 +7,7 @@ import com.sendgrid.*
 class EmailService {
 
 	def grailsLinkGenerator
+	def groovyPageRenderer
 
 	static SENDGRID_API_KEY = "SG.-gXcHLvSQ_6kLAce7Wl0qw.GkRZPX6VRc_BWy7CZ0nZL0i_pwUnUHG7pAwQ6weX6IA"
 
@@ -200,4 +201,18 @@ class EmailService {
 		}
 		
 	}
+
+	public sendClientsEmail(){
+		def clients = User.findAllWhere(isClient:true)
+		def from = 'kalin@thedenbarbershop-kc.com'
+		def subject = 'New Appointment Scheduling System'
+		def to = ''
+		def body = ''
+		clients.each(){
+			to = it.email
+			body = groovyPageRenderer.render(view:'/email/newSchedulingSystem', model:[clientName:it.firstName])
+			sendMailUsingSendGrid(from,to,subject,body)
+		}
+	}
+
 }
