@@ -26,6 +26,10 @@ class AccessController {
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.user){
 				session.user = loginResults.user
+				if (session.user?.isAdmin && !request.getCookie('den146s320!nskjh')){
+					println "setting cookie"
+            		response.setCookie('den146s320!nskjh', 'den6sB80s2sd0')
+				}
 				println "LOGGED IN, REDIRECTING TO: " + session.caller ?: '/book/confirmation'
 				if (session.caller){
 					redirect(uri:session.caller)

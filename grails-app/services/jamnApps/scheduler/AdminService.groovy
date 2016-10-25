@@ -22,7 +22,7 @@ class AdminService {
 	private Boolean updateAvailabilityForServiceProvider(serviceProvider, params = [:]){
 		def success = false
 		def updatedTimesMap = [:]
-		for (int i = 1; i <= 7; i++) {
+		for (int i = 0; i <= 7; i++) {
 			def startTime = params["startTime-"+i]
 			def endTime = params["endTime-"+i]
 			def startTimeInMillis = dateService.getMillisForTimeString(startTime)

@@ -7,19 +7,19 @@ import org.joda.time.*
 
 class SchedulerService {
 
-	/*******************************************************
+	/******************************************************************
 
-		Day			| Database	| Cal/DateTime	| 	JS
-		--------------------------------------------------
-		Sunday		|	0		|		1		|	0
-		Monday		|	1		|		2		|	1
-		Tuesday		|	2		|		3		|	2
-		Wednesday	|	3		|		4		|	3
-		Thursday	|	4		|		5		|	4
-		Friday		|	5		|		6		|	5
-		Saturday	|	6		|		7		|	6
-		--------------------------------------------------
-	*********************************************************/
+		Day			| Database	|   Calendar	| 	JS 	|  DateTime
+		--------------------------------------------------------------
+		Sunday		|	0		|		1		|	0	|     7
+		Monday		|	1		|		2		|	1	|	  1
+		Tuesday		|	2		|		3		|	2	|	  2
+		Wednesday	|	3		|		4		|	3	|	  3
+		Thursday	|	4		|		5		|	4	|	  4
+		Friday		|	5		|		6		|	5	|	  5
+		Saturday	|	6		|		7		|	6	|	  6
+		--------------------------------------------------------------
+	*******************************************************************/
 
 	static Long HOUR = 3600000
 	static Long MINUTE = 60000
@@ -33,103 +33,89 @@ class SchedulerService {
 
 		def timeSlotsMap = [:]
 
-		Calendar startDate = new GregorianCalendar()
-		startDate.setTime(requestedDate)
-		Calendar endDate = new GregorianCalendar()
-		endDate.setTime(requestedDate)
-		def serviceProviderDayOfTheWeek
-		serviceProvider?.daysOfTheWeek?.each(){
-			def dayIndex = it.dayIndex + 1
-			if(dayIndex == startDate.get(Calendar.DAY_OF_WEEK)){
-				serviceProviderDayOfTheWeek = it
-			}
-		}
-		println "serviceProviderDayOfTheWeek: " + serviceProviderDayOfTheWeek.name
+		def startDate = new DateTime(requestedDate, DateTimeZone.forID("America/Chicago"))
+		def endDate = new DateTime(requestedDate, DateTimeZone.forID("America/Chicago"))
+
+		def serviceProviderDayOfTheWeek = getServiceProviderDayOfTheWeek(serviceProvider, startDate)
+		
 		def dayIsAvailableByDefault = serviceProviderDayOfTheWeek?.available
 		def dayIsNotBlockedOff = DayOff.findWhere(serviceProvider:serviceProvider, dayOffDate:requestedDate) ? false : true
 
 		if (dayIsAvailableByDefault && dayIsNotBlockedOff){
 
-			def serviceProviderStartTime = dateService.get24HourTimeValues(serviceProviderDayOfTheWeek.startTime)
-			def serviceProviderEndTime = dateService.get24HourTimeValues(serviceProviderDayOfTheWeek.endTime)
-
-			startDate.set(Calendar.HOUR_OF_DAY, serviceProviderStartTime.hour.intValue())
-			startDate.set(Calendar.MINUTE, serviceProviderStartTime.minute.intValue())
-			startDate.set(Calendar.SECOND, 0)
-			startDate.set(Calendar.MILLISECOND, 0)
-
-			endDate.set(Calendar.HOUR_OF_DAY, serviceProviderEndTime.hour.intValue())
-			endDate.set(Calendar.MINUTE, serviceProviderEndTime.minute.intValue())
-			endDate.set(Calendar.SECOND, 0)
-			endDate.set(Calendar.MILLISECOND, 0)
-
-			def appointments = Appointment.executeQuery("FROM Appointment a WHERE a.serviceProvider = :serviceProvider AND a.appointmentDate >= :startDate AND a.appointmentDate <= :endDate AND a.deleted = false ORDER BY appointmentDate", [serviceProvider:serviceProvider, startDate:startDate.getTime(), endDate:endDate.getTime()])
-
-			Calendar currentTimeMarker = new GregorianCalendar()
-			currentTimeMarker.setTime(startDate.getTime())
+			startDate = startDate.withMillisOfDay(serviceProviderDayOfTheWeek.startTime.intValue()).toLocalDateTime().toDate()
+			endDate = endDate.withMillisOfDay(serviceProviderDayOfTheWeek.endTime.intValue()).toLocalDateTime().toDate()
+			def currentTimeMarker = new DateTime(startDate)
 			
 			def durationInMinutes = service.duration / MINUTE
-			println "durationInMinutes: " + durationInMinutes
+
+			def appointments = Appointment.executeQuery("FROM Appointment a WHERE a.serviceProvider = :serviceProvider AND a.appointmentDate >= :startDate AND a.appointmentDate <= :endDate AND a.deleted = false ORDER BY appointmentDate", [serviceProvider:serviceProvider, startDate:startDate, endDate:endDate])
 			
 			def count = 0
-
-			while(currentTimeMarker < endDate) {
+			while(currentTimeMarker.toLocalDateTime().toDate() < endDate) {
 				count++
-				Calendar timeSlotStart = new GregorianCalendar()
-				timeSlotStart.setTime(currentTimeMarker.getTime())
-				Calendar timeSlotEnd = new GregorianCalendar()
-				timeSlotEnd.setTime(timeSlotStart.getTime())
-				timeSlotEnd.add(Calendar.MINUTE, durationInMinutes.intValue())
+				def timeSlotStart = new DateTime(currentTimeMarker)
+				def timeSlotEnd = new DateTime(timeSlotStart).plusMinutes(durationInMinutes.intValue())
 
 				// DOES AN EXISTING APPOINTMENT FALL IN THIS TIME RANGE?
-				def existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.getTime() && it.appointmentDate < timeSlotEnd.getTime() }
-				//println "timeSlotStart: " + timeSlotStart.getTime().format("yyyy-MM-dd HH:mm:ss")
-				//println "existingAppointment: " + existingAppointment?.appointmentDate?.format("yyyy-MM-dd HH:mm:ss")
+				def existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.toLocalDateTime().toDate() && it.appointmentDate < timeSlotEnd.toLocalDateTime().toDate() }
+				
+				//println "\ndurationInMinutes: " + durationInMinutes
+				//println "startDate: " + startDate
+				//println "endDate: " + endDate
+				//println "currentTimeMarker: " + currentTimeMarker.toLocalDateTime().toDate()
+
 				while (existingAppointment){
-					timeSlotStart.setTime(existingAppointment.appointmentDate)
 					def existingAppointmentDurationInMinutes = existingAppointment.service.duration / MINUTE
-					timeSlotStart.add(Calendar.MINUTE, existingAppointmentDurationInMinutes.intValue())
-					timeSlotEnd.setTime(timeSlotStart.getTime())
-					timeSlotEnd.add(Calendar.MINUTE, durationInMinutes.intValue())
-					existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.getTime() && it.appointmentDate < timeSlotEnd.getTime() }
+					timeSlotStart = timeSlotStart.plusMinutes(existingAppointmentDurationInMinutes.intValue())
+					timeSlotEnd = timeSlotEnd.plusMinutes(durationInMinutes.intValue())
+					existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.toLocalDateTime().toDate() && it.appointmentDate < timeSlotEnd.toLocalDateTime().toDate() }
 				}
 
+				def anHourFromNow = new DateTime(DateTimeZone.forID("America/Chicago")).plusMinutes(60).toLocalDateTime()
 
-				def dayOfWeek = timeSlotEnd.get(Calendar.DAY_OF_WEEK)
-				Calendar anHourFromNow = new GregorianCalendar()
-				anHourFromNow.add(Calendar.MINUTE, 60)
 				
-				if (timeSlotEnd <= endDate && timeSlotStart.getTime() > anHourFromNow.getTime()){
-					def timeSlot = timeSlotStart.getTime().format('h:mma').replace(':00', '') + " / " + timeSlotEnd.getTime().format('h:mma').replace(':00', '')
-					if (timeSlotStart.get(Calendar.HOUR_OF_DAY) < 11){
+				if (timeSlotEnd.toDate() <= endDate && timeSlotStart.getMillisOfDay() > anHourFromNow.getMillisOfDay()){
+					def timeSlot = timeSlotStart.toDate().format('h:mma').replace(':00', '') + " / " + timeSlotEnd.toDate().format('h:mma').replace(':00', '')
+					if (timeSlotStart.getHourOfDay() < 11){
 						List morning = timeSlotsMap.get("morning") ?: []
-						morning.add([startTime:timeSlotStart.getTime().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
+						morning.add([startTime:timeSlotStart.toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("morning", morning)
 					}
-					else if (timeSlotStart.get(Calendar.HOUR_OF_DAY) < 14){
+					else if (timeSlotStart.getHourOfDay() < 14){
 						List lunch = timeSlotsMap.get("lunch") ?: []
-						lunch.add([startTime:timeSlotStart.getTime().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
+						lunch.add([startTime:timeSlotStart.toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("lunch", lunch)
 					}
 					else{
 						List afternoon = timeSlotsMap.get("afternoon") ?: []
-						afternoon.add([startTime:timeSlotStart.getTime().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
+						afternoon.add([startTime:timeSlotStart.toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("afternoon", afternoon)
 					}
 				}
 
-				currentTimeMarker.setTime(timeSlotStart.getTime())
-				currentTimeMarker.add(Calendar.MINUTE, 15)
+				currentTimeMarker = new DateTime(timeSlotStart).plusMinutes(15)
 			}
 		}
 
 		return timeSlotsMap
 	}
 
+	private getServiceProviderDayOfTheWeek(User serviceProvider, DateTime startDate){
+		def serviceProviderDayOfTheWeek
+		serviceProvider?.daysOfTheWeek?.each(){
+			def dayIndex = (it.dayIndex == 0) ? 7 : it.dayIndex
+			if(dayIndex == startDate.getDayOfWeek()){
+				serviceProviderDayOfTheWeek = it
+			}
+		}
+		return serviceProviderDayOfTheWeek
+	}
+
 	public Boolean bookForClient(Map params = [:]){
 		Boolean success = false
 		def client = User.get(new Long(params.cId))
-		def serviceProvider = User.findByCode("dsp907201")
+		def serviceProvider = User.findByUsername("kpfanmiller")
 		def service = ServiceType.get(new Long(params.sId))
 
 		def startTimeString = params.sTime

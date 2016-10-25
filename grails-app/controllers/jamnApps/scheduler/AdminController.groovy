@@ -201,7 +201,7 @@ class AdminController {
 			def from = dateFormatter2.parse(params?.date+params?.from)
 			def to = dateFormatter2.parse(params?.date+params?.to)
 
-			def serviceProvider = User.findByCode("dsp907201")
+			def serviceProvider = User.findByUsername("kpfanmiller")
 			def service = ServiceType.findByDescription("Blocked Off Time")
 			Calendar currentDate = new GregorianCalendar()
 			currentDate.setTime(from)
@@ -245,7 +245,7 @@ class AdminController {
 			def from = dateFormatter3.parse(params?.from)
 			def to = dateFormatter3.parse(params?.to)
 
-			def serviceProvider = User.findByCode("dsp907201")
+			def serviceProvider = User.findByUsername("kpfanmiller")
 			Calendar currentDate = new GregorianCalendar()
 			currentDate.setTime(from)
 			currentDate.set(Calendar.HOUR_OF_DAY, 0)
