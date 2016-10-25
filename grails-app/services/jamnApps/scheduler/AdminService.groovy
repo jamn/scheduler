@@ -200,7 +200,7 @@ class AdminService {
 			key = data[0]
 			value = data[1]
 			if (key == "DTSTART"){
-				appointmentDate = dateFormatter5.withZone(DateTimeZone.forID("America/Los_Angeles")).parseDateTime(value).toLocalDateTime().toDate()
+				appointmentDate = dateFormatter5.withZone(DateTimeZone.forID("America/Chicago")).parseDateTime(value).toLocalDateTime().toDate()
 			}
 			if (key == "SUMMARY"){
 				if (value == "Personal Time Off"){
