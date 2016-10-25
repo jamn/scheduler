@@ -66,19 +66,14 @@ class BootStrap {
 
 		if (ServiceType.count() == 0){
 			println "creating default services..."
-			def newServiceType = new ServiceType(
+			new ServiceType(
 				description: "Haircut",
 				serviceProvider: defaultServiceProvider,
 				duration: dateService.getMillis([minutes:30]),
 				price: 10,
 				displayOrder: new Long(1),
 				calendarColor: '#6cab99'
-			)
-			if (!newServiceType.save(flush:true)){
-				newServiceType.errors.allErrors.each(){
-					println "ERROR: " + it + "\n"
-				}
-			}
+			).save()
 			new ServiceType(
 				description: "Hot Towel Shave",
 				serviceProvider: defaultServiceProvider,
@@ -142,6 +137,54 @@ class BootStrap {
 				price: 10,
 				display: false,
 				calendarColor: '#505050'
+			).save()
+			new ServiceType(
+				description: "Cut & Color Camo",
+				serviceProvider: defaultServiceProvider,
+				duration: dateService.getMillis([minutes:45]),
+				display: false,
+				deleted: true,
+				calendarColor: '#6d3939'
+			).save()
+			new ServiceType(
+				description: "Head Shave",
+				serviceProvider: defaultServiceProvider,
+				duration: dateService.getMillis([minutes:30]),
+				display: false,
+				deleted: true,
+				calendarColor: '#566d39'
+			).save()
+			new ServiceType(
+				description: "Haircut & Beard Trim",
+				serviceProvider: defaultServiceProvider,
+				duration: dateService.getMillis([minutes:45]),
+				display: false,
+				deleted: true,
+				calendarColor: '#396d69'
+			).save()
+			new ServiceType(
+				description: "Father & Two Kids",
+				serviceProvider: defaultServiceProvider,
+				duration: dateService.getMillis([minutes:60]),
+				display: false,
+				deleted: true,
+				calendarColor: '#39466d'
+			).save()
+			new ServiceType(
+				description: "Haircut & Brow Wax",
+				serviceProvider: defaultServiceProvider,
+				duration: dateService.getMillis([minutes:45]),
+				display: false,
+				deleted: true,
+				calendarColor: '#6d3966'
+			).save()
+			new ServiceType(
+				description: "Beard Trim",
+				serviceProvider: defaultServiceProvider,
+				duration: dateService.getMillis([minutes:15]),
+				display: false,
+				deleted: true,
+				calendarColor: '#A46F8C'
 			).save()
 		}
 

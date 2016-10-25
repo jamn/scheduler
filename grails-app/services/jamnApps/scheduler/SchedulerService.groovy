@@ -235,7 +235,7 @@ class SchedulerService {
 	public List getServicesForServiceProvider(User serviceProvider = null){
 		def serviceList = []
 		if (serviceProvider){
-			def services = ServiceType.executeQuery("FROM ServiceType s WHERE s.serviceProvider = :serviceProvider AND display = true ORDER BY s.displayOrder", [serviceProvider:serviceProvider])
+			def services = ServiceType.executeQuery("FROM ServiceType s WHERE s.serviceProvider = :serviceProvider AND display = true AND deleted = false ORDER BY s.displayOrder", [serviceProvider:serviceProvider])
 			services?.each(){
 				//def duration = dateService.getTimeString(it.duration)
 				def price = it.price

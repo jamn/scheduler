@@ -189,21 +189,18 @@ class AdminService {
 		def value
 		def newEvent = false
 		def appointmentDate
-		def dateCreated
 		def clientName
 		def client
 		def serviceName
 		def service
 		def summarySeperatorIndex
+		def appointment
+		def missingServices = new HashSet()
 		convertedFile.splitEachLine(':'){ data ->
 			key = data[0]
 			value = data[1]
 			if (key == "DTSTART"){
-				appointmentDate = dateFormatter5.parseDateTime(value)
-				//appointmentDate = appointmentDate.withZone(DateTimeZone.forID("America/Chicago"));
-			}
-			if (key == "DTSTAMP"){
-				dateCreated = dateFormatter5.parseDateTime(value)
+				appointmentDate = dateFormatter5.withZone(DateTimeZone.forID("America/Los_Angeles")).parseDateTime(value).toLocalDateTime().toDate()
 			}
 			if (key == "SUMMARY"){
 				if (value == "Personal Time Off"){
@@ -221,8 +218,8 @@ class AdminService {
 				}
 			}
 			if (key == "END" && value == "VEVENT"){
-				if (appointmentDate && client && service && serviceProvider && dateCreated){
-					new Appointment(
+				if (appointmentDate && client && service && serviceProvider){
+					appointment = new Appointment(
 						appointmentDate: appointmentDate,
 						serviceProvider: serviceProvider,
 						client: client,
@@ -230,16 +227,21 @@ class AdminService {
 						code: RandomStringUtils.random(14, true, true),
 						booked: true,
 						sendEmailReminder: false,
-						sendTextReminder: false,
-						dateCreated: dateCreated
+						sendTextReminder: false
 					).save()
-					appointmentDate = null
-					dateCreated = null
-					client = null
-					service = null
+					if (appointment.hasErrors()){
+						println "ERROR: " + appointment.errors
+					}
+				}else{
+					println "appointmentDate: ${appointmentDate} | client: ${clientName} | service: ${serviceName}"
+					missingServices.add(serviceName)
 				}
+				appointmentDate = null
+				client = null
+				service = null
 			}
 		}
+		println "MISSING SERVICES: " + missingServices
 	}
 
 	private File multipartToFile(StandardMultipartFile file) throws IllegalStateException, IOException {

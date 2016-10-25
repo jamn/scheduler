@@ -134,7 +134,8 @@ class AdminController {
 		}else{
 			adminService.importClients(clientsFile)
 		}
-		redirect(action: 'clients')
+		flash.success = "Clients were successfully imported."
+		redirect(action:'homepageConfig')
 	}
 
 	def importAppointments(){
@@ -147,7 +148,8 @@ class AdminController {
 			def serviceProvider = User.get(session.user.id)
 			adminService.importAppointments(appointmentsFile, serviceProvider)
 		}
-		redirect(action: 'calendar')
+		flash.success = "Appointments were successfully imported."
+		redirect(action:'homepageConfig')
 	}
 
 	def getClientsSelectMenu(){
