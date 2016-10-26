@@ -18,13 +18,13 @@ environments:
         dataSource:
             username: root
             password:
-            dbCreate: create-drop
+            dbCreate: validate
             url: jdbc:mysql://localhost/scheduler?useOldAliasMetadataBehavior=true&autoReconnect=true
             #logSql: true
             #formatSql: true
     production:
         dataSource:
-            dbCreate: create
+            dbCreate: validate
             properties:
                 jmxEnabled: true
                 initialSize: 5

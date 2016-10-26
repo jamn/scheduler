@@ -179,27 +179,29 @@ class EmailService {
 	}
 
 	public sendMailUsingSendGrid(fromEmail, toEmail, subject, body) throws IOException {
-		if (Environment.current == Environment.DEVELOPMENT){
-			toEmail = "bjacobi@gmail.com"
-		}
-		Email from = new Email(fromEmail);
-		Email to = new Email(toEmail);
-		Content content = new Content("text/html", body);
-		Mail mail = new Mail(from, subject, to, content);
+		def enabled = true
+		if (enabled){
+			if (Environment.current == Environment.DEVELOPMENT){
+				toEmail = "bjacobi@gmail.com"
+			}
+			Email from = new Email(fromEmail);
+			Email to = new Email(toEmail);
+			Content content = new Content("text/html", body);
+			Mail mail = new Mail(from, subject, to, content);
 
-		SendGrid sg = new SendGrid(SENDGRID_API_KEY);
-		Request request = new Request();
-		request.method = Method.POST;
-		request.endpoint = "mail/send";
-		request.body = mail.build();
-		try {
-			Response response = sg.api(request);
+			SendGrid sg = new SendGrid(SENDGRID_API_KEY);
+			Request request = new Request();
+			request.method = Method.POST;
+			request.endpoint = "mail/send";
+			request.body = mail.build();
+			try {
+				Response response = sg.api(request);
+			}
+			catch(IOException ex) {
+				println "ERROR: " + ex
+				throw ex
+			}
 		}
-		catch(IOException ex) {
-			println "ERROR: " + ex
-			throw ex
-		}
-		
 	}
 
 	public sendClientsEmail(){
