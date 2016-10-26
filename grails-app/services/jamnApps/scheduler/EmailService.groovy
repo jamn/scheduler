@@ -204,7 +204,7 @@ class EmailService {
 		}
 	}
 
-	public sendClientsEmail(){
+	/*public sendClientsEmail(){
 		def clients = User.findAllWhere(isClient:true)
 		def from = 'kalin@thedenbarbershop-kc.com'
 		def subject = 'New Appointment Scheduling System'
@@ -215,6 +215,6 @@ class EmailService {
 			body = groovyPageRenderer.render(view:'/email/newSchedulingSystem', model:[clientName:it.firstName])
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
-	}
+	}*/
 
 }

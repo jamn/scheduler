@@ -24,13 +24,7 @@ class AdminController {
 	def dateService
 	def amazonWebService
 	def textMessageService
-
-	def sendClientsEmail(){
-		if (params?.pw == 'doit'){
-			emailService.sendClientsEmail()
-		}
-		render "done"
-	}
+	
 
 	/*********************************
 				NAVIGATION
