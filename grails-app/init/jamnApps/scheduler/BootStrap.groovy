@@ -1,6 +1,7 @@
 package jamnApps.scheduler
 
 import java.text.SimpleDateFormat
+import org.joda.time.*
 
 class BootStrap {
 
@@ -9,6 +10,8 @@ class BootStrap {
 	def defaultClient
 
 	def init = { servletContext ->
+
+		TimeZone.setDefault(TimeZone.getTimeZone("America/Chicago"))
 		
 		def dateService = new DateService()
 
