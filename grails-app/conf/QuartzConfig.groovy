@@ -1,0 +1,3 @@
+{
+	autoStartup = true
+}

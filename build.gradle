@@ -68,7 +68,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
-    compile 'org.grails.plugins:quartz:2.0.1'
+    compile 'org.grails.plugins:quartz:2.0.9'
     compile 'org.grails.plugins:cookie:2.0.5'
     compile 'com.amazonaws:aws-java-sdk-s3'
     compile 'com.sendgrid:sendgrid-java:3.1.0'

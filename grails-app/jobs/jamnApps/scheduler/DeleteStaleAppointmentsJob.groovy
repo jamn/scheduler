@@ -7,7 +7,7 @@ class DeleteStaleAppointmentsJob {
     def concurrent = false
 
     static triggers = {
-        cron name: 'DeleteStaleAppointmentsTrigger', cronExpression: "0 0/5 * * * ?"
+		simple repeatInterval: 300000l // every 5 minutes
     }
 
     def execute() {

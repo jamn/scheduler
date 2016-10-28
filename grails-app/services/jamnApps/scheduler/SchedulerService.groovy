@@ -26,6 +26,7 @@ class SchedulerService {
 
 	def dateService
 	def emailService
+	def sessionFactory
 
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy")
 
@@ -259,9 +260,10 @@ class SchedulerService {
 			numberOfTimeSlotsFreed++
 		}*/
 		Calendar calendarObject = new GregorianCalendar()
-		calendarObject.add(Calendar.MINUTE, -1)
+		calendarObject.add(Calendar.MINUTE, -5)
 		def fiveMinutesAgo = calendarObject.getTime()
-		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true where a.booked = false and a.dateCreated < :fiveMinutesAgo", [fiveMinutesAgo:fiveMinutesAgo])	
+		println "fiveMinutesAgo: " + fiveMinutesAgo
+		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true where a.booked = false and a.deleted = false and a.dateCreated < :fiveMinutesAgo", [fiveMinutesAgo:fiveMinutesAgo])	
 		sessionFactory.currentSession.flush()
 		println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
 	}
