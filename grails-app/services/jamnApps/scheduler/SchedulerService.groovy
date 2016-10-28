@@ -250,8 +250,6 @@ class SchedulerService {
 	}
 
 	public void deleteStaleAppointments(){
-		println "\n---- DELETING STALE APPOINTMENTS ----"
-		println new Date()
 		def numberOfTimeSlotsFreed = 0
 		/*def lastAppointmentUserAttemptedToBook = Appointment.get(session?.appointmentId)
 		if (lastAppointmentUserAttemptedToBook && lastAppointmentUserAttemptedToBook.booked == false){
@@ -262,10 +260,11 @@ class SchedulerService {
 		Calendar calendarObject = new GregorianCalendar()
 		calendarObject.add(Calendar.MINUTE, -5)
 		def fiveMinutesAgo = calendarObject.getTime()
-		println "fiveMinutesAgo: " + fiveMinutesAgo
 		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true where a.booked = false and a.deleted = false and a.dateCreated < :fiveMinutesAgo", [fiveMinutesAgo:fiveMinutesAgo])	
 		sessionFactory.currentSession.flush()
-		println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
+		if (numberOfTimeSlotsFreed > 0){
+			println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
+		}
 	}
 
 	public List getDaysForCalendar(DateTime startDate){
