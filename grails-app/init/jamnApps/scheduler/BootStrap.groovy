@@ -20,12 +20,13 @@ class BootStrap {
 
 			defaultCompany = new Company()
 			defaultCompany.name = "The Den Barbershop"
-			defaultCompany.address1 = "123 Main Street"
+			defaultCompany.address1 = "1013 W 47th Street"
 			defaultCompany.city = "Kansas City`"
 			defaultCompany.state = "MO"
-			defaultCompany.zip = "64108"
+			defaultCompany.zip = "64112"
 			defaultCompany.email = "info@thedenbarbershop-kc.com"
 			defaultCompany.phone = "816-000-0000"
+			defaultCompany.save()
 		}
 
 		if (Image.count == 0) {
@@ -196,6 +197,13 @@ class BootStrap {
 			new ApplicationProperty(
 				name:"HOMEPAGE_MESSAGE", 
 				value:"<p>Welcome! This site will make it easy for you to schedule with me. Click 'Book Now' to get started.</p>"
+			).save()
+		}
+		if (!ApplicationProperty.findByName("JOBS__SEND_APPOINTMENT_REMINDERS_JOB__ACTIVE")){
+			println "setting appointment reminder option..."
+			new ApplicationProperty(
+				name:"JOBS__SEND_APPOINTMENT_REMINDERS_JOB__ACTIVE", 
+				value:"1"
 			).save()
 		}
 

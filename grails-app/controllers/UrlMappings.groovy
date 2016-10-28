@@ -7,6 +7,7 @@ class UrlMappings {
 			}
 		}
 		"/"(controller: "book")
+		"/error"(uri: "/static/error.html")
 	}
 
 }

@@ -10,12 +10,10 @@ class UserService {
 		]
 
 		def existingUser
-		def cookies = request.getCookies()
-		def loggedInCookieId = cookies.find{it.getName() == 'scheduler-1'}?.getValue()
-		println "loggedInCookieId: " + loggedInCookieId
-		
-		if (loggedInCookieId) {
-			def loginLog = LoginLog.findByLoggedInCookieId(loggedInCookieId)
+		def cookie = request.getCookie('den-scheduler-1')
+		println "cookie: " + cookie
+		if (cookie) {
+			def loginLog = LoginLog.findWhere(loggedInCookieId:cookie, deleted:false)
 			existingUser = loginLog?.user
 			//def fourMonthsAgo = dateService.getDateFourMonthsAgo()
 			//if (loginLog?.dateCreated > fourMonthsAgo){

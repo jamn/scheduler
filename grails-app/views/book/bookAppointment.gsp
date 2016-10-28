@@ -7,16 +7,28 @@
 	<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
 		<form method="post" class="login-box" action="confirmation" id="loginForm">
 
-			<g:set var="plural" value="${session?.bookedAppointments?.size() > 1 ? 's' : ''}" />
+			<g:set var="plural" value="${session?.newAppointments?.size() > 1 ? 's' : ''}" />
 
 			<div class="reminders">
-				<g:if test="${!cancelAppointment && session?.bookedAppointments?.size() > 0}">
-					<h2>Confirm ${session?.bookedAppointments[0]?.service?.description}${plural}:</h2>
+				<g:if test="${!cancelAppointment && session.newAppointments?.size() > 0}">
+					<h2>Confirm ${session?.newAppointments[0]?.service?.description}${plural}:</h2>
 					<ul>
-						<g:each in='${session.bookedAppointments}'>
+						<g:each in='${session.newAppointments}'>
 							<li>${it.appointmentDate.format('EEEE, MMMM dd @ hh:mm a')}</li>
 						</g:each>
 					</ul>
+				</g:if>
+				<g:if test="${!cancelAppointment && session.existingAppointments?.size() > 0}">
+					<div id='existingAppointments'>
+						<div class='existing-appointments-text'>Unfortunately the following date(s) were unavailable:</div>
+						<ul class='existing-appointments'>
+							<g:each in='${session.existingAppointments}'>
+								<li>
+									${it.appointmentDate.format('MMMM dd')}
+								</li>
+							</g:each>
+						</ul>
+					</div>
 				</g:if>
 				<g:if test="${session.appointmentToDelete}">
 					<h2>Confirm Cancellation:</h2>

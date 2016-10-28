@@ -32,7 +32,7 @@
 
 			<g:if test="${existingAppointments.size() > 0}">
 				<div id='existingAppointments'>
-					<div class='existing-appointments-text'>Unfortunately we were unable to book an appointment for you on the following date(s):</div>
+					<div class='existing-appointments-text'>Unfortunately the following date(s) were unavailable:</div>
 					<ul class='existing-appointments'>
 						<g:each in='${existingAppointments}'>
 							<li>

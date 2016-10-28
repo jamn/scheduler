@@ -16,26 +16,37 @@ class AccessController {
 	def login(){
 		if (session.user?.isAdmin){
 			redirect(controller:'admin')
-		}else if (session.user?.isClient && !session.caller.contains('admin')){
+		}else if (session.user?.isClient && !session.caller?.contains('admin')){
 			redirect(controller:'book', action:'chooseService')
 		}
 	}
 
 	def attemptLogin(){
+		println "attempting login..."
 		if (params?.email || params?.password){
 			def loginResults = userService.loginUser(request, params)
 			if (loginResults?.user){
 				session.user = loginResults.user
-				if (session.user?.isAdmin && !request.getCookie('den146s320!nskjh')){
-					println "setting cookie"
-            		response.setCookie('den146s320!nskjh', 'den6sB80s2sd0')
+				if (params?.rememberMe){
+					def loggedInCookieId = RandomStringUtils.random(20, true, true)
+					new LoginLog(
+						user:loginResults.user,
+						loggedInCookieId: loggedInCookieId
+					).save(flush:true)
+					def defaultExpiration = 15552000 //6 months
+					def path = '/'
+            		response.setCookie('den-scheduler-1', loggedInCookieId, defaultExpiration, path)
 				}
-				println "LOGGED IN, REDIRECTING TO: " + session.caller ?: '/book/confirmation'
+				println "LOGGED IN"
 				if (session.caller){
 					redirect(uri:session.caller)
 					return
 				}else{
-					redirect(controller:'book', action:'confirmation')
+					if (loginResults?.user?.isAdmin){
+						redirect(controller:'admin', action:'calendar')
+					}else{
+						redirect(controller:'book', action:'confirmation')
+					}
 					return
 				}
 			}
@@ -43,17 +54,23 @@ class AccessController {
 		}else{
 			flash.error = 'Email/password required.'
 		}
+		if (flash.error){
+			println "ERROR: " + flash.error
+		}
 		flash.email = params?.email
 		redirect(action:'login')
 	}
 
 	def logout(){
-		println "session: " + session
+		println "logging user out: " + session.user?.fullName
+		LoginLog.executeUpdate(
+			"update LoginLog set deleted = true where deleted = false and user = ?", [session.user]
+		)
+		response.deleteCookie('den-scheduler-1', '/')
 		session.user = null
 		if (session.caller?.contains('confirmation') || session.caller?.contains('admin') || session.caller?.contains('attemptPasswordReset')){
 			session.caller = '/book'
 		}
-		//response.deleteCookie('scheduler-1')
 		redirect(uri:session.caller)
 	}
 
@@ -163,16 +180,18 @@ class AccessController {
 			def password2 = params.verifyNewPassword
 			if (password1 == password2){
 				def user = User.get(session.userUpdatingPassword.id)
-				user.password = password1
-				user.passwordResetCode = null
-				user.passwordResetCodeDateCreated = null
-				user.save(flush:true)
-				session.user = user
-				session.userUpdatingPassword = null
+				if (user){
+					user.password = password1
+					user.passwordResetCode = null
+					user.passwordResetCodeDateCreated = null
+					user.save(flush:true)
+				}
 				if (user.hasErrors()){
 					println "ERROR: " + user.errors
 					errorOccurred = true
 					errorMessage = 'Something really weird happened. Please try again.'
+				}else{
+					session.user = user
 				}
 			}else{
 				errorOccurred = true
@@ -189,9 +208,14 @@ class AccessController {
 			flash.error = errorMessage
 			redirect(action:"resetPassword")
 		}else{
-			freeHeldTimeslots()
-			resetSessionVariables()
-			render(view:"confirmation", model:[message:"Your password has been reset.<br><a href='/book/bookAppointment'>Continue Booking</a>"])
+			session.userUpdatingPassword = null
+			//freeHeldTimeslots()
+			//resetSessionVariables()
+			if (session?.bookedAppointments){
+				redirect(controller:"book", action:"bookAppointment")
+			}else{
+				render(view:"confirmation", model:[message:"Your password has been reset.<br><a href='/book/bookAppointment'>Continue Booking</a>"])
+			}
 		}
 	}
 

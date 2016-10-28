@@ -314,7 +314,7 @@ class AdminController {
 			render ('{"success":true}') as JSON
 		}
 		else{
-			flash.error "There was an error scheduling this appointment."
+			flash.error = "There was an error scheduling this appointment."
 			render ('{"success":false}') as JSON
 		}
 	}

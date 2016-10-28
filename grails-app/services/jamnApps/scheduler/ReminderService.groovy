@@ -28,7 +28,7 @@ class ReminderService {
 						println "  -- email reminder disabled"
 					}
 					if (appointment.sendTextReminder){
-						//textMessageService.sendReminder(appointment)
+						textMessageService.sendReminder(appointment)
 					}
 					else {
 						println "  -- text reminder disabled"

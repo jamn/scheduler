@@ -24,8 +24,4 @@ class UtilService {
 		homepageImageUrl = null
 	}
 
-	def resetSession(){
-		session.invalidate()
-	}
-
 }

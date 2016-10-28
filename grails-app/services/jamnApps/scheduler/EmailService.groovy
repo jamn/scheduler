@@ -71,8 +71,8 @@ class EmailService {
 
 	private sendCancellationNoticeToClient(Appointment appointment){
 		println "    sending notice to client"
-		def from = "${appointment.client.email}"
-		def to = "kalin@thedenbarbershop-kc.com"
+		def from = "kalin@thedenbarbershop-kc.com"
+		def to = "${appointment.client.email}"
 		def subject = "** Appointment Cancelled ** [${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}]"     
 		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/assets/logo.png'></p><p>Your appointment for a ${appointment.service.description} on ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')} has been cancelled. Thank you.</p>"
 		try {

@@ -8,6 +8,11 @@ class BookInterceptor {
         def caller = request.getHeader('referer') ?: "/book"
         session.caller = caller
 
+        def cookie = request.getCookie('den-scheduler-1')
+        if (!session.user && cookie){
+            session.user = LoginLog.findWhere(loggedInCookieId:cookie, deleted:false)?.user
+        }
+
         def serviceProvider = session?.serviceProvider
         def service = session?.service
         def serviceDate = session?.nextAppointment

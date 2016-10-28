@@ -7,14 +7,14 @@ class AccessInterceptor {
     boolean before() {
         def caller = params?.caller ?: request.getHeader('referer')
         if (caller && !caller?.contains('login') && !caller?.contains('bookAppointment')){
-            println "caller: " + caller
             session.caller = caller
         }else{
             session.caller = null
         }
-        if (!session.user && request.getCookie('den146s320!nskjh')){
-            println "auto logging Kalin in"
-            session.user = User.findByUsername('kpfanmiller')
+        
+        def cookie = request.getCookie('den-scheduler-1')
+        if (!session.user && cookie){
+            session.user = LoginLog.findWhere(loggedInCookieId:cookie, deleted:false)?.user
         }
         true
     }

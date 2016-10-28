@@ -6,12 +6,12 @@
 
 <div class="password-reset-instructions">Send a password reset link to:</div>
 
-<input class="form-control" placeholder="Email" type="text" name="email" id="email" value="${client?.email}" autofocus="autofocus"/>
+<input class="form-control" placeholder="Email" type="email" name="email" id="email" value="${client?.email}" autofocus="autofocus"/>
 
 <input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" value="${client?.password}" />
 
 <g:if test="${!cancelAppointment}">
-	<input class="form-control new-user" placeholder="Phone" type="text" name="phoneNumber" id="phoneNumber" value="${client?.phone}" />
+	<input class="form-control new-user" placeholder="Phone" type="tel" name="phoneNumber" id="phoneNumber" value="${client?.phone}" />
 
 	<input placeholder="First Name" type="text" name="first-name" id="firstName" class="form-control new-user">
 
@@ -21,9 +21,9 @@
 <br>
 
 <g:if test="${!cancelAppointment}">
-	<label class="reminders">		
+	<!-- <label class="reminders">		
 		<input type="checkbox" name="rememberMe" id="rememberMe" checked> Remember Me
-	</label>
+	</label> -->
 </g:if>
 
 <div class="reset-password-links">

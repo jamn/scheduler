@@ -125,106 +125,111 @@ class SchedulerService {
 
 	public Boolean bookForClient(Map params = [:]){
 		Boolean success = false
-		def client = User.get(new Long(params.cId))
-		def serviceProvider = User.findByUsername("kpfanmiller")
-		def service = ServiceType.get(new Long(params.sId))
+		if (params.sTime && params.cId && params.sId && params.aDate){
+			def client = User.get(new Long(params.cId))
+			def serviceProvider = User.findByUsername("kpfanmiller")
+			def service = ServiceType.get(new Long(params.sId))
 
-		def startTimeString = params.sTime
-		def amIndex = startTimeString.indexOf("AM")
-		def pmIndex = startTimeString.indexOf("PM")
-		def minutesIndex = startTimeString.indexOf(":")
-		Long hour = 0
-		Long minute = 0
+			def startTimeString = params.sTime
+			def amIndex = startTimeString.indexOf("AM")
+			def pmIndex = startTimeString.indexOf("PM")
+			def minutesIndex = startTimeString.indexOf(":")
+			Long hour = 0
+			Long minute = 0
 
-		def repeatDuration = new Integer(1)
-		def repeatNumberOfAppointments = 1
+			def repeatDuration = new Integer(1)
+			def repeatNumberOfAppointments = 1
 
-		if (params?.r?.toLowerCase() == "true"){ // r = recurringAppointment
-			println "Recurring Appointment"
-			repeatDuration = new Integer(params?.dur)
-			repeatNumberOfAppointments = new Integer(params?.num)
-		}
+			if (params?.r?.toLowerCase() == "true"){ // r = recurringAppointment
+				println "Recurring Appointment"
+				repeatDuration = new Integer(params?.dur)
+				repeatNumberOfAppointments = new Integer(params?.num)
+			}
 
-		if (amIndex > -1){
-			startTimeString = startTimeString.substring(0,amIndex)
-		}
-		else if (pmIndex > -1){
-			startTimeString = startTimeString.substring(0,pmIndex)
-		}
-		
-		if (minutesIndex > -1){
-			minute = new Long(startTimeString.substring(minutesIndex+1))
-		}
-		def tempHour
-		if (minutesIndex > -1){
-			tempHour = startTimeString.substring(0,minutesIndex)?.padLeft(2, "0")
-		}
-		else if (amIndex > -1){
-			tempHour = startTimeString.substring(0,amIndex)?.padLeft(2, "0")
-		}else if (pmIndex > -1){
-			tempHour = startTimeString.substring(0,pmIndex)?.padLeft(2, "0")
-		}
-		hour = new Long(tempHour)
-		if (pmIndex > -1 && hour != 12){
-			hour = hour + 12
-		}
-		Calendar tempDate = new GregorianCalendar()
-		tempDate.setTime(dateFormatter.parse(params.aDate))
-		tempDate.set(Calendar.HOUR_OF_DAY, hour.intValue())
-		tempDate.set(Calendar.MINUTE, minute.intValue())
-		tempDate.set(Calendar.SECOND, 0)
-		tempDate.set(Calendar.MILLISECOND, 0)
+			if (amIndex > -1){
+				startTimeString = startTimeString.substring(0,amIndex)
+			}
+			else if (pmIndex > -1){
+				startTimeString = startTimeString.substring(0,pmIndex)
+			}
+			
+			if (minutesIndex > -1){
+				minute = new Long(startTimeString.substring(minutesIndex+1))
+			}
+			def tempHour
+			if (minutesIndex > -1){
+				tempHour = startTimeString.substring(0,minutesIndex)?.padLeft(2, "0")
+			}
+			else if (amIndex > -1){
+				tempHour = startTimeString.substring(0,amIndex)?.padLeft(2, "0")
+			}else if (pmIndex > -1){
+				tempHour = startTimeString.substring(0,pmIndex)?.padLeft(2, "0")
+			}
+			hour = new Long(tempHour)
+			if (pmIndex > -1 && hour != 12){
+				hour = hour + 12
+			}
+			Calendar tempDate = new GregorianCalendar()
+			tempDate.setTime(dateFormatter.parse(params.aDate))
+			tempDate.set(Calendar.HOUR_OF_DAY, hour.intValue())
+			tempDate.set(Calendar.MINUTE, minute.intValue())
+			tempDate.set(Calendar.SECOND, 0)
+			tempDate.set(Calendar.MILLISECOND, 0)
 
-		def appointmentDate = tempDate.getTime()
-		def count = 1
-		List appointmentsScheduled = []
+			def appointmentDate = tempDate.getTime()
+			def count = 1
+			List appointmentsScheduled = []
 
-		while (count <= repeatNumberOfAppointments){
-			if (client && serviceProvider && service && appointmentDate){
-				def existingAppointment = Appointment.findWhere(appointmentDate:appointmentDate, deleted:false)
-				if (!existingAppointment){
-					def appointment = new Appointment()
-					appointment.appointmentDate = appointmentDate
-					appointment.serviceProvider = serviceProvider
-					appointment.service = service
-					appointment.client = client
-					appointment.code = RandomStringUtils.random(14, true, true)
-					appointment.booked = true
-					appointment.save(flush:true)
-					if (appointment.hasErrors()){
-						println "ERROR!"
-						println appointment.errors
-					}
-					else{
-						success = true
-						if (params?.rescheduledAppointment?.toString()?.toUpperCase() == "TRUE"){
-							emailService.sendRescheduledConfirmation(appointment)
+			println "appointmentDate: " + appointmentDate
+
+			while (count <= repeatNumberOfAppointments){
+				if (client && serviceProvider && service && appointmentDate){
+					def existingAppointment = Appointment.findWhere(appointmentDate:appointmentDate, deleted:false, booked:true)
+					if (!existingAppointment){
+						def appointment = new Appointment()
+						appointment.appointmentDate = appointmentDate
+						appointment.serviceProvider = serviceProvider
+						appointment.service = service
+						appointment.client = client
+						appointment.code = RandomStringUtils.random(14, true, true)
+						appointment.booked = true
+						appointment.save(flush:true)
+						if (appointment.hasErrors()){
+							println "ERROR!"
+							println appointment.errors
 						}
 						else{
-							appointmentsScheduled.add(appointment)
+							success = true
+							if (params?.rescheduledAppointment?.toString()?.toUpperCase() == "TRUE"){
+								emailService.sendRescheduledConfirmation(appointment)
+							}
+							else{
+								appointmentsScheduled.add(appointment)
+							}
 						}
 					}
+					else{
+						println "ERROR: existing appointment found for this time slot. Unable to book appointment."
+						println "existingAppointment: " + existingAppointment
+					}
 				}
-				else{
-					println "ERROR: existing appointment found for this time slot. Unable to book appointment."
+				else {
+					println "ERROR! Missing params:"
+					println "client: " + client
+					println "serviceProvider: " + serviceProvider
+					println "service: " + service
+					println "appointmentDate: " + appointmentDate
+
 				}
-			}
-			else {
-				println "ERROR! Missing params:"
-				println "client: " + client
-				println "serviceProvider: " + serviceProvider
-				println "service: " + service
-				println "appointmentDate: " + appointmentDate
 
+				tempDate.add(Calendar.WEEK_OF_YEAR, repeatDuration)
+				appointmentDate = tempDate.getTime()
+				count++
 			}
 
-			tempDate.add(Calendar.WEEK_OF_YEAR, repeatDuration)
-			appointmentDate = tempDate.getTime()
-			count++
-		}
-
-		if (appointmentsScheduled.size() > 0){
-			emailService.sendEmailConfirmation(appointmentsScheduled)
+			if (appointmentsScheduled.size() > 0){
+				emailService.sendEmailConfirmation(appointmentsScheduled)
+			}
 		}
 		return success
 	}
@@ -247,12 +252,12 @@ class SchedulerService {
 		println "\n---- DELETING STALE APPOINTMENTS ----"
 		println new Date()
 		def numberOfTimeSlotsFreed = 0
-		def lastAppointmentUserAttemptedToBook = Appointment.get(session?.appointmentId)
+		/*def lastAppointmentUserAttemptedToBook = Appointment.get(session?.appointmentId)
 		if (lastAppointmentUserAttemptedToBook && lastAppointmentUserAttemptedToBook.booked == false){
 			lastAppointmentUserAttemptedToBook.deleted = true
 			lastAppointmentUserAttemptedToBook.save(flush:true)
 			numberOfTimeSlotsFreed++
-		}
+		}*/
 		Calendar calendarObject = new GregorianCalendar()
 		calendarObject.add(Calendar.MINUTE, -1)
 		def fiveMinutesAgo = calendarObject.getTime()

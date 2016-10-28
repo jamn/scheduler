@@ -165,9 +165,9 @@ class BookController {
 		def errorMessage = ''
 		def appointments = []
 		def client
-		def service = ServiceType.get(session.service.id)
-		def serviceProvider = User.get(session.serviceProvider.id)
-		def tempAppointment = Appointment.get(session.nextAppointment.id)
+		def service = ServiceType.get(session.service?.id)
+		def serviceProvider = User.get(session.serviceProvider?.id)
+		def tempAppointment = Appointment.get(session.nextAppointment?.id)
 
 		if (session?.user){
 			client = User.get(session.user.id)
@@ -205,8 +205,8 @@ class BookController {
 		if (appointments.size() > 0){
 			appointments.each(){ appointment ->
 				appointment.client = client
-				appointment.sendEmailReminder = params?.eRmndr == "true" ? true : false
-				appointment.sendTextReminder = params?.tRmndr == "true" ? true : false
+				appointment.sendEmailReminder = params?.emailReminder ? true : false
+				appointment.sendTextReminder = params?.textMessageReminder ? true : false
 				appointment.booked = true
 				appointment.save(flush:true)
 				if (appointment.hasErrors() || appointment.booked == false){
@@ -327,6 +327,20 @@ class BookController {
 			}
 		}
 		redirect(controller: 'user', action:'history')
+	}
+
+
+	private resetSessionVariables(){
+		session?.bookedAppointments = null
+		session?.serviceProviderId = null
+		session?.serviceId = null
+		session?.userUpdatingPassword = null
+		session?.existingAppointments = null
+		session?.newAppointments = null
+		session?.appointmentId = null
+		session?.serviceProvider = null
+        session?.service = null
+        session?.nextAppointment = null
 	}
 
 
