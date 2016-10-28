@@ -322,7 +322,7 @@ class BookController {
 				}
 				else{
 					flash.success = "Appointment canceled."
-					//emailService.sendCancellationNotices(appointment)
+					emailService.sendCancellationNotices(appointment)
 				}
 			}
 		}
