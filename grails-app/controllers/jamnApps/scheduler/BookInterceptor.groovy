@@ -30,10 +30,10 @@ class BookInterceptor {
         
         def protectedActions = readyTo.keySet()
 
-        if (requestedAction == 'index' || !protectedActions.contains(requestedAction) || readyTo[requestedAction]){
+        if (requestedAction == 'chooseService' || !protectedActions.contains(requestedAction) || readyTo[requestedAction]){
             return true
         }else{
-            redirect(action:'index')
+            redirect(action:'chooseService')
         }
 
     }

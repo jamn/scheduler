@@ -46,7 +46,6 @@ class SchedulerService {
 
 			startDate = startDate.withMillisOfDay(serviceProviderDayOfTheWeek.startTime.intValue()).toLocalDateTime().toDate()
 			endDate = endDate.withMillisOfDay(serviceProviderDayOfTheWeek.endTime.intValue()).toLocalDateTime().toDate()
-			def currentTimeMarker = new DateTime(startDate)
 			
 			def durationInMinutes = service.duration / MINUTE
 			//println "duration: " + durationInMinutes
@@ -54,28 +53,25 @@ class SchedulerService {
 			//println "endDate: " + endDate
 
 			def appointments = Appointment.executeQuery("FROM Appointment a WHERE a.serviceProvider = :serviceProvider AND a.appointmentDate >= :startDate AND a.appointmentDate <= :endDate AND a.deleted = false AND a.booked = true ORDER BY appointmentDate", [serviceProvider:serviceProvider, startDate:startDate, endDate:endDate])
-			def timeSlotStart
-			def timeSlotEnd
+			def timeSlotStart = new DateTime(startDate)
+			def timeSlotEnd = new DateTime(startDate).plusMinutes(durationInMinutes.intValue())
 			def count = 1
-			while(currentTimeMarker.toLocalDateTime().toDate() < endDate) {
-				timeSlotStart = new DateTime(currentTimeMarker)
-				timeSlotEnd = new DateTime(currentTimeMarker).plusMinutes(durationInMinutes.intValue())
-				// DOES AN EXISTING APPOINTMENT FALL IN THIS TIME RANGE?
-				def existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.toLocalDateTime().toDate() && it.appointmentDate < timeSlotEnd.toLocalDateTime().toDate() }
+			while(timeSlotEnd.toLocalDateTime().toDate() <= endDate) {
 
 				//println "----------------------------------------------------"
-				//println "1) currentTimeMarker: " + currentTimeMarker
 				//println "1) timeSlotStart: " + timeSlotStart
 				//println "1) timeSlotEnd: " + timeSlotEnd
 
+				// DOES AN EXISTING APPOINTMENT FALL IN THIS TIME RANGE?
+				def existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.toLocalDateTime().toDate() && it.appointmentDate < timeSlotEnd.toLocalDateTime().toDate() }
+				def existingAppointmentDurationInMinutes
 				while (existingAppointment){
+					existingAppointmentDurationInMinutes = existingAppointment.service.duration / MINUTE
+					timeSlotStart = new DateTime(existingAppointment.appointmentDate).plusMinutes(existingAppointmentDurationInMinutes.intValue())
+					timeSlotEnd = new DateTime(timeSlotStart).plusMinutes(durationInMinutes.intValue())
 					//println "${existingAppointment.id} | ${existingAppointment.client?.fullName} | ${existingAppointment.service?.description} | " + existingAppointment.appointmentDate.format('HH:mm')
-					def existingAppointmentDurationInMinutes = existingAppointment.service.duration / MINUTE
 					//println "existingAppointmentDurationInMinutes: " + existingAppointmentDurationInMinutes
-					timeSlotStart = timeSlotStart.plusMinutes(existingAppointmentDurationInMinutes.intValue())
-					timeSlotEnd = timeSlotEnd.plusMinutes(existingAppointmentDurationInMinutes.intValue())
 					//println "----------------------------------------------------"
-					//println "2) currentTimeMarker: " + currentTimeMarker
 					//println "2) timeSlotStart: " + timeSlotStart
 					//println "2) timeSlotEnd: " + timeSlotEnd
 					existingAppointment = appointments.find{ it.appointmentDate >= timeSlotStart.toLocalDateTime().toDate() && it.appointmentDate < timeSlotEnd.toLocalDateTime().toDate() }
@@ -83,29 +79,30 @@ class SchedulerService {
 
 				def anHourFromNow = new DateTime(DateTimeZone.forID("America/Chicago")).plusMinutes(60)
 
-				//println "timeSlotEnd.toDate() <= endDate: " + (timeSlotEnd.toDate() <= endDate)
-				//println "timeSlotStart.toLocalDateTime().getLocalMillis() > anHourFromNow.toLocalDateTime().getLocalMillis(): " + (timeSlotStart.toLocalDateTime().getLocalMillis() > anHourFromNow.toLocalDateTime().getLocalMillis())
+				//println "<= end date: " + (timeSlotEnd.toLocalDateTime().toDate() <= endDate)
+				//println "> 1 hour: " + (timeSlotStart.toLocalDateTime().getLocalMillis() > anHourFromNow.toLocalDateTime().getLocalMillis())
 				
-				if (timeSlotEnd.toDate() <= endDate && timeSlotStart.toLocalDateTime().getLocalMillis() > anHourFromNow.toLocalDateTime().getLocalMillis()){
-					def timeSlot = timeSlotStart.toDate().format('h:mma').replace(':00', '') + " / " + timeSlotEnd.toDate().format('h:mma').replace(':00', '')
-					if (timeSlotStart.getHourOfDay() < 11){
+				if (timeSlotEnd.toLocalDateTime().toDate() <= endDate && timeSlotStart.toLocalDateTime().getLocalMillis() > anHourFromNow.toLocalDateTime().getLocalMillis()){
+					def timeSlot = timeSlotStart.toLocalDateTime().toDate().format('h:mma').replace(':00', '') + " / " + timeSlotEnd.toLocalDateTime().toDate().format('h:mma').replace(':00', '')
+					if (timeSlotStart.toLocalDateTime().getHourOfDay() < 11){
 						List morning = timeSlotsMap.get("morning") ?: []
-						morning.add([startTime:timeSlotStart.toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
+						morning.add([startTime:timeSlotStart.toLocalDateTime().toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("morning", morning)
 					}
-					else if (timeSlotStart.getHourOfDay() < 14){
+					else if (timeSlotStart.toLocalDateTime().getHourOfDay() < 14){
 						List lunch = timeSlotsMap.get("lunch") ?: []
-						lunch.add([startTime:timeSlotStart.toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
+						lunch.add([startTime:timeSlotStart.toLocalDateTime().toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("lunch", lunch)
 					}
 					else{
 						List afternoon = timeSlotsMap.get("afternoon") ?: []
-						afternoon.add([startTime:timeSlotStart.toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
+						afternoon.add([startTime:timeSlotStart.toLocalDateTime().toDate().format('MMddyyyyHHmm'), timeSlot: timeSlot, id:count])
 						timeSlotsMap.put("afternoon", afternoon)
 					}
 				}
 
-				currentTimeMarker = new DateTime(timeSlotStart).plusMinutes(15)
+				timeSlotStart = new DateTime(timeSlotStart).plusMinutes(15)
+				timeSlotEnd = new DateTime(timeSlotEnd).plusMinutes(15)
 				count++
 			}
 		}
