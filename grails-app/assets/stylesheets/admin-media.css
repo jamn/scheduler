@@ -1,8 +1,19 @@
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 @media (min-width: 321px) {
+	.navbar {
+		margin: 0;
+		padding: 0 10px;
+	}
 	.main {
-		padding: 20px 40px;
+		padding: 10px 0;
+	}
+	.date-range-picker {
+		border: none;
+		margin: 0;
+	}
+	.container {
+		padding: 0;
 	}
 }
 @media (min-width: 376px) {

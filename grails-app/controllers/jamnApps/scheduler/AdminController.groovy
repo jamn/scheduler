@@ -34,7 +34,7 @@ class AdminController {
     def calendar(){
     	List serviceProviderAvailability = adminService.getServiceProviderAvailability(session.user)
     	def startDate = adminService.getStartDate(params, serviceProviderAvailability)
-    	def services = ServiceType.findAllByServiceProvider(session.user)
+    	def services = adminService.getServices(session.user)?.services
     	Map upcomingAppointments = adminService.getUpcomingAppointments(startDate, session.user)
     	def numberOfRows = schedulerService.getNumberOfRowsForCalendar(serviceProviderAvailability)
     	def days = schedulerService.getDaysForCalendar(startDate)

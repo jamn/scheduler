@@ -69,20 +69,22 @@
 
 	<div class="container">
 		<div class="main col-xs-12">
-			<div class="row">
-				<g:if test="${flash.error}">
-					<div class="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
-						<strong>Error!</strong> ${flash.error.encodeAsHTML()}
-					</div>
-				</g:if>
-				<g:if test="${flash.success}">
-					<div class="alert alert-success alert-dismissible" role="alert">
-						<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
-						<strong>Success!</strong> ${flash.success.encodeAsHTML()}
-					</div>
-				</g:if>
-			</div>
+			<g:if test="${flash.error || flash.success}">
+				<div class="row">
+					<g:if test="${flash.error}">
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
+							<strong>Error!</strong> ${flash.error.encodeAsHTML()}
+						</div>
+					</g:if>
+					<g:if test="${flash.success}">
+						<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
+							<strong>Success!</strong> ${flash.success.encodeAsHTML()}
+						</div>
+					</g:if>
+				</div>
+			</g:if>	
 			<g:layoutBody />
 		</div>
 	</div>
