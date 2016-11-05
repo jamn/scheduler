@@ -5,7 +5,16 @@ input, select, textarea {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 body {
+	background-color: #f3f3f3;
 	margin-bottom: 40px;
+}
+.container {
+    position: relative;
+	background-color: #fff;
+	border: 1px solid #e8e8e8;
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
+       -moz-box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
+            box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
 }
 .alert {
 	margin: 0 0 10px 0;
@@ -30,15 +39,6 @@ body {
 #mask .loader {
 	top: 180px;
 	position: relative;
-}
-
-/* Remove the blue halo jquery mobile adds */
-.ui-focus,
-.ui-page { 
-	-moz-box-shadow: none !important;
-	-webkit-box-shadow: none !important;
-	box-shadow: none !important;
-	outline: none 0px;
 }
 
 .btn-default {
@@ -111,6 +111,7 @@ body {
 .header .logo {
 	margin: 0 auto;
 	padding: 50px 0 4px;
+	width: 224px;
 }
 
 .header .user-links {
@@ -159,7 +160,6 @@ body {
 .grey-box {
 	background-color: #58585A;
 	padding: 20px 0;
-	margin-bottom: 14px;
 }
 
 .message-board-backing{
@@ -211,10 +211,10 @@ body {
 	font-size: 1.3em;
 }
 
-.footer .address:hover{
+/*.footer .address:hover{
 	color: #fff;
 	background-color: #8D8800;
-}
+}*/
 .footer hr {
 	margin-top: 0;
 }
@@ -255,16 +255,6 @@ body {
 }
 
 /* SERVICES */
-
-.book-now-button:hover,
-.address:hover,
-.google-map:hover,
-.service:hover,
-.time-slot:hover{
-	color: #fff;
-	background-color: #8D8800;
-	cursor: pointer;
-}
 
 .service,
 .time-slot{

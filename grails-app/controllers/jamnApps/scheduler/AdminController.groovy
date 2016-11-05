@@ -52,7 +52,7 @@ class AdminController {
     }
 
     def bookAppointment(){
-    	return adminService.getClients() + adminService.getServices()
+    	return adminService.getClients() + adminService.getServices(session.user)
     }
 
     def blockOffTime(){
@@ -68,9 +68,9 @@ class AdminController {
     				availability:adminService.getServiceProviderAvailability(session.user)]
     }
 
-    def log(){
-    	return adminService.getLog()
-    }
+    // def log(){
+    // 	return adminService.getLog()
+    // }
 
 
 
@@ -113,9 +113,8 @@ class AdminController {
 	def getScheduleAppointmentForm(){
 		println "params: " + params
 		def datetime = dateFormatter2.parse(params.d) ?: new Date()
-		def serviceProvider = User.get(session.user.id)
-		def availability = DayOfTheWeek.findAllWhere(serviceProvider:serviceProvider, available:true)?.collect{ it.dayIndex }
-		def model = adminService.getClients() + adminService.getServices() + [datetime:datetime, availability:availability]
+		def availability = DayOfTheWeek.findAllWhere(serviceProvider:session.user, available:true)?.collect{ it.dayIndex }
+		def model = adminService.getClients() + adminService.getServices(session.user) + [datetime:datetime, availability:availability]
 		render(template:"schedulingForm", model:model)
 	}
 
@@ -139,8 +138,7 @@ class AdminController {
 			redirect(action: 'homepageConfig')
 			return
 		}else{
-			def serviceProvider = User.get(session.user.id)
-			adminService.importAppointments(appointmentsFile, serviceProvider)
+			adminService.importAppointments(appointmentsFile, session.user)
 		}
 		flash.success = "Appointments were successfully imported."
 		redirect(action:'homepageConfig')

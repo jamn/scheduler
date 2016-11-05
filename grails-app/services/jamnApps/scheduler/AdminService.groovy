@@ -73,8 +73,12 @@ class AdminService {
 		return [clients:clients, filterLetters:filterLetters]
     }
 
-    private Map getServices(){
-    	def services = ServiceType.list()?.sort{it?.displayOrder}.findAll{it?.description != "Blocked Off Time"} ?: []
+    private Map getServices(User serviceProvider = null){
+    	def services = []
+    	if (serviceProvider){
+    		services = ServiceType.executeQuery("FROM ServiceType s WHERE s.serviceProvider = :serviceProvider AND s.description != 'Blocked Off Time' AND display = true AND deleted = false ORDER BY s.displayOrder", [serviceProvider:serviceProvider])
+    	}
+    	//def services = ServiceType.findWhere(serviceProvider:serviceProvider, deleted:false, display:true)?.sort{it?.displayOrder}.findAll{it?.description != "Blocked Off Time"} ?: []
     	return [services:services]
     }
 

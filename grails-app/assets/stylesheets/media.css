@@ -3,6 +3,9 @@
 
 /* Additional query not based on bootstrap */
 @media (min-width: 580px) {
+	.header .logo {
+		width: initial;
+	}
 	.footer .address {
 		font-size: 1.7em;
 	}

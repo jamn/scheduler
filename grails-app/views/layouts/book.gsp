@@ -14,7 +14,7 @@
 <html><head>
 <meta charset="UTF-8">
 <title><g:layoutTitle default="The Den Barbershop :: KC" /></title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
 
 <link rel="stylesheet" type="text/css" href="${resource(dir:'css', file:'bootstrap-3.2.0.min.css')}" >
@@ -36,11 +36,11 @@
 
 	<g:set var="util" bean="utilService"/>
 
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row header">
 			<div class=".col-xs-12">
 				<img class="img-responsive logo link home-link" id="logoPlain" src="${resource(dir:'images',file:'logo-plain.png')}" />
-				<div class="link address" id="headerAddressLink">1013 W 47th Street<br/>KCMO, 64112</div>
+				<div class="address">1013 W 47th Street<br/>KCMO, 64112</div>
 				<div class="user-links">
 					<g:if test="${session.user}">
 						<g:render template="/user/menu" />
