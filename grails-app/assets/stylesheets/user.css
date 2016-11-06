@@ -28,10 +28,7 @@ body{
 .header .header-logo.closed {
 	top: -1000px;
 }
-.header .header-board {
-	width: 300px;
-}
-.header .logo {
+#headerLogoBoard .logo {
     width: 216px;
     padding: initial;
     background-color: #FFF;
@@ -41,6 +38,9 @@ body{
     top: 80px;
     left: 40px;
     border: 1px solid #CACACA;
+}
+.header .header-board {
+	width: 300px;
 }
 .header .user-links {
 	float: right;
@@ -89,4 +89,8 @@ p.no-appointments {
 	font-size: .5em;
 	padding: 14px 36px;
 	margin: 4px;
+}
+
+.footer {
+	,margin-bottom: 16px;
 }

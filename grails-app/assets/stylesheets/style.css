@@ -319,7 +319,8 @@ body {
 .reset-password-box{
 	border: 1px solid #A2A2A2;
 	border-radius: 4px;
-	padding: 20px; 
+	padding: 20px;
+	margin-top: 16px;
 }
 
 .login-box input,
@@ -345,6 +346,10 @@ body {
     color: #f00;
     text-align: center;
     display: none;
+}
+
+.login-box .reminders h2 {
+	margin: 0
 }
 
 #showLoginForm,

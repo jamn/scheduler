@@ -40,7 +40,7 @@
 
 	<g:set var="util" bean="utilService"/>
 
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row header">
 			<div class="col-xs-12">
 				<div id="headerLogoBoard" class="header-logo closed">
