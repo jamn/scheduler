@@ -27,6 +27,7 @@ class SchedulerService {
 	def dateService
 	def emailService
 	def sessionFactory
+	def notificationService
 
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy")
 
@@ -199,7 +200,7 @@ class SchedulerService {
 						else{
 							success = true
 							if (params?.rescheduledAppointment?.toString()?.toUpperCase() == "TRUE"){
-								emailService.sendRescheduledConfirmation(appointment)
+								emailService.sendRescheduledConfirmationToClient(appointment)
 							}
 							else{
 								appointmentsScheduled.add(appointment)
@@ -226,7 +227,7 @@ class SchedulerService {
 			}
 
 			if (appointmentsScheduled.size() > 0){
-				emailService.sendEmailConfirmation(appointmentsScheduled)
+				notificationService.sendBookingConfirmations(appointmentsScheduled)
 			}
 		}
 		return success

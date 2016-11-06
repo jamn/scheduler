@@ -11,7 +11,7 @@ class EmailService {
 
 	static SENDGRID_API_KEY = "SG.-gXcHLvSQ_6kLAce7Wl0qw.GkRZPX6VRc_BWy7CZ0nZL0i_pwUnUHG7pAwQ6weX6IA"
 
-	public sendEmailConfirmation(List appointments){
+	public sendClientConfirmation(List appointments){
 		println "Sending email confirmation for appointment(s): "
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointments[0].client.email}"
@@ -35,11 +35,9 @@ class EmailService {
 			println "ERROR"
 			println e
 		}
-
-		sendConfirmationToServiceProvider(appointments)
 	}
 
-	private sendConfirmationToServiceProvider(List appointments){
+	private sendServiceProviderConfirmation(List appointments){
 		println "    sending confirmation to service provider"
 		try {
 			def from = "${appointments[0].client.email}"
@@ -61,16 +59,8 @@ class EmailService {
 		}
 	}
 
-	public sendCancellationNotices(Appointment appointment){
-		if (!appointment.isBlockedTime()){
-			println "Sending cancellation notices: " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
-			sendCancellationNoticeToClient(appointment)
-			sendCancellationNoticeToServiceProvider(appointment)
-		}
-	}
-
 	private sendCancellationNoticeToClient(Appointment appointment){
-		println "    sending notice to client"
+		println "    sending email to client"
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointment.client.email}"
 		def subject = "** Appointment Cancelled ** [${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}]"     
@@ -85,7 +75,7 @@ class EmailService {
 	}
 
 	private sendCancellationNoticeToServiceProvider(Appointment appointment){
-		println "    sending notice to service provider"
+		println "    sending email to service provider"
 		def from = "${appointment.client.email}"
 		def to = "kalin@thedenbarbershop-kc.com"
 		def subject = "** Appointment Cancelled ** [${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}]"
@@ -99,7 +89,7 @@ class EmailService {
 		}
 	}
 
-	public sendRescheduledConfirmation(Appointment appointment){
+	public sendRescheduledConfirmationToClient(Appointment appointment){
 		println "Sending reschedule confirmation for appointment: " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('E MM/dd @ hh:mm a')
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointment.client.email}"

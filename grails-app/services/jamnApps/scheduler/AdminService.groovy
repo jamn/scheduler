@@ -9,9 +9,6 @@ import org.springframework.web.multipart.support.StandardMultipartHttpServletReq
 class AdminService {
 
 	def dateService
-	def schedulerService
-	def emailService
-	def userService
 
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("EE dd MMM yyyy @ hh:mm a")
 	SimpleDateFormat dateFormatter2 = new SimpleDateFormat("MM/dd/yyyyhh:mma")

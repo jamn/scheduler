@@ -14,6 +14,7 @@ class BookController {
 	def schedulerService
 	def userService
 	def sessionFactory
+	def notificationService
 
 	static layout = 'book'
 	static Long HOUR = 3600000
@@ -218,7 +219,7 @@ class BookController {
 					println "saved appointment(${appointment.id}): " + appointment.client?.getFullName() + " | " + appointment.service?.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
 				}
 			}
-			emailService.sendEmailConfirmation(appointments)
+			notificationService.sendBookingConfirmations(appointments)
 
 			if (session.existingAppointmentId){
 				def existingAppointment = Appointment.get(session.existingAppointmentId)
@@ -227,7 +228,7 @@ class BookController {
 					existingAppointment.deleted = true
 					existingAppointment.save(flush:true)
 					session.existingAppointmentId = null
-					emailService.sendCancellationNotices(existingAppointment)
+					notificationService.sendCancellationNotices(existingAppointment)
 				}
 			}
 		}
@@ -291,7 +292,7 @@ class BookController {
 			else{
 				flash.appointmentDeleted = true
 				session.appointmentToDelete = null
-				emailService.sendCancellationNotices(appointment)
+				notificationService.sendCancellationNotices(appointment)
 			}
 		}
 		redirect(action:"cancelAppointmentConfirmation")
@@ -322,7 +323,7 @@ class BookController {
 				}
 				else{
 					flash.success = "Appointment canceled."
-					emailService.sendCancellationNotices(appointment)
+					notificationService.sendCancellationNotices(appointment)
 				}
 			}
 		}

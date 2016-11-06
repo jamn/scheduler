@@ -23,7 +23,7 @@ class AdminController {
 	def utilService
 	def dateService
 	def amazonWebService
-	def textMessageService
+	def notificationService
 	
 
 	/*********************************
@@ -412,7 +412,7 @@ class AdminController {
 				appointment.deleted = true
 				appointment.save(flush:true)
 				if (!appointment.hasErrors()){
-					emailService.sendCancellationNotices(appointment)
+					notificationService.sendCancellationNotices(appointment, false)
 					success = true
 					if (appointment.isBlockedTime()){
 						flash.success = "Blocked time removed."
