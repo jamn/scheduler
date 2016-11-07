@@ -6,11 +6,12 @@
 		padding: 0 10px;
 	}
 	.main {
-		padding: 10px 0;
+		padding: 0;
 	}
 	.date-range-picker {
 		border: none;
 		margin: 0;
+		font-size: 1em;
 	}
 	.container {
 		padding: 0;
@@ -23,6 +24,7 @@
 	.add-client-label {
 		display: block;
 	}
+
 }
 @media (min-width: 500px) {
 	.edit-appointment .glyphicon-class {
@@ -37,6 +39,12 @@
 		padding: 6px 10px 10px;
 		width: 50px;
 		height: 50px;
+	}
+	.date-range-picker {
+		font-size: 1.4em;
+	}
+	.date-range-picker label {
+		margin: 8px 0 0 -47px;
 	}
 }
 /* Small devices (tablets, 768px and up) */
@@ -59,6 +67,12 @@
 	}
 	#clientDetails > h2 {
 		font-size: 4em;
+	}
+	.date-range-picker {
+		font-size: 2em;
+	}
+	.date-range-picker label {
+		margin: 8px 0 0 -25px;
 	}
 }
 @media (min-width: 769px) {

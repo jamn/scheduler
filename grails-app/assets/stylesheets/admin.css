@@ -470,7 +470,6 @@ select{
 /* CALENDAR */
 
 .date-range-picker {
-	font-size: 2em;
 	text-align: center;
 	border: 1px solid #ccc;
     border-radius: 10px;
@@ -481,29 +480,43 @@ select{
 }
 .date-range-picker label {
     font-weight: 100;
-    font-size: .7em;
-    margin: 0;
-    margin-left: -12px;
+    font-size: .6em;
+    margin: 8px 0 0 -60px;
 }
 .date-range-picker input {
 	width: 100px;
     margin: auto;
     margin-bottom: 20px;
 }
-.date-range-picker ul {
-	padding: 0;
-	margin: 15px;
+.date-range-picker .arrow {
+	padding: 26px;
+	cursor: pointer;
+}
+.date-range-picker .arrow:hover {
+	background-color: #eceace;
+}
+.date-range-picker .calendar-form {
+	border-left: 1px solid #e8e7d7;
+	border-right: 1px solid #e8e7d7;
 }
 .date-range-picker .glyphicon {
-	margin: 0 20px;
-	border-bottom: 2px solid #e6e6e6;
+	border-bottom: 2px solid #e8e7d7;
 	padding-bottom: 6px;
 }
-.date-range-picker .glyphicon:hover {
-	cursor: pointer;
-	color: #585858;
-	border-bottom: 2px solid #585858;
+.date-range-picker .today {
+	padding: 27px;
+    margin: 0;
+    background-color: rgba(133, 128, 3, 0.31);
+    cursor: pointer;
 }
+.date-range-picker .today:hover {
+    background-color: rgba(133, 128, 3, 0.51);
+    color: #1f1f1f;
+}
+.date-range-picker .date-selector {
+	background-color: rgba(133, 128, 3, 0.11);
+	padding: 0;
+}	
 
 .ui-datepicker .ui-priority-secondary {
 	opacity: 1;

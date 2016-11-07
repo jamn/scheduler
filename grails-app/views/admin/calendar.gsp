@@ -4,22 +4,19 @@
 	<g:set var="schedulerService" bean="schedulerService"/>
 
 	<div class="row date-range-picker">
-		<ul>
-			<li>
-				<form action="calendar">
-					<label id="calendarStartDateLabel" for="calendarStartDate">Start Date:</label>
-					<input class="form-control calendar-start-date" id="calendarStartDate" name="calendarStartDate" type="text" />
-				</form>
-			</li>
-			<li>
-				<ul>
-					<li><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" onclick="minusOneWeek();"></span></li>
-					<li><h1>${startDate.toString('MMMM')}</h1></li>
-					<li><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" onclick="plusOneWeek();"></span></li>
-				</ul>
-			</li>
-		</ul>
-		
+		<div class="col-xs-4 col-sm-6 today" onclick="today();">
+			Today
+		</div>
+		<div class="col-xs-8 col-sm-6 date-selector">
+				<div class="col-xs-3 col-sm-4 arrow" onclick="minusOneWeek();"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+				<div class="col-xs-6 col-sm-4 calendar-form">
+					<form action="calendar">
+						<label id="calendarStartDateLabel" for="calendarStartDate">Start Date:</label>
+						<input class="form-control calendar-start-date" id="calendarStartDate" name="calendarStartDate" type="text" />
+					</form>
+				</div>
+				<div class="col-xs-3 col-sm-4 arrow" onclick="plusOneWeek();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
+		</div>
 	</div>
 
 	<table id="calendarTable" class="calendar-table">
@@ -114,6 +111,11 @@
 			$("#mask").fadeIn()
 			var lastWeek = selectedDate.setDate(selectedDate.getDate()-7)
 			document.location = "?startDate="+encodeURIComponent(dateFormat(lastWeek, "mm/dd/yyyy"))
+		}
+		function today(){
+			$("#mask").fadeIn()
+			var today = new Date()
+			document.location = "?startDate="+encodeURIComponent(dateFormat(today, "mm/dd/yyyy"))
 		}
 		// hack to make "today" button in calendar actually select today's date
 		$.datepicker._gotoToday = function(id) {
