@@ -486,18 +486,19 @@ select{
 .date-range-picker input {
 	width: 100px;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 .date-range-picker .arrow {
 	padding: 26px;
 	cursor: pointer;
 }
 .date-range-picker .arrow:hover {
-	background-color: #eceace;
+	background-color: rgba(133, 128, 3, 0.51);
 }
 .date-range-picker .calendar-form {
 	border-left: 1px solid #e8e7d7;
 	border-right: 1px solid #e8e7d7;
+	padding: 0;
 }
 .date-range-picker .glyphicon {
 	border-bottom: 2px solid #e8e7d7;
