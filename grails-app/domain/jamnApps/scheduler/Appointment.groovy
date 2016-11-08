@@ -14,6 +14,7 @@ class Appointment extends CoreObject {
 	Boolean sendTextReminder = true
 	Boolean reminderTextSent = false
 	Boolean cancellationTextSentToServiceProvider = false
+	Boolean newAppointmentTextSentToServiceProvider = false
 
 	static constraints = {
     	client(nullable:true)

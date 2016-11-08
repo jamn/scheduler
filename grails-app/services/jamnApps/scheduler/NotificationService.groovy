@@ -19,6 +19,7 @@ class NotificationService {
 	public sendBookingConfirmations(List appointments){
 		emailService.sendServiceProviderConfirmation(appointments)
 		emailService.sendClientConfirmation(appointments)
+		textMessageService.sendNewBookingNoticeToServiceProvider(appointments)
 	}
 
 }

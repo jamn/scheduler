@@ -14,10 +14,9 @@ class TextMessageService {
 		def phone = appointment.client?.phone?.replaceAll("-","")?.replaceAll("\\(","")?.replaceAll("\\)","")?.replaceAll(" ","")?.replaceAll("___-___-____","")
 		if (!appointment.reminderTextSent && (phone?.size() == 10 && !phone.contains('0000000000'))) {
 			println "sending text to client"
-			def appointmentDate = appointment.appointmentDate.format('hh:mm a')
 			def to = "+1" + phone
 			def from = "+18162664723"
-			def body = "Reminder: Your appointment for a ${appointment.service.description} @ The Den is tomorrow at ${appointmentDate}."
+			def body = "Reminder: Your appointment for a ${appointment.service.description} @ The Den is tomorrow at ${appointment.appointmentDate.format('hh:mm a')}."
 			sendMessage(to,from,body)
 			appointment.reminderTextSent = true
 			appointment.save()
@@ -26,21 +25,37 @@ class TextMessageService {
 
 	public static void sendCancellationNoticeToServiceProvider(Appointment appointment){
 		def phone = appointment.serviceProvider?.phone?.replaceAll("-","")?.replaceAll("\\(","")?.replaceAll("\\)","")?.replaceAll(" ","")?.replaceAll("___-___-____","")
-		println "phone: " + phone
-		println "appointment.cancellationTextSentToServiceProvider: " + appointment.cancellationTextSentToServiceProvider
 		if (!appointment.cancellationTextSentToServiceProvider && (phone?.size() == 10 && !phone.contains('0000000000'))) {
 			println "    sending text to service provider"
-			def appointmentDate = appointment.appointmentDate.format('hh:mm a')
 			def to = "+1" + phone
 			def from = "+18162664723"
-			def body = "Appointment Canceled: ${appointment.client.fullName} -- ${appointment.service.description} @ ${appointmentDate}."
+			def body = "Appointment Canceled: ${appointment.client.fullName} - ${appointment.service.description} ${appointment.appointmentDate.format('MM/dd')} @ ${appointment.appointmentDate.format('hh:mm a')}."
 			sendMessage(to,from,body)
 			appointment.cancellationTextSentToServiceProvider = true
 			appointment.save()
 		}
 	}
 
-
+	public static void sendNewBookingNoticeToServiceProvider(List appointments){
+		def phone = appointments[0].serviceProvider?.phone?.replaceAll("-","")?.replaceAll("\\(","")?.replaceAll("\\)","")?.replaceAll(" ","")?.replaceAll("___-___-____","")
+		if (phone?.size() == 10 && !phone.contains('0000000000')) {
+			println "    sending text to service provider"
+			def to = "+1" + phone
+			def from = "+18162664723"
+			def body = "New Appointment(s) Booked:"
+			appointments.eachWithIndex(){ appointment,i ->
+				if (i == 0) {
+					body += " ${appointment.client.fullName} -"
+				}
+				if (!appointment.newAppointmentTextSentToServiceProvider){
+					body += " ${appointment.service.description} ${appointment.appointmentDate.format('MM/dd')} @ ${appointment.appointmentDate.format('hh:mm a')}."
+					appointment.newAppointmentTextSentToServiceProvider = true
+					appointment.save()
+				}
+			}
+			sendMessage(to,from,body)
+		}
+	}
 
 	private static void sendMessage(to, from, messageBody){
 		def enabled = true

@@ -110,7 +110,13 @@ class BookController {
 		def nextAppointment
 		while (count <= repeatNumberOfAppointments){
 			def existingAppointment = Appointment.findWhere(appointmentDate:appointmentDate, deleted:false)
-			if (existingAppointment && count == 1){
+			if (existingAppointment && existingAppointment.id == session.nextAppointment?.id){
+				// bad method...needs refactored
+				existingAppointment.service.attach()
+				nextAppointment = existingAppointment
+				newAppointments.add(existingAppointment)
+			}
+			else if (existingAppointment && count == 1){
 				println "existingAppointment(${existingAppointment.id}): " + existingAppointment.client?.getFullName() + " | " + existingAppointment.service?.description + " on " + existingAppointment.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')
 				flash.error = "It looks like another client grabbed this timeslot just before you did. If they don't book it within 5 minutes it will become available again."
 				redirect(action:"chooseTime", params:[date:startDate.format('MM/dd/yyyy')])
@@ -142,6 +148,9 @@ class BookController {
 			appointmentDate = startDate.getTime()
 			count++
 		}
+		session.nextAppointment = null
+		session.existingAppointments = null
+		session.newAppointments = null
 		session.nextAppointment = nextAppointment
 		session.existingAppointments = existingAppointments
 		session.newAppointments = newAppointments
