@@ -22,6 +22,9 @@ $(document).ready(function(){
 	})
 });
 
+function hideAlert(){
+	$('.alert').slideUp()
+}
 
 function showMask(){
 	$("#mask").fadeIn()

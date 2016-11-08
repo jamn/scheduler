@@ -112,7 +112,9 @@ class BookController {
 			def existingAppointment = Appointment.findWhere(appointmentDate:appointmentDate, deleted:false)
 			if (existingAppointment && count == 1){
 				println "existingAppointment(${existingAppointment.id}): " + existingAppointment.client?.getFullName() + " | " + existingAppointment.service?.description + " on " + existingAppointment.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')
-				render ('{"success":false}') as JSON
+				flash.error = "It looks like another client grabbed this timeslot just before you did. If they don't book it within 5 minutes it will become available again."
+				redirect(action:"chooseTime", params:[date:startDate.format('MM/dd/yyyy')])
+				return
 			}
 			else if (existingAppointment && count > 1){
 				println "existingAppointment(${existingAppointment.id}): " + existingAppointment.client?.getFullName() + " | " + existingAppointment.service?.description + " on " + existingAppointment.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')

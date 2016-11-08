@@ -53,7 +53,7 @@ class SchedulerService {
 			//println "startDate: " + startDate
 			//println "endDate: " + endDate
 
-			def appointments = Appointment.executeQuery("FROM Appointment a WHERE a.serviceProvider = :serviceProvider AND a.appointmentDate >= :startDate AND a.appointmentDate <= :endDate AND a.deleted = false AND a.booked = true ORDER BY appointmentDate", [serviceProvider:serviceProvider, startDate:startDate, endDate:endDate])
+			def appointments = Appointment.executeQuery("FROM Appointment a WHERE a.serviceProvider = :serviceProvider AND a.appointmentDate >= :startDate AND a.appointmentDate <= :endDate AND a.deleted = false ORDER BY appointmentDate", [serviceProvider:serviceProvider, startDate:startDate, endDate:endDate])
 			def timeSlotStart = new DateTime(startDate)
 			def timeSlotEnd = new DateTime(startDate).plusMinutes(durationInMinutes.intValue())
 			def count = 1
