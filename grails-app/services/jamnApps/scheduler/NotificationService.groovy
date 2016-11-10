@@ -9,7 +9,7 @@ class NotificationService {
 		if (!appointment.isBlockedTime()){
 			println "Sending cancellation notices: " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
 			emailService.sendCancellationNoticeToClient(appointment)
-			emailService.sendCancellationNoticeToServiceProvider(appointment)
+			//emailService.sendCancellationNoticeToServiceProvider(appointment)
 			if (sendToServiceProvider){
 				textMessageService.sendCancellationNoticeToServiceProvider(appointment)
 			}
@@ -17,7 +17,7 @@ class NotificationService {
 	}
 
 	public sendBookingConfirmations(List appointments){
-		emailService.sendServiceProviderConfirmation(appointments)
+		//emailService.sendServiceProviderConfirmation(appointments)
 		emailService.sendClientConfirmation(appointments)
 		textMessageService.sendNewBookingNoticeToServiceProvider(appointments)
 	}
