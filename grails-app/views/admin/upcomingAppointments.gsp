@@ -3,31 +3,33 @@
 	<h1>All Upcoming Appointments</h1>
 	<hr />
 	<div class="row">
-		<table class="appointments">
-			<g:each in="${appointments}">
-				<%if (it.service.description != 'Blocked Off Time'){%>
-					<tr class="appointment-data appointment-data-${it.id}" id="${it.id}">
-						<td>
-							<div class="col-xs-4 appointment-details">
-								<h2>${it.client.fullName}<%if(it.client.isNewUser()){%> (**NEW**)<%}%></h2>
-								<h4 style="background-color:${it.service.calendarColor};"><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')}</h4>
-							</div>
-							<div class="col-xs-8 edit-appointment edit-appointment-${it.id}">
-								<div class="col-xs-4 center">
-									<button type="button" class="btn white-button" data-toggle="modal" data-target="#rescheduleAppointmentModal" onclick="getRescheduleOptions(${it.id});"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="glyphicon-class">Reschedule</span></button>
+		<div class="col-xs-12">
+			<table class="appointments">
+				<g:each in="${appointments}">
+					<%if (it.service.description != 'Blocked Off Time'){%>
+						<tr class="appointment-data appointment-data-${it.id}" id="${it.id}">
+							<td>
+								<div class="col-xs-4 appointment-details">
+									<h2>${it.client.fullName}<%if(it.client.isNewUser()){%> (**NEW**)<%}%></h2>
+									<h4 style="background-color:${it.service.calendarColor};"><b>${it.service.description}:</b> ${it.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')}</h4>
 								</div>
-								<div class="col-xs-4 center">
-									<button type="button" class="btn white-button" data-toggle="modal" data-target="#clientDetailsModal" data-name="${it.client.fullName}" data-email="${it.client.email}" data-phone="${it.client.phone}" data-id="${it.client.id}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span><span class="glyphicon-class">Contact</span></button>
+								<div class="col-xs-8 edit-appointment edit-appointment-${it.id}">
+									<div class="col-xs-4 center">
+										<button type="button" class="btn white-button" data-toggle="modal" data-target="#rescheduleAppointmentModal" onclick="getRescheduleOptions(${it.id});"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="glyphicon-class">Reschedule</span></button>
+									</div>
+									<div class="col-xs-4 center">
+										<button type="button" class="btn white-button" data-toggle="modal" data-target="#clientDetailsModal" data-name="${it.client.fullName}" data-email="${it.client.email}" data-phone="${it.client.phone}" data-id="${it.client.id}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span><span class="glyphicon-class">Contact</span></button>
+									</div>
+									<div class="col-xs-4 center">
+										<button type="button" c="${it.code}" class="btn white-button error-button cancelAppointmentButton"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><span class="glyphicon-class">Cancel</span></button>
+									</div>
 								</div>
-								<div class="col-xs-4 center">
-									<button type="button" c="${it.code}" class="btn white-button error-button cancelAppointmentButton"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><span class="glyphicon-class">Cancel</span></button>
-								</div>
-							</div>
-						</td>
-					</tr>
-				<%}%>
-			</g:each>
-		</table>
+							</td>
+						</tr>
+					<%}%>
+				</g:each>
+			</table>
+		</div>
 	</div>
 
 

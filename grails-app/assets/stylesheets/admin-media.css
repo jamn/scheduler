@@ -5,16 +5,10 @@
 		margin: 0;
 		padding: 0 10px;
 	}
-	.main {
-		padding: 0;
-	}
 	.date-range-picker {
 		border: none;
 		margin: 0;
 		font-size: 1em;
-	}
-	.container {
-		padding: 0;
 	}
 }
 @media (min-width: 376px) {
@@ -44,7 +38,7 @@
 		font-size: 1.4em;
 	}
 	.date-range-picker label {
-		margin: 8px 0 0 -47px;
+		margin: 8px 0 0 -38px;
 	}
 }
 /* Small devices (tablets, 768px and up) */
@@ -60,6 +54,8 @@
 		font-size: 1.3em;
 	}
 	.main {
+		padding: 40px;
+		border: none;
 		border: 1px solid #ccc;
 		border-radius: 10px;
 		margin-top: 20px;
@@ -68,12 +64,25 @@
 	#clientDetails > h2 {
 		font-size: 4em;
 	}
+	.calendar {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
 	.date-range-picker {
 		font-size: 2em;
 	}
 	.date-range-picker label {
-		margin: 8px 0 0 -25px;
+		margin: 8px 0 0 -20px;
 	}
+	.date-range-picker .today {
+		padding: 26px;
+		border-radius: 10px 0 0 0;
+    	border-right: 1px solid #e8e7d7;
+	}
+	.date-range-picker .date-selector,
+	.date-range-picker .arrow.arrow-right {
+		border-radius: 0 10px 0 0;
+	}	
 }
 @media (min-width: 769px) {
 	.appointment-data .appointment-details {

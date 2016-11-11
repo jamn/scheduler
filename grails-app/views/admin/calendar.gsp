@@ -3,57 +3,60 @@
 
 	<g:set var="schedulerService" bean="schedulerService"/>
 
-	<div class="row date-range-picker">
-		<div class="col-xs-4 col-sm-6 today" onclick="today();">
-			Today
+	<div class="calendar">
+		<div class="row date-range-picker">
+			<div class="col-xs-4 col-sm-6 today" onclick="today();">
+				Today
+			</div>
+			<div class="col-xs-8 col-sm-6 date-selector">
+					<div class="col-xs-3 arrow" onclick="minusOneWeek();"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+					<div class="col-xs-6 calendar-form">
+						<form action="calendar">
+							<label id="calendarStartDateLabel" for="calendarStartDate">Start Date:</label>
+							<input class="form-control calendar-start-date" id="calendarStartDate" name="calendarStartDate" type="text" />
+						</form>
+					</div>
+					<div class="col-xs-3 arrow arrow-right" onclick="plusOneWeek();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
+			</div>
 		</div>
-		<div class="col-xs-8 col-sm-6 date-selector">
-				<div class="col-xs-3 col-sm-4 arrow" onclick="minusOneWeek();"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-				<div class="col-xs-6 col-sm-4 calendar-form">
-					<form action="calendar">
-						<label id="calendarStartDateLabel" for="calendarStartDate">Start Date:</label>
-						<input class="form-control calendar-start-date" id="calendarStartDate" name="calendarStartDate" type="text" />
-					</form>
-				</div>
-				<div class="col-xs-3 col-sm-4 arrow" onclick="plusOneWeek();"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
-		</div>
-	</div>
 
-	<table id="calendarTable" class="calendar-table">
-		<tr class="dateHeader">
-			<td></td>
-			<g:each in="${(0..6)}" var="i"> 
-				<td>
-					<span class="day">${days[i].toString('EEE')}</span><br>
-					${days[i].toString('dd')}
-				</td>
-			</g:each>
-			<td></td>
-		</tr>
-		<% for (i=0; i<numberOfRows; i++){ %>
-			<g:each in="${['halfHour','fifteen']}">
-				<g:render template="calendarRow" model="['rowClass':it]" />
-				<%for ( j in 0..6 ){
-					days[j] = days[j].plusMinutes(15)
-				}%>
-			</g:each>
-		<%}%>
-	</table>
+		<table id="calendarTable" class="calendar-table">
+			<tr class="dateHeader">
+				<td></td>
+				<g:each in="${(0..6)}" var="i"> 
+					<td>
+						<span class="day">${days[i].toString('EEE')}</span><br>
+						${days[i].toString('dd')}
+					</td>
+				</g:each>
+				<td></td>
+			</tr>
+			<% for (i=0; i<numberOfRows; i++){ %>
+				<g:each in="${['halfHour','fifteen']}">
+					<g:render template="calendarRow" model="['rowClass':it]" />
+					<%for ( j in 0..6 ){
+						days[j] = days[j].plusMinutes(15)
+					}%>
+				</g:each>
+			<%}%>
+		</table>
 
-	<hr>
+		<hr>
 
-	<div class="calendar-key">
-		<ul>
-			<g:each in="${services}" var="service">
+		<div class="calendar-key">
+			<ul>
+				<g:each in="${services}" var="service">
+					<li>
+						<div class="color-swatch" style="background-color:${service.calendarColor};"></div> ${service.description}
+					</li>
+				</g:each>
 				<li>
-					<div class="color-swatch" style="background-color:${service.calendarColor};"></div> ${service.description}
+					<div class="color-swatch" style="background-color:#ccc;"></div> Unavailable
 				</li>
-			</g:each>
-			<li>
-				<div class="color-swatch" style="background-color:#ccc;"></div> Unavailable
-			</li>
-		</ul>
+			</ul>
+		</div>
 	</div>
+
 
 	<div class="modal fade" id="appointmentDetailsModal" tabindex="-1" role="dialog" aria-labelledby="appointmentDetailsModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

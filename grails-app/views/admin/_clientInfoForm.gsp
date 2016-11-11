@@ -11,7 +11,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="p">Password:</label>
 			<div class="col-sm-9 col-sm-offset-right-1">          
-				<input type="text" class="form-control" id="p" placeholder="Enter password" value="${client?.password}" required />
+				<input type="Password" class="form-control" id="p" placeholder="Enter password" value="${client?.password}" required />
 			</div>
 		</div>
 		<div class="form-group">

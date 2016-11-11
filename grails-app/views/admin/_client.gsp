@@ -23,7 +23,7 @@
 	<h3>Password:</h3>
 </div>
 <div class="row">
-	<p>${client.password}</p>
+	<a href="#">Send Password Reset Link</a>
 </div>
 <div class="row">
 	<h3>History:</h3>

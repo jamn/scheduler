@@ -68,20 +68,24 @@
 	</nav>
 
 	<div class="container">
-		<div class="main col-xs-12">
+		<div class="main">
 					<g:if test="${flash.error}">
 						<div class="row">
-							<div class="alert alert-danger alert-dismissible" role="alert">
-								<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
-								<strong>Error!</strong> ${flash.error.encodeAsHTML()}
+							<div class="col-xs-12">
+								<div class="alert alert-danger alert-dismissible" role="alert">
+									<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
+									<strong>Error!</strong> ${flash.error.encodeAsHTML()}
+								</div>
 							</div>
 						</div>	
 					</g:if>
 					<g:if test="${flash.success}">
 						<div class="row">
-							<div class="alert alert-success alert-dismissible" role="alert">
-								<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
-								<strong>Success!</strong> ${flash.success.encodeAsHTML()}
+							<div class="col-xs-12">
+								<div class="alert alert-success alert-dismissible" role="alert">
+									<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
+									<strong>Success!</strong> ${flash.success.encodeAsHTML()}
+								</div>
 							</div>
 						</div>
 					</g:if>
