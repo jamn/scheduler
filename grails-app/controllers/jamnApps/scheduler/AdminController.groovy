@@ -208,6 +208,7 @@ class AdminController {
 				appointment.booked = true
 				appointment.sendEmailReminder = false
 				appointment.sendTextReminder = false
+				appointment.createdBy = session.user.id
 				appointment.save(flush:true)
 				if (appointment.hasErrors()){
 					appointmentFailedToSave = true
@@ -288,6 +289,7 @@ class AdminController {
 		timeSlotsToDelete?.each(){
 			def appointment = Appointment.get(it.toLong())
 			appointment.deleted = true
+			appointment.updatdBy = session.user.id
 			appointment.save(flush:true)
 			if (appointment.hasErrors()){
 				success = false
@@ -327,6 +329,7 @@ class AdminController {
 				success = schedulerService.bookForClient(params)
 				if (success){
 					existingApointment.deleted = true
+					existingApointment.updatedBy = session.user.id
 					existingApointment.save(flush:true)
 					if (existingApointment.hasErrors()){
 						success = false
@@ -410,6 +413,7 @@ class AdminController {
 			println "appointment(${appointment.id}): " + appointment.client?.getFullName() + " | " + appointment.service?.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a [E]')
 			if (appointment){
 				appointment.deleted = true
+				appointment.updatedBy = session.user.id
 				appointment.save(flush:true)
 				if (!appointment.hasErrors()){
 					notificationService.sendCancellationNotices(appointment, false)

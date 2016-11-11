@@ -135,6 +135,7 @@ class BookController {
 				appointment.serviceProvider = serviceProvider
 				appointment.service = service
 				appointment.code = RandomStringUtils.random(14, true, true)
+				appointment.createdBy = session.user?.id
 				appointment.save(flush:true)
 				newAppointments.add(appointment)
 				if (count == 1){
@@ -220,11 +221,12 @@ class BookController {
 				appointment.sendEmailReminder = params?.emailReminder ? true : false
 				appointment.sendTextReminder = params?.textMessageReminder ? true : false
 				appointment.booked = true
+				appointment.createdBy = session.user?.id
 				appointment.save(flush:true)
 				if (appointment.hasErrors() || appointment.booked == false){
 					println "ERROR: " + appointment?.errors
 					errorOccurred = true
-					errorMessage = "An error occured trying to save your appointment. Sorry about that, we'll get to the bottom of it. In the meantime please try booking again from the start."
+					errorMessage = "An error occured trying to save your appointment. Sorry about that, we'll get to the bottom of it. Please try booking again from the start."
 				}
 				else{
 					println "saved appointment(${appointment.id}): " + appointment.client?.getFullName() + " | " + appointment.service?.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
@@ -235,8 +237,9 @@ class BookController {
 			if (session.existingAppointmentId){
 				def existingAppointment = Appointment.get(session.existingAppointmentId)
 				if (existingAppointment.client == client){
-					println "Deleting existing appointment..."
+					println "Deleting existing appointment: (${existingAppointment.id})"
 					existingAppointment.deleted = true
+					existingAppointment.updatedBy = session.user.id
 					existingAppointment.save(flush:true)
 					session.existingAppointmentId = null
 					notificationService.sendCancellationNotices(existingAppointment)
@@ -244,7 +247,10 @@ class BookController {
 			}
 		}
 
-		return [appointments:appointments, existingAppointments:session.existingAppointments]
+		def existingAppointments = session.existingAppointments
+		resetSessionVariables()
+
+		return [appointments:appointments, existingAppointments:existingAppointments]
 
 	}
 
@@ -296,6 +302,7 @@ class BookController {
 		if (session?.appointmentToDelete){
 			def appointment = Appointment.get(session.appointmentToDelete.id)
 			appointment.deleted = true
+			appointment.updatedBy = session.user.id
 			appointment.save(flush:true)
 			if (appointment.hasErrors()){
 				println "ERROR: " + appointment.error
@@ -315,7 +322,7 @@ class BookController {
 	}
 
 	def cancelAttemptToCancelAppointment(){
-		session?.appointmentToDelete = null
+		session.appointmentToDelete = null
 		redirect(action:'index')
 	}
 
@@ -327,6 +334,7 @@ class BookController {
 			def appointment = Appointment.findByCode(params.c)
 			if (appointment){
 				appointment.deleted = true
+				appointment.updatedBy = session.user.id
 				appointment.save(flush:true)
 				if (appointment.hasErrors()){
 					println "ERROR: " + appointment.error
@@ -348,6 +356,8 @@ class BookController {
 		session?.serviceId = null
 		session?.userUpdatingPassword = null
 		session?.existingAppointments = null
+        session?.existingAppointmentId = null
+        session?.appointmentToDelete = null
 		session?.newAppointments = null
 		session?.appointmentId = null
 		session?.serviceProvider = null

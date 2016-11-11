@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version "0.7"
+version "0.8"
 group "scheduler"
 
 apply plugin:"eclipse"

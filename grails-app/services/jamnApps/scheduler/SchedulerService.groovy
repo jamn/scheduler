@@ -252,13 +252,14 @@ class SchedulerService {
 		/*def lastAppointmentUserAttemptedToBook = Appointment.get(session?.appointmentId)
 		if (lastAppointmentUserAttemptedToBook && lastAppointmentUserAttemptedToBook.booked == false){
 			lastAppointmentUserAttemptedToBook.deleted = true
+			lastAppointmentUserAttemptedToBook.updatedBy = 0
 			lastAppointmentUserAttemptedToBook.save(flush:true)
 			numberOfTimeSlotsFreed++
 		}*/
 		Calendar calendarObject = new GregorianCalendar()
 		calendarObject.add(Calendar.MINUTE, -5)
 		def fiveMinutesAgo = calendarObject.getTime()
-		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true where a.booked = false and a.deleted = false and a.dateCreated < :fiveMinutesAgo", [fiveMinutesAgo:fiveMinutesAgo])	
+		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true, a.updatedBy = 0 where a.booked = false and a.deleted = false and a.dateCreated < :fiveMinutesAgo", [fiveMinutesAgo:fiveMinutesAgo])	
 		sessionFactory.currentSession.flush()
 		if (numberOfTimeSlotsFreed > 0){
 			println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
