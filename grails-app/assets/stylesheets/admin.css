@@ -39,6 +39,7 @@ body {
 }
 .navbar-default {
     background-color: #ccc;
+    border-bottom: 1px solid #b7b7b7;
 }
 .navbar-default .navbar-brand {
 	font-size: 1.6em;
@@ -634,7 +635,7 @@ select{
 }
 
 .calendar-table .unavailable{
-	background-color: #888;
+	background-color: #929292;
 }
 
 .calendar-table .available{

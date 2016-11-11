@@ -51,7 +51,10 @@
 					</li>
 				</g:each>
 				<li>
-					<div class="color-swatch" style="background-color:#ccc;"></div> Unavailable
+					<div class="color-swatch" style="background-color:#505050;"></div> Blocked
+				</li>
+				<li>
+					<div class="color-swatch unavailable" style="background-color:#929292;"></div> Unavailable
 				</li>
 			</ul>
 		</div>
