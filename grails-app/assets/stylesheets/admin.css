@@ -18,16 +18,6 @@ body {
 	position: fixed;
 }
 
-/* Remove the blue halo jquery mobile adds */
-.ui-focus,
-.ui-page,
-body { 
-	-moz-box-shadow: none !important;
-	-webkit-box-shadow: none !important;
-	box-shadow: none !important;
-	outline: none 0px;
-}
-
 .alert {
 	z-index: 10000;
 	position: fixed;
@@ -47,21 +37,20 @@ body {
 .center {
 	text-align: center;
 }
-
+.navbar-default {
+    background-color: #ccc;
+}
 .navbar-default .navbar-brand {
 	font-size: 1.6em;
-	color: #616161;
+	color: #505050;
 }
-
 .navbar-inverse .navbar-toggle {
 	width: 40px;
 	height: 40px;
 }
-
 .navbar-inverse .navbar-toggle:hover {
 	background-color: #6F6F6F;
 }
-
 .navbar-inverse .navbar-nav>li>a {
 	color: #999;
 }
@@ -109,7 +98,7 @@ body {
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-	background-color: rgba(255, 255, 255, 0.67);
+	background-color: rgba(255, 255, 255, 0.9);
 }
 .main .page-header {
 	margin-top: 0;

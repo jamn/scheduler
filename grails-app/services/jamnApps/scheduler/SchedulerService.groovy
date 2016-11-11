@@ -297,7 +297,7 @@ class SchedulerService {
 			cssClass = "booked"
 		}else if(config && (config.available == false || 
 		 	config.startTime > dayOfWeek.getMillisOfDay() || 
-		 	config.endTime < dayOfWeek.getMillisOfDay())) {
+		 	config.endTime <= dayOfWeek.getMillisOfDay())) {
 		 		cssClass = "unavailable"
 		 }
 		return cssClass
