@@ -109,6 +109,7 @@ body {
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
+	background-color: rgba(255, 255, 255, 0.67);
 }
 .main .page-header {
 	margin-top: 0;
@@ -164,6 +165,7 @@ body {
 	font-size: 1.7em;
 }
 h1{
+	font-size: 1.6em;
 	margin: 24px 0;
 	font-weight: bold;
 	color: #2E2E2E;
@@ -569,6 +571,12 @@ select{
 .calendar-table h6 {
 	margin: 0;
 }
+.calendar-table h6.large-screen {
+	display: none;
+}
+.calendar-table h6.small-screen {
+	display: initial;
+}
 .calendar-key {
 	font-size: 1.2em;
 }
@@ -698,6 +706,10 @@ select{
 .appointments td{
 	padding: 6px;
 	font-size: 1.2em;
+}
+.appointments .edit-appointment .col-xs-4 {
+	padding-right: 5px;
+	padding-left: 5px
 }
 
 /*.appointment-data:hover,

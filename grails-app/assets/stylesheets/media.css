@@ -24,6 +24,12 @@
 	.reset-password-box{
 		padding: 40px; 
 	}
+	body {
+		padding: 20px;
+	}
+	.container {
+		border-radius: 10px;
+	}
 }
 
 /* Medium devices (desktops, 992px and up) */

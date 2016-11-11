@@ -40,11 +40,20 @@
 	.date-range-picker label {
 		margin: 8px 0 0 -38px;
 	}
+	.calendar-table h6.large-screen {
+		display: initial;
+	}
+	.calendar-table h6.small-screen {
+		display: none;
+	}
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+	body {
+		background: url("/assets/grey-texture.png") repeat scroll 0% 0% transparent;
+	}
 	h1 {
-		/*font-size: 1.8em;*/
+		font-size: 2em;
 		margin: 20px 0;
 	}
 	h6, .h6 {
@@ -82,7 +91,11 @@
 	.date-range-picker .date-selector,
 	.date-range-picker .arrow.arrow-right {
 		border-radius: 0 10px 0 0;
-	}	
+	}
+	.appointments .edit-appointment .col-xs-4 {
+		padding-right: inherit;
+		padding-left: inherit
+	}
 }
 @media (min-width: 769px) {
 	.appointment-data .appointment-details {

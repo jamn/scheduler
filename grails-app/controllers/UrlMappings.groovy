@@ -7,7 +7,8 @@ class UrlMappings {
 			}
 		}
 		"/"(controller: "book")
-		"/error"(uri: "/static/error.html")
+		"500"(view: "/error")
+		"404"(view: "/error")
 	}
 
 }

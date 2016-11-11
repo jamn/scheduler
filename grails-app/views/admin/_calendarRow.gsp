@@ -31,8 +31,11 @@
 					</div>
 				</g:if>
 				<g:else>
-					<h6>
+					<h6 class="large-screen">
 						${appointment.client.fullName}
+					</h6>
+					<h6 class="small-screen">
+						${raw(appointment.client.shortName)}
 					</h6>
 					<div class="editable-cell" id="appointment-${appointment?.id}" data-toggle="modal" data-target="#appointmentDetailsModal" onclick="getRescheduleOptions(${appointment.id});">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

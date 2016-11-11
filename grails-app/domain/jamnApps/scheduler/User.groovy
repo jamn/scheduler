@@ -48,11 +48,16 @@ class User extends CoreObject {
     }
 
     def transients = [
-    	'fullName'
+    	'fullName',
+        'shortName'
     ]
 
     String getFullName(){
     	return firstName + " " + lastName
+    }
+
+    String getShortName(){
+        return fullName.substring(0,8) + "&hellip;"
     }
 
     Boolean isNewUser(){
