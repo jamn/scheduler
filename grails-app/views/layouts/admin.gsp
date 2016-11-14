@@ -25,7 +25,7 @@
 	<script src="${resource(dir:'js', file:'jquery-validate-min.js')}"></script>
 	<%-- http://blog.stevenlevithan.com/archives/date-time-format --%>
 	<script src="${resource(dir:'js', file:'date.format.js')}"></script>
-	<script src="${resource(dir:'js', file:'a.min.js')}?v${appVersion}" type="text/javascript"></script>
+	<script src="${resource(dir:'js', file:'a.js')}?v${appVersion}" type="text/javascript"></script>
 
 <g:layoutHead />
 </head><body>

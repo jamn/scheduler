@@ -3,7 +3,7 @@ package jamnApps.scheduler
 class ServiceType extends CoreObject {
 
     String description
-	Long duration
+	Long duration // in milleseconds
 	User serviceProvider
 	Long price
 	Long displayOrder = 0
@@ -14,4 +14,13 @@ class ServiceType extends CoreObject {
 		price nullable:true
 		calendarColor nullable:true
 	}
+
+	def transients = [
+    	'durationInMinutes'
+    ]
+
+    String getDurationInMinutes(){
+	return (duration / 60000) + ' min'
+    }
+
 }

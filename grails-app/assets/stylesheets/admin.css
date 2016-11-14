@@ -319,7 +319,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 #addClient {
 	position: absolute;
 	top: -15px;
-	right: 60px;
+	right: 20px;
 }
 .add-client {
 	font-size: 1.4em;
@@ -703,6 +703,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	width: 30px;
 }
 
+
+
+
+/* UPCOMING APPOINTMENTS */
+
 .appointments .edit-appointment .col-xs-4 {
 	padding-right: 5px;
 	padding-left: 5px
@@ -721,13 +726,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 .services .row {
 	margin: 6px 0;
 }
-.services .service input {
+.services .service input,
+.services .service select {
 	border: none;
 	border-bottom: 1px solid #ccc;
 	background-color: rgba(255, 255, 255, 0.75);
 	width: 100%;
 	padding: 8px;
 	color: #5d5d5d
+}
+.services .service select {
+	height: 40px;
+	width: 100%;
 }
 .services .service input:focus {
 	outline: none;
@@ -754,6 +764,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	font-size: 1em;
 	font-weight: normal;
 }
+.services .service .buttons.edit-buttons .display-order {
+	height: 71px;
+	background-color: rgba(0,0,0,.14);
+}
+.services .service .buttons.edit-buttons .display-order p {
+	padding: 0;
+	font-size: 1.5em;
+	margin: 0
+}
+.services .service .buttons.edit-buttons .display-order h2 {
+	font-size: .5em;
+}
+.services .service .buttons.save-button {
+	display: none;
+}
+.services .service .buttons.save-button > :first-child {
+	padding-left: 0;
+}
+.services .service .buttons.save-button > :last-child {
+	padding-right: 0;
+}
 .services .service .buttons .button.delete-button {
     background-color: rgba(198, 0, 0, 0.73);
 }
@@ -763,6 +794,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 .services .service .service-name {
 	font-size: 1.7em;
 }
+
+
+
+
+
+
+/* CLIENTS */
 
 .modal-header .close {
 	border: 1px solid #CCC;

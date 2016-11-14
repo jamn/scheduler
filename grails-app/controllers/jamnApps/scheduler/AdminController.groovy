@@ -122,6 +122,39 @@ class AdminController {
 		render(template:"schedulingForm", model:model)
 	}
 
+	def saveService(){
+		println "params: " + params
+		def service = ServiceType.get(params.long('serviceId'))
+		if (service){
+			def getDurationInMilleseconds = { duration ->
+				def returnVal
+				if (duration){
+					try {
+						returnVal = new Long(duration.replace(' min', '')) * 60000
+					}
+					catch(Exception e) {
+						println "error: " + e
+					}
+					
+				}
+				return returnVal
+			}
+
+			service.description = params.serviceDescription ?: service.description
+			service.price = params.servicePrice ? params.long('servicePrice') : service.price
+			service.duration = getDurationInMilleseconds(params.serviceDuration) ?: service.duration
+			service.calendarColor = params.serviceCalendarColor ?: service.calendarColor
+			service.save()
+			if (service.hasErrors()){
+				println "ERROR: " + service.errors
+				flash.error = "An error has occured. Please try again."
+			}else{
+				flash.success = "Service updated."
+			}
+		}
+		redirect(action:'services')
+	}
+
 	def importClients(){
 		def clientsFile = request.getFile('clientsFile')
 		if (clientsFile.empty) {

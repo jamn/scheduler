@@ -10,11 +10,18 @@
 		margin: 0;
 		font-size: 1em;
 	}
+	.services .service .buttons.edit-buttons .display-order h2 {
+		font-size: .7em;
+	}
 }
 @media (min-width: 376px) {
 	.add-client-label {
 		display: block;
 	}
+	#addClient {
+		right: 60px;
+	}
+	
 
 }
 @media (min-width: 500px) {
@@ -42,6 +49,12 @@
 	}
 	.calendar-table h6.small-screen {
 		display: none;
+	}
+	.services .service .buttons.edit-buttons .display-order h2 {
+		font-size: inherit;
+	}
+	.services .service select {
+		width: 84%;
 	}
 }
 /* Small devices (tablets, 768px and up) */
