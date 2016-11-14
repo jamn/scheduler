@@ -1,12 +1,12 @@
 <html>
 <head></head><body>
-	<div class="row" style="position:relative;">
-		<h1 class="page-header">Client Details</h1>
-		<div id="addClient">
-			<div class="add-client green-button">+</div>
-			<div class="add-client-label">Add Client</div>
-		</div>
+
+	<h1>Client Details</h1>
+	<div id="addClient">
+		<div class="add-client green-button">+</div>
+		<div class="add-client-label">Add Client</div>
 	</div>
+
 	<div class="row" id="lastNameFilters">
 		<div class="col-sm-12">
 			<g:each in="${filterLetters}" var="letter">
@@ -21,10 +21,10 @@
 			<g:render template="clientsSelectMenu" />
 		</div>
 	</div>
-	<div class="row">
+	<div>
 		<div id="clientDetails"></div>
 	</div>
-	<div class="row">
+	<div>
 		<div id="clientInfoForm"></div>
 	</div>
 </body></html>

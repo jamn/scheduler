@@ -100,6 +100,7 @@ body {
 	margin-top: 0;
 	margin-bottom: 0;
 	background-color: rgba(255, 255, 255, 0.9);
+	position: relative;
 }
 .main .page-header {
 	margin-top: 0;
@@ -270,6 +271,16 @@ select{
 	color: #fff;
 }
 
+.grey-gradient {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,efefef+100 */
+background: rgb(247,247,247); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(247,247,247,1) 0%, rgba(239,239,239,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(247,247,247,1) 0%,rgba(239,239,239,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(247,247,247,1) 0%,rgba(239,239,239,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#efefef',GradientType=0 ); /* IE6-9 */
+
+}
+
 #mask {
 	display: none;
 	position: fixed;
@@ -307,8 +318,8 @@ select{
 }
 #addClient {
 	position: absolute;
-	top: -3px;
-	right: 8px;
+	top: -15px;
+	right: 60px;
 }
 .add-client {
 	font-size: 1.4em;
@@ -653,10 +664,12 @@ select{
 	color: rgba(0,0,0,.75);
 	vertical-align: middle;
 }
-.appointments tr:not(:first-child) td {
-	border-top: 1px solid rgba(0,0,0,.02);
+.appointments tr:not(:first-child) td,
+.services .service:not(:first-child) {
+	border-top: 1px solid rgba(0,0,0,.06);
 }
-.appointment-data {
+.appointment-data,
+.services .service {
 	background-color: #f9f9f9;
 }
 .appointment-data .new-user {
@@ -690,26 +703,66 @@ select{
 	width: 30px;
 }
 
-.appointments{
-	width: 100%
-}
-.appointments td{
-	padding: 6px;
-	font-size: 1.2em;
-}
 .appointments .edit-appointment .col-xs-4 {
 	padding-right: 5px;
 	padding-left: 5px
 }
-
-/*.appointment-data:hover,
-.appointment-data.selected,
-.appointment-data:hover.a,
-.appointment-data:hover.a:visited{
-	background-color: #9B9605;
+.appointments,
+.services {
+	width: 100%
+}
+.appointments td,
+.services .service {
+	padding: 8px;
+	font-size: 1.2em;
+	border: 1px solid #eee;
+	border-radius: 10px;
+}
+.services .row {
+	margin: 6px 0;
+}
+.services .service input {
+	border: none;
+	border-bottom: 1px solid #ccc;
+	background-color: rgba(255, 255, 255, 0.75);
+	width: 100%;
+	padding: 8px;
+	color: #5d5d5d
+}
+.services .service input:focus {
+	outline: none;
+	border-color: #2baad5;
+}
+.services .service .buttons {
+	margin: 10px 14px;
+}
+.services .service .buttons .button:hover {
+	opacity: .9;
+}
+.services .service .buttons .button {
+	text-align: center;
+	padding: 6px;
+	background-color: #eee;
+	border: 1px solid #e3e3e3;
 	cursor: pointer;
-	color: #fff;
-}*/
+}
+.services .service .buttons .button .glyphicon{
+	font-size: 2em;
+}	
+.services .service .buttons .button h2 {
+	margin: 0;
+	font-size: 1em;
+	font-weight: normal;
+}
+.services .service .buttons .button.delete-button {
+    background-color: rgba(198, 0, 0, 0.73);
+}
+.services .service .buttons .button.active-button {
+    background-color: rgba(116, 200, 100, 0.73);
+}
+.services .service .service-name {
+	font-size: 1.7em;
+}
 
 .modal-header .close {
 	border: 1px solid #CCC;

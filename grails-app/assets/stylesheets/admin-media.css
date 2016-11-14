@@ -12,9 +12,6 @@
 	}
 }
 @media (min-width: 376px) {
-	#addClient {
-		right: 43px;
-	}
 	.add-client-label {
 		display: block;
 	}
@@ -54,7 +51,7 @@
 	}
 	h1 {
 		font-size: 2em;
-		margin: 20px 0;
+		margin: 10px 0;
 	}
 	h6, .h6 {
 		font-size: 11px;
@@ -69,6 +66,9 @@
 		border-radius: 10px;
 		margin-top: 20px;
 		margin-bottom: 20px;
+	}
+	#addClient {
+		top: 10px;
 	}
 	#clientDetails > h2 {
 		font-size: 4em;

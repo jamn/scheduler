@@ -47,6 +47,10 @@ class AdminController {
     	return adminService.getUpcomingAppointments(startDate, session.user)
     }
 
+    def services(){
+    	return adminService.getServices(session.user)
+    }
+
     def homepageConfig(){
     	return adminService.getHomepageText()
     }

@@ -12,7 +12,7 @@ body {
 .container {
     position: relative;
 	background-color: #fff;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #ccc;
     -webkit-box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
        -moz-box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
             box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
