@@ -215,24 +215,31 @@ class BookController {
 
 		println "appointments: " + appointments
 
+		def confirmedAppointments = []
+
 		if (appointments.size() > 0){
 			appointments.each(){ appointment ->
-				appointment.client = client
-				appointment.sendEmailReminder = params?.emailReminder ? true : false
-				appointment.sendTextReminder = params?.textMessageReminder ? true : false
-				appointment.booked = true
-				appointment.createdBy = session.user?.id
-				appointment.save(flush:true)
-				if (appointment.hasErrors() || appointment.booked == false){
-					println "ERROR: " + appointment?.errors
-					errorOccurred = true
-					errorMessage = "An error occured trying to save your appointment. Sorry about that, we'll get to the bottom of it. Please try booking again from the start."
+				if (!appointment.deleted){
+					appointment.client = client
+					appointment.sendEmailReminder = params?.emailReminder ? true : false
+					appointment.sendTextReminder = params?.textMessageReminder ? true : false
+					appointment.booked = true
+					appointment.createdBy = session.user?.id
+					appointment.updatedBy = session.user?.id
+					apointment.dateLastUpdated = new Date()
+					appointment.save(flush:true)
+					if (appointment.hasErrors() || appointment.booked == false){
+						println "ERROR: " + appointment?.errors
+						errorOccurred = true
+						errorMessage = "An error occured trying to save your appointment. Sorry about that, we'll get to the bottom of it. Please try booking again from the start."
+					}
+					else{
+						confirmedAppointments.add(appointment)
+						println "saved appointment(${appointment.id}): " + appointment.client?.getFullName() + " | " + appointment.service?.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
+					}
 				}
-				else{
-					println "saved appointment(${appointment.id}): " + appointment.client?.getFullName() + " | " + appointment.service?.description + " on " + appointment.appointmentDate.format('MM/dd/yy @ hh:mm a')
-				}
+
 			}
-			notificationService.sendBookingConfirmations(appointments)
 
 			if (session.existingAppointmentId){
 				def existingAppointment = Appointment.get(session.existingAppointmentId)
@@ -246,12 +253,18 @@ class BookController {
 				}
 			}
 		}
-
-		def existingAppointments = session.existingAppointments
-		resetSessionVariables()
-
-		return [appointments:appointments, existingAppointments:existingAppointments]
-
+		
+		if (confirmedAppointments.size() > 0){
+			notificationService.sendBookingConfirmations(confirmedAppointments)
+			def existingAppointments = session.existingAppointments
+			resetSessionVariables()
+			return [appointments:appointments, existingAppointments:existingAppointments]
+		}else{
+			resetSessionVariablesToChooseNewTimeslot()
+			flash.error = "The time limit for holding that timeslot has elapsed. Please choose a timeslot again."
+			redirect(action:'chooseTime')
+			return
+		}
 	}
 
 	def modifyAppointment(){
@@ -351,18 +364,29 @@ class BookController {
 
 
 	private resetSessionVariables(){
-		session?.bookedAppointments = null
+		session?.serviceProvider = null
 		session?.serviceProviderId = null
+		session?.service = null
 		session?.serviceId = null
-		session?.userUpdatingPassword = null
+		session?.bookedAppointments = null
 		session?.existingAppointments = null
-        session?.existingAppointmentId = null
-        session?.appointmentToDelete = null
+		session?.existingAppointmentId = null
+		session?.appointmentToDelete = null
 		session?.newAppointments = null
 		session?.appointmentId = null
-		session?.serviceProvider = null
-        session?.service = null
-        session?.nextAppointment = null
+		session?.nextAppointment = null
+		session?.userUpdatingPassword = null
+	}
+
+	private resetSessionVariablesToChooseNewTimeslot(){
+		session?.bookedAppointments = null
+		session?.existingAppointments = null
+		session?.existingAppointmentId = null
+		session?.appointmentToDelete = null
+		session?.newAppointments = null
+		session?.appointmentId = null
+		session?.nextAppointment = null
+		session?.userUpdatingPassword = null
 	}
 
 

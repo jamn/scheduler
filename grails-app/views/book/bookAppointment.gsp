@@ -11,10 +11,10 @@
 
 			<div class="reminders">
 				<g:if test="${!cancelAppointment && session.newAppointments?.size() > 0}">
-					<h2>Confirm ${session?.newAppointments[0]?.service?.description}${plural}:</h2>
+					<h2>Confirm Appointment</h2>
 					<ul>
 						<g:each in='${session.newAppointments}'>
-							<li>${it.appointmentDate.format('EEEE, MMMM dd @ hh:mm a')}</li>
+							<li>${it.service.description}: ${it.appointmentDate.format('EEEE, MMMM dd @ hh:mm a')}</li>
 						</g:each>
 					</ul>
 				</g:if>

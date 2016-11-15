@@ -16,7 +16,7 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointments[0].client.email}"
 		def subject = "Appointment Booked @ The Den Barbershop"
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>The following appointment(s) have been scheduled for you:</p><ul>"
+		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>The following appointment has been scheduled for you:</p><ul>"
 		appointments.each(){ appointment ->
 			println "    - " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('E MM/dd @ hh:mm a')
 			body += "<li>A <b>${appointment.service.description}</b> on ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/>"
