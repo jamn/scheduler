@@ -17,7 +17,7 @@
 							$ <input type="text" name="servicePrice" value="${it.price}" style="width:70%">
 						</div>
 						<div class="col-xs-4">
-							<g:select name="serviceDuration" from="${['15 min', '30 min', '45 min', '60 min', '90 min', '120 min']}" value="${it.durationInMinutes}" noSelection="['':'-Choose duration-']"/>
+							<g:select name="serviceDuration" from="${['15 min', '30 min', '45 min', '60 min', '90 min', '120 min']}" value="${it.durationInMinutes}" />
 						</div>
 						<div class="col-xs-4">
 							<input type="text" name="serviceCalendarColor" value="${it.calendarColor}" class="color">
