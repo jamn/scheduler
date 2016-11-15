@@ -226,7 +226,7 @@ class BookController {
 					appointment.booked = true
 					appointment.createdBy = session.user?.id
 					appointment.updatedBy = session.user?.id
-					apointment.dateLastUpdated = new Date()
+					appointment.dateLastUpdated = new Date()
 					appointment.save(flush:true)
 					if (appointment.hasErrors() || appointment.booked == false){
 						println "ERROR: " + appointment?.errors

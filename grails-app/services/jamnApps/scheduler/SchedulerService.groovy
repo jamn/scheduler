@@ -260,7 +260,7 @@ class SchedulerService {
 		calendarObject.add(Calendar.MINUTE, -10)
 		def tenMinutesAgo = calendarObject.getTime()
 		def now = new Date()
-		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true, a.updatedBy = 0, a.dateLastUpdated = :now where a.booked = false and a.deleted = false and a.dateCreated < :tenMinutesAgo", [now:now, fiveMinutesAgo:fiveMinutesAgo])	
+		numberOfTimeSlotsFreed += Appointment.executeUpdate("update Appointment a set a.deleted = true, a.updatedBy = 0, a.dateLastUpdated = :now where a.booked = false and a.deleted = false and a.dateCreated < :tenMinutesAgo", [now:now, tenMinutesAgo:tenMinutesAgo])	
 		sessionFactory.currentSession.flush()
 		if (numberOfTimeSlotsFreed > 0){
 			println "Deleted ${numberOfTimeSlotsFreed} stale appointments"
