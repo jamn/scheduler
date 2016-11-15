@@ -41,7 +41,7 @@ class EmailService {
 		println "    sending confirmation to service provider"
 		try {
 			def from = "${appointments[0].client.email}"
-			def to = "kalin@thedenbarbershop-kc.com"
+			def to = "bjacobi@gmail.com"
 			def subject = "New Appointment [${appointments[0].appointmentDate.format('E MM/dd @ hh:mm a')}]"
 			def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p><b>Client:</b> ${appointments[0].client.firstName} ${appointments[0].client.lastName}<br/><b>Phone:</b> ${appointments[0].client.phone}<br/><b>Email:</b> <a href='mailto:${appointments[0].client.email}'>${appointments[0].client.email}</a><br/><b>Service:</b> ${appointments[0].service.description}<br/><b>Time(s):</b> "
 			appointments.eachWithIndex(){ appointment,index ->
