@@ -181,7 +181,7 @@ class AccessController {
 			if (password1 == password2){
 				def user = User.get(session.userUpdatingPassword.id)
 				if (user){
-					user.password = password1
+					user.password = password1.encodeAsSHA256()
 					user.passwordResetCode = null
 					user.passwordResetCodeDateCreated = null
 					user.save(flush:true)

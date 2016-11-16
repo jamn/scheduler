@@ -27,7 +27,7 @@ class UserService {
 				results['error'] = true
 				results['errorDetails'] = "Email was not found."
 			}else{
-				if (existingUser.password == params.password){
+				if (existingUser.password == params.password.encodeAsSHA256() || existingUser.password == params.password){
 					println "USER LOGGED IN CORRECTLY"
 					results['user'] = existingUser
 				}else{
@@ -50,7 +50,7 @@ class UserService {
 		newClient.firstName = params.firstName
 		newClient.lastName = params.lastName
 		newClient.email = params.email.toLowerCase()?.replace(' @', '@')?.replace('@ ', '@')
-		newClient.password = params.password
+		newClient.password = params.password.encodeAsSHA256()
 		newClient.phone = params.phone
 		newClient.code = newClient.firstName.substring(0,1).toLowerCase() + newClient.lastName.substring(0,1).toLowerCase() + new Date().getTime()
 		newClient.isClient = true
@@ -63,7 +63,7 @@ class UserService {
 		Boolean success = false
 		client.firstName = params?.firstName
 		client.lastName = params?.lastName
-		client.password = params?.password
+		client.password = params?.password?.encodeAsSHA256()
 		client.email = params?.email
 		client.phone = params?.phoneNumber
 		client.save(flush:true)

@@ -101,6 +101,7 @@ body {
 	margin-bottom: 0;
 	background-color: rgba(255, 255, 255, 0.9);
 	position: relative;
+	min-height: 600px;
 }
 .main .page-header {
 	margin-top: 0;

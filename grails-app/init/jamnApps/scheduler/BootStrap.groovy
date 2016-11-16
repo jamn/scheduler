@@ -47,7 +47,7 @@ class BootStrap {
 
 			defaultServiceProvider = new User()
 			defaultServiceProvider.username = "kpfanmiller"
-			defaultServiceProvider.password = "kjp620300"
+			defaultServiceProvider.password = "5e5575fa06b0abf7ca88c88a64503896327d539bd004faaf9c8b069561adb816"
 			defaultServiceProvider.firstName = "Kalin"
 			defaultServiceProvider.lastName = "Pfanmiller"
 			defaultServiceProvider.email = "kalin@thedenbarbershop-kc.com"
