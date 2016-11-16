@@ -24,26 +24,6 @@ class AdminController {
 	def dateService
 	def amazonWebService
 	def notificationService
-
-	def hashPasswords(){
-		println "start: " + new Date()
-		if (params.c == "yes"){
-			def users = User.list()
-			def count = 0
-			users.each(){
-				count ++
-				it.password = it.password.encodeAsSHA256()
-				if (count % 10 == 0){
-					println "    - count: ${count}"
-					it.save(flush:true)
-				}else{
-					it.save()
-				}
-			}
-		}
-		println "end: " + new Date()
-		render "done"
-	}
 	
 
 	/*********************************

@@ -26,7 +26,7 @@
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Password" value="${session?.user?.password}">
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password" value="*********">
 				</div>
 				<input type="submit" class="btn btn-default green-button" value="Update Profile" />
 			</form>

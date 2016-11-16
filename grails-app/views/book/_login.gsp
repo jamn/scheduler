@@ -8,7 +8,7 @@
 
 <input class="form-control" placeholder="Email" type="email" name="email" id="email" value="${client?.email}" autofocus="autofocus"/>
 
-<input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" value="${client?.password}" />
+<input class="form-control" placeholder="Password" type="password" name="password" id="password-${formAction}" value="" />
 
 <g:if test="${!cancelAppointment}">
 	<input class="form-control new-user" placeholder="Phone" type="tel" name="phoneNumber" id="phoneNumber" value="${client?.phone}" />

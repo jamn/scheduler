@@ -63,7 +63,9 @@ class UserService {
 		Boolean success = false
 		client.firstName = params?.firstName
 		client.lastName = params?.lastName
-		client.password = params?.password?.encodeAsSHA256()
+		if (params?.password?.contains('****') == false){
+			client.password = params?.password?.encodeAsSHA256()
+		}
 		client.email = params?.email
 		client.phone = params?.phoneNumber
 		client.save(flush:true)
