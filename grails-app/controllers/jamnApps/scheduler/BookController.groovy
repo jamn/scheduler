@@ -246,7 +246,7 @@ class BookController {
 				if (existingAppointment.client == client){
 					println "Deleting existing appointment: (${existingAppointment.id})"
 					existingAppointment.deleted = true
-					existingAppointment.updatedBy = session.user.id
+					existingAppointment.updatedBy = session.user?.id
 					existingAppointment.save(flush:true)
 					session.existingAppointmentId = null
 					notificationService.sendCancellationNotices(existingAppointment)
@@ -315,7 +315,7 @@ class BookController {
 		if (session?.appointmentToDelete){
 			def appointment = Appointment.get(session.appointmentToDelete.id)
 			appointment.deleted = true
-			appointment.updatedBy = session.user.id
+			appointment.updatedBy = session.user?.id
 			appointment.save(flush:true)
 			if (appointment.hasErrors()){
 				println "ERROR: " + appointment.error
@@ -347,7 +347,7 @@ class BookController {
 			def appointment = Appointment.findByCode(params.c)
 			if (appointment){
 				appointment.deleted = true
-				appointment.updatedBy = session.user.id
+				appointment.updatedBy = session.user?.id
 				appointment.save(flush:true)
 				if (appointment.hasErrors()){
 					println "ERROR: " + appointment.error

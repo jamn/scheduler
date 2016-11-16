@@ -27,7 +27,7 @@ class UserService {
 				results['error'] = true
 				results['errorDetails'] = "Email was not found."
 			}else{
-				if (existingUser.password == params.password.encodeAsSHA256() || existingUser.password == params.password){
+				if (existingUser.password == params.password.encodeAsSHA256()){
 					println "USER LOGGED IN CORRECTLY"
 					results['user'] = existingUser
 				}else{
