@@ -21,7 +21,7 @@ body {
 	margin-top: 12px;
 }
 .alert {
-	margin: 0 0 10px 0;
+	margin: 0;
 }
 .centered {
 	text-align: center;
@@ -354,6 +354,11 @@ body {
 
 .login-box .reminders h2 {
 	margin: 0
+}
+
+.login-box input.error {
+	border-color: #e46c6c;
+    box-shadow: 0 0 10px rgba(255, 63, 63, 0.29);
 }
 
 #showLoginForm,

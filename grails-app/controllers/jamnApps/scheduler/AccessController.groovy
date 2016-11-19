@@ -79,18 +79,32 @@ class AccessController {
 		println new Date()
 		println "params: " + params
 		Boolean error = false
-		if (params?.email?.size() > 1 && params?.password?.size() > 1 && params?.firstName?.size() > 1 && params?.lastName?.size() > 1){
+		if (params.email?.size() > 1 && params.password?.size() > 1 && params.firstName?.size() > 1 && params.lastName?.size() > 1 && params.phoneNumber?.size() > 1){
 			println "CREATING NEW USER"
-			def newClient = userService.createNewClient(params)
-			if (newClient.hasErrors()){
-				println "ERROR: " + newClient.errors
-				flash.error = "There was an unexpected error creating your new account. Please try again."
+			def existingClient = User.findByEmail(params.email)
+			if (existingClient){
+				flash.error = "That email address has already been registered."
+				flash.email = params.email
+				flash.sendPasswordResetLink = true
 				error = true
 			}else{
-				session.user = newClient
+				def newClient = userService.createNewClient(params)
+				if (newClient.hasErrors()){
+					println "ERROR: " + newClient.errors
+					flash.error = "There was an unexpected error creating your new account. Please try again."
+					error = true
+				}else{
+					session.user = newClient
+				}
 			}
 		}else{
-			flash.error = 'Email, password, first name, and last name are required to create a new account.'
+			flash.newClientRegistering = true
+			flash.email = params.email
+			flash.password = params.password
+			flash.firstName = params.firstName
+			flash.lastName = params.lastName
+			flash.phoneNumber = params.phoneNumber
+			flash.error = 'All fields must be completed.'
 			error = true
 		}
 		if (error){

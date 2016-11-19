@@ -69,7 +69,7 @@
 					<div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6">
 						<div class="alert alert-danger alert-dismissible" role="alert">
 							<button type="button" class="close" aria-label="Close" onclick="hideAlert();"><span aria-hidden="true">&times;</span></button>
-							<strong>Dang!</strong> ${flash.error.encodeAsHTML()}
+							${flash.error.encodeAsHTML()}
 						</div>
 					</div>	
 				</g:if>
