@@ -1,6 +1,10 @@
 <html>
 <head></head><body>
 	<h1>Services</h1>
+	<div id="addService">
+		<div class="add-service green-button">+</div>
+		<div class="add-service-label">Add Service</div>
+	</div>
 	<hr />
 	<div class="services">
 		<g:each in="${services}">
@@ -51,6 +55,10 @@
 					</div>
 				</form>
 		</g:each>
+	</div>
+
+	<div>
+		<div id="newServiceFormContainer"></div>
 	</div>
 
 	<!-- https://github.com/PitPik/tinyColorPicker -->

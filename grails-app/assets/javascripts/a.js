@@ -108,6 +108,21 @@ function getTimeSlotOptionsForRescheduledAppointment(aId){
 	}
 }
 
+$(document).on('click', '#addService', function(e) {
+	$.ajax({
+		type: "POST",
+		url: "/admin/getNewServiceForm"
+	}).done(function(response) {
+		if (response.indexOf("ERROR") > -1){
+			alert('An error has occured. Please try again.');
+		}else{
+			$('.services').slideUp();
+			$('#addService').fadeOut();
+			$('#newServiceFormContainer').html(response).slideDown();
+		}
+	});
+});
+
 $(document).on('click', '#addClient', function(e) {
 	$.ajax({
 		type: "POST",

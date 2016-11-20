@@ -299,6 +299,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	position: relative;
 }
 
+#addService:hover,
 #addClient:hover {
 	cursor: pointer;
 }
@@ -317,11 +318,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 .reset-search{
 	display: none;
 }
+#addService,
 #addClient {
 	position: absolute;
 	top: -15px;
 	right: 20px;
 }
+.add-service,
 .add-client {
 	font-size: 1.4em;
 	border-radius: 100%;
@@ -331,6 +334,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	margin-left: 6px;
 }
 
+.add-service-label,
 .add-client-label {
 	display: none;
 	position: relative;
@@ -341,6 +345,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	color: #939393;
 }
 
+.add-service-label:hover,
 .add-client-label:hover {
 	color: #282828;
 }

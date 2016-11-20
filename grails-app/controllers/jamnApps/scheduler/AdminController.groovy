@@ -126,31 +126,15 @@ class AdminController {
 		println "params: " + params
 		def service = ServiceType.get(params.long('serviceId'))
 		if (service){
-			def getDurationInMilleseconds = { duration ->
-				def returnVal
-				if (duration){
-					try {
-						returnVal = new Long(duration.replace(' min', '')) * 60000
-					}
-					catch(Exception e) {
-						println "error: " + e
-					}
-					
-				}
-				return returnVal
-			}
-
-			service.description = params.serviceDescription ?: service.description
-			service.price = params.servicePrice ? params.long('servicePrice') : service.price
-			service.duration = getDurationInMilleseconds(params.serviceDuration) ?: service.duration
-			service.calendarColor = params.serviceCalendarColor ?: service.calendarColor
-			service.save()
-			if (service.hasErrors()){
-				println "ERROR: " + service.errors
-				flash.error = "An error has occured. Please try again."
-			}else{
-				flash.success = "Service updated."
-			}
+			service = adminService.updateService(service,params)
+		}else{
+			service = adminService.createNewService(params)
+		}
+		if (service.hasErrors()){
+			println "ERROR: " + service.errors
+			flash.error = "An error has occured. Please try again."
+		}else{
+			flash.success = "Your changes have been saved."
 		}
 		redirect(action:'services')
 	}
@@ -198,17 +182,22 @@ class AdminController {
 		return false
 	}
 
+	def getNewServiceForm(){
+
+		render(template: "newServiceForm")
+	}
+
 	def getClientDataForm(){
-    	def client
-    	def submitText = "Register Client"
-    	if (params?.cId){
-    		client = User.get(params.cId)
-    		if (client){
-    			submitText = "Save"
-    		}
-    	}
-    	render(template: "clientInfoForm", model: [client:client, submitText:submitText])
-    }
+		def client
+		def submitText = "Register Client"
+		if (params?.cId){
+			client = User.get(params.cId)
+			if (client){
+				submitText = "Save"
+			}
+		}
+		render(template: "clientInfoForm", model: [client:client, submitText:submitText])
+	}
 
 	def saveClientNotes(){
 		if (params?.n){

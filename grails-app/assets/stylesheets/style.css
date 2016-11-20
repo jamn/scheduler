@@ -13,9 +13,9 @@ body {
     position: relative;
 	background-color: #fff;
 	border: 1px solid #ccc;
-    -webkit-box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
-       -moz-box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
-            box-shadow: 6px 6px 5px 0px rgba(230,230,230,1);
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(214,213,213,1);
+       -moz-box-shadow: 6px 6px 5px 0px rgba(214,213,213,1);
+            box-shadow: 6px 6px 5px 0px rgba(214,213,213,1);
 }
 .main-content .page .alert {
 	margin-top: 12px;

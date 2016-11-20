@@ -245,6 +245,39 @@ class AdminService {
 		println "MISSING SERVICES: " + missingServices
 	}
 
+	private updateService(ServiceType service, Map params){
+		service.description = params.serviceDescription ?: service.description
+		service.price = params.servicePrice ? params.long('servicePrice') : service.price
+		service.duration = getDurationInMilleseconds(params.serviceDuration) ?: service.duration
+		service.calendarColor = params.serviceCalendarColor ?: service.calendarColor
+		service.save()
+		return service
+	}
+
+	private createNewSerivce(Map params){
+		def service = new ServiceType()
+		service.description = params.serviceDescription
+		service.price = params.long('servicePrice')
+		service.duration = getDurationInMilleseconds(params.serviceDuration)
+		service.calendarColor = params.serviceCalendarColor
+		service.save()
+		return service
+	}
+
+	private getDurationInMilleseconds(String duration){
+		def returnVal
+		if (duration){
+			try {
+				returnVal = new Long(duration.replace(' min', '')) * 60000
+			}
+			catch(Exception e) {
+				println "error: " + e
+			}
+			
+		}
+		return returnVal
+	}
+
 	private File multipartToFile(StandardMultipartFile file) throws IllegalStateException, IOException {
 		File convFile = new File(file.getOriginalFilename())
 		convFile.createNewFile() 

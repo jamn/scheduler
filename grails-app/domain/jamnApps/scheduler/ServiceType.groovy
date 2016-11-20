@@ -8,7 +8,7 @@ class ServiceType extends CoreObject {
 	Long price
 	Long displayOrder = 0
 	Boolean display = true
-	String calendarColor
+	String calendarColor = "#FFFFFF"
 
 	static constraints = {
 		price nullable:true
