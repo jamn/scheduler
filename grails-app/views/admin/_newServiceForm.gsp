@@ -1,20 +1,20 @@
 <form method="post" class="form-horizontal" role="form">
 	<div class="form-group">
-		<label class="control-label col-sm-2" for="description">Description:</label>
+		<label class="control-label col-sm-2" for="serviceDescription">Description:</label>
 		<div class="col-sm-9 col-sm-offset-right-1">
-			<input type="text" class="form-control" name="description" placeholder="Description" required />
+			<input type="text" class="form-control" name="serviceDescription" placeholder="Description" required />
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-2" for="price">Price:</label>
+		<label class="control-label col-sm-2" for="servicePrice">Price:</label>
 		<div class="col-sm-9 col-sm-offset-right-1">          
-			<input type="Password" class="form-control" name="price" placeholder="Price" required />
+			$ <input type="text" class="form-control" name="servicePrice" placeholder="Price" required />
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-2" for="duration">Duration:</label>
+		<label class="control-label col-sm-2" for="serviceDuration">Duration:</label>
 		<div class="col-sm-9 col-sm-offset-right-1">          
-			<input type="text" class="form-control" name="duration" placeholder="Duration" required />
+			<g:select name="serviceDuration" from="${['15 min', '30 min', '45 min', '60 min', '90 min', '120 min']}" />
 		</div>
 	</div>
 	<div class="form-group">

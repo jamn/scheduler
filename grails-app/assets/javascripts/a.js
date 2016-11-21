@@ -22,7 +22,11 @@ $(document).ready(function(){
 });
 
 function hideAlert(){
-	$('.alert').slideUp()
+	$('.alert').slideUp();
+}
+
+function showMask(){
+	$("#mask").fadeIn();
 }
 
 function getTimeSlotOptions(){

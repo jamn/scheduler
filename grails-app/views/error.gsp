@@ -19,7 +19,7 @@
 			text-align: center;
 		}
 		.server-error-message {
-			top: 50%;
+			top: 400px;
 			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		}
 	</style>

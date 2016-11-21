@@ -720,7 +720,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 }
 .appointments,
 .services {
-	width: 100%
+	width: 100%;
+	position: relative;
 }
 .appointments td,
 .services .service {
@@ -728,6 +729,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	font-size: 1.2em;
 	border: 1px solid #eee;
 	border-radius: 10px;
+	position: relative;
 }
 .services .row {
 	margin: 6px 0;
