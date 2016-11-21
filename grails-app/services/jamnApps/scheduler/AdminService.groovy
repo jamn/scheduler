@@ -245,7 +245,71 @@ class AdminService {
 		println "MISSING SERVICES: " + missingServices
 	}
 
-	private updateService(ServiceType service, Map params){
+	private Boolean moveServiceUp(Map params, User user){
+		def success = false
+		if (params.currentDisplayOrder && user){
+			def currentDisplayOrder = params.long('currentDisplayOrder')
+			def newDisplayOrder = currentDisplayOrder - 1
+			success = swapServiceDisplayOrder(currentDisplayOrder, newDisplayOrder, user)
+
+		}
+		return success
+	}
+
+	private Boolean moveServiceDown(Map params, User user){
+		def success = false
+		if (params.currentDisplayOrder && user){
+			def currentDisplayOrder = params.long('currentDisplayOrder')
+			def newDisplayOrder = currentDisplayOrder + 1
+			
+			success = swapServiceDisplayOrder(currentDisplayOrder, newDisplayOrder, user)
+		}
+		return success
+	}
+
+	private Boolean swapServiceDisplayOrder(Long currentDisplayOrder, Long newDisplayOrder, User user){
+		def success = false
+		try {
+			ServiceType.withTransaction { status ->
+				def service1 = ServiceType.findWhere(displayOrder:currentDisplayOrder, serviceProvider:user)
+				def service2 = ServiceType.findWhere(displayOrder:newDisplayOrder, serviceProvider:user)
+				if (service1 && service2){
+					service1.displayOrder = newDisplayOrder
+					service1.save()
+					service2.displayOrder = currentDisplayOrder
+					service2.save()
+					if (service1.hasErrors() == false && service2.hasErrors() == false){
+						status.flush()
+						success = true
+					}else{
+						status.setRollbackOnly()
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			println "ERROR: " + e	
+		}
+		return success
+	}
+
+	private Boolean saveService(Map params){
+		def success = false
+		def service = ServiceType.get(params.long('serviceId'))
+		if (service){
+			service = updateService(service, params)
+		}else{
+			service = createNewService(params)
+		}
+		if (service.hasErrors()){
+			println "ERROR: " + service.errors
+		}else{
+			success = true
+		}
+		return success
+	}
+
+	private ServiceType updateService(ServiceType service, Map params){
 		service.description = params.serviceDescription ?: service.description
 		service.price = params.servicePrice ? params.long('servicePrice') : service.price
 		service.duration = getDurationInMilleseconds(params.serviceDuration) ?: service.duration
@@ -254,7 +318,7 @@ class AdminService {
 		return service
 	}
 
-	private createNewSerivce(Map params){
+	private ServiceType createNewService(Map params){
 		def service = new ServiceType()
 		service.description = params.serviceDescription
 		service.price = params.long('servicePrice')
@@ -262,6 +326,30 @@ class AdminService {
 		service.calendarColor = params.serviceCalendarColor
 		service.save()
 		return service
+	}
+
+	private Boolean deleteService(Map params){
+		def success = false
+		try {
+			ServiceType.withTransaction { status ->
+				def deletedService = ServiceType.get(params.id)
+				deletedService?.deleted = true
+				deletedService?.display = false
+				deletedService?.save()
+
+				def services = ServiceType.findAllWhere(serviceProvider:deletedService?.serviceProvider, deleted:false, display:true)
+				services.eachWithIndex(){ service,index ->
+					service.displayOrder = index + 1
+					service.save()
+				}
+			}
+			success = true
+		}
+		catch(Exception e) {
+			println "ERROR: " + e	
+		}
+
+		return success
 	}
 
 	private getDurationInMilleseconds(String duration){

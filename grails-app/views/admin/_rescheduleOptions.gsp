@@ -49,7 +49,7 @@
 		textYes: 'Yes',
 		textNo: 'No'
 	},'click', function(e, confirmed){
-		if(confirmed){
+		if(confirmed === true){
 			var c = $(e.currentTarget).attr('c');
 			$.ajax({
 				type: "POST",

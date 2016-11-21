@@ -66,32 +66,52 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".move-up-button").click(function(event) {
+				showMask();
 				var currentDisplayOrder = parseInt($(event.target).closest('form').attr('id').substring(14));
-				swapUp(currentDisplayOrder);
 				$.ajax({
 					type: "POST",
 					url: "/admin/moveServiceUp",
 					data: { currentDisplayOrder:currentDisplayOrder}
 				}).done(function(response) {
-					if (response.indexOf("ERROR") > -1){
-						alert('An error has occured. Please try again.');
-						swapDown(currentDisplayOrder);
+					hideMask()
+					var obj = JSON && JSON.parse(response) || $.parseJSON(response);
+					if (obj.success === true){
+						swapUp(currentDisplayOrder);
+					}else{
+						alert('An error has occured. Please notify support if you continue to receive this message.');
+						location.reload()
 					}
 				});
 			});
 			$(".move-down-button").click(function(event) {
+				showMask();
 				var currentDisplayOrder = parseInt($(event.target).closest('form').attr('id').substring(14));
-				swapDown(currentDisplayOrder);
 				$.ajax({
 					type: "POST",
 					url: "/admin/moveServiceDown",
 					data: { currentDisplayOrder:currentDisplayOrder}
 				}).done(function(response) {
-					if (response.indexOf("ERROR") > -1){
-						alert('An error has occured. Please try again.');
-						swapUp(currentDisplayOrder);
+					hideMask()
+					var obj = JSON && JSON.parse(response) || $.parseJSON(response);
+					if (obj.success === true){
+						swapDown(currentDisplayOrder);
+					}else{
+						alert('An error has occured. Please notify support if you continue to receive this message.');
+						location.reload();
 					}
 				});
+			});
+			$(".delete-button").confirmOn({
+				classPrepend: 'confirmon',
+				questionText: 'Delete Service?',
+				textYes: 'Yes',
+				textNo: 'No'
+			},'click', function(event,confirmed) {
+				if (confirmed === true){
+					showMask();
+					var serviceId = $(event.target).closest('form').find('input[name="serviceId"]').val()
+					document.location = '/admin/deleteService/'+serviceId
+				}
 			});
 			$('.color').colorPicker({
 				renderCallback: function($elm, toggled) {

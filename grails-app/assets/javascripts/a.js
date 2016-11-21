@@ -29,6 +29,10 @@ function showMask(){
 	$("#mask").fadeIn();
 }
 
+function hideMask(){
+	$("#mask").fadeOut();
+}
+
 function getTimeSlotOptions(){
 	var sId = $('#services').val();
 	var aDate = $('#dateOfAppointment').val();

@@ -1,4 +1,4 @@
-<form method="post" class="form-horizontal" role="form">
+<form method="post" class="form-horizontal service" role="form">
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="serviceDescription">Description:</label>
 		<div class="col-sm-9 col-sm-offset-right-1">
@@ -8,7 +8,12 @@
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="servicePrice">Price:</label>
 		<div class="col-sm-9 col-sm-offset-right-1">          
-			$ <input type="text" class="form-control" name="servicePrice" placeholder="Price" required />
+			<table width="100%">
+				<tr>
+					<td style="font-size:1.5em;padding:8px;width:20px;color: #545454;">$</td>
+					<td><input type="text" class="form-control" name="servicePrice" placeholder="Price" required /></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	<div class="form-group">

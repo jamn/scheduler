@@ -115,26 +115,41 @@ class AdminController {
 	}
 
 	def getScheduleAppointmentForm(){
-		println "params: " + params
 		def datetime = dateFormatter2.parse(params.d) ?: new Date()
 		def availability = DayOfTheWeek.findAllWhere(serviceProvider:session.user, available:true)?.collect{ it.dayIndex }
 		def model = adminService.getClients() + adminService.getServices(session.user) + [datetime:datetime, availability:availability]
 		render(template:"schedulingForm", model:model)
 	}
 
+	def moveServiceUp(){
+		def success = adminService.moveServiceUp(params, session.user)
+		render ('{"success":'+success+'}') as JSON
+	}
+
+	def moveServiceDown(){
+		def success = adminService.moveServiceDown(params, session.user)
+		render ('{"success":'+success+'}') as JSON
+	}
+
 	def saveService(){
 		println "params: " + params
-		def service = ServiceType.get(params.long('serviceId'))
-		if (service){
-			service = adminService.updateService(service,params)
-		}else{
-			service = adminService.createNewService(params)
-		}
-		if (service.hasErrors()){
-			println "ERROR: " + service.errors
-			flash.error = "An error has occured. Please try again."
-		}else{
+		def success = adminService.saveService(params)
+		if (success){
 			flash.success = "Your changes have been saved."
+		}else{
+			println "ERROR: " + service.errors
+			flash.error = "An error has occured. If you continue to receive this message please contact support."
+		}
+		redirect(action:'services')
+	}
+
+	def deleteService(){
+		println "params: " + params
+		def success = adminService.deleteService(params)
+		if (success){
+			flash.success = "Service deleted."
+		}else{
+			flash.error = "An error has occured. If you continue to receive this message please contact support."
 		}
 		redirect(action:'services')
 	}
@@ -183,7 +198,6 @@ class AdminController {
 	}
 
 	def getNewServiceForm(){
-
 		render(template: "newServiceForm")
 	}
 
@@ -243,7 +257,6 @@ class AdminController {
 				}else{
 					success = true
 				}
-				println "appointment: " + appointment
 				currentDate.add(Calendar.MINUTE, 15)
 			}
 		}
@@ -290,7 +303,6 @@ class AdminController {
 				}else{
 					success = true
 				}
-				println "dayOff: " + dayOff
 				currentDate.add(Calendar.DAY_OF_YEAR, 1)
 			}
 		}

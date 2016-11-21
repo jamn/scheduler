@@ -734,8 +734,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 .services .row {
 	margin: 6px 0;
 }
-.services .service input,
-.services .service select {
+.service input,
+.service select {
 	border: none;
 	border-bottom: 1px solid #ccc;
 	background-color: rgba(255, 255, 255, 0.75);
@@ -743,11 +743,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	padding: 8px;
 	color: #5d5d5d
 }
-.services .service select {
+.service select {
 	height: 40px;
 	width: 100%;
 }
-.services .service input:focus {
+.service input:focus {
 	outline: none;
 	border-color: #2baad5;
 }
@@ -755,7 +755,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	margin: 10px 14px;
 }
 .services .service .buttons .button:hover {
-	opacity: .9;
+	opacity: .85;
 }
 .services .service .buttons .button {
 	text-align: center;
