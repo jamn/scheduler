@@ -1,4 +1,4 @@
-<form method="post" class="form-horizontal service" role="form">
+<form method="post" action="saveService" class="form-horizontal service" role="form">
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="serviceDescription">Description:</label>
 		<div class="col-sm-9 col-sm-offset-right-1">

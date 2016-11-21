@@ -261,7 +261,7 @@ class AdminService {
 		if (params.currentDisplayOrder && user){
 			def currentDisplayOrder = params.long('currentDisplayOrder')
 			def newDisplayOrder = currentDisplayOrder + 1
-			
+
 			success = swapServiceDisplayOrder(currentDisplayOrder, newDisplayOrder, user)
 		}
 		return success
@@ -293,13 +293,18 @@ class AdminService {
 		return success
 	}
 
-	private Boolean saveService(Map params){
+	private Boolean saveService(Map params, User user){
 		def success = false
-		def service = ServiceType.get(params.long('serviceId'))
+		def service
+		if (params.serviceId){
+			service = ServiceType.get(params.long('serviceId'))
+		}else if (params.serviceDescription && user){
+			service = ServiceType.findWhere(description:params.serviceDescription, serviceProvider:user)
+		}
 		if (service){
 			service = updateService(service, params)
 		}else{
-			service = createNewService(params)
+			service = createNewService(params, user)
 		}
 		if (service.hasErrors()){
 			println "ERROR: " + service.errors
@@ -318,12 +323,15 @@ class AdminService {
 		return service
 	}
 
-	private ServiceType createNewService(Map params){
+	private ServiceType createNewService(Map params, User user){
+		def lastService = ServiceType.findAll("from ServiceType st where st.serviceProvider = :serviceProvider and st.deleted = false and st.display = true order by st.displayOrder desc", [serviceProvider:user], [max:1])[0]
 		def service = new ServiceType()
 		service.description = params.serviceDescription
 		service.price = params.long('servicePrice')
 		service.duration = getDurationInMilleseconds(params.serviceDuration)
 		service.calendarColor = params.serviceCalendarColor
+		service.serviceProvider = user
+		service.displayOrder = lastService.displayOrder + 1
 		service.save()
 		return service
 	}

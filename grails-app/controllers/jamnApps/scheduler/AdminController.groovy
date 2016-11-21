@@ -133,7 +133,7 @@ class AdminController {
 
 	def saveService(){
 		println "params: " + params
-		def success = adminService.saveService(params)
+		def success = adminService.saveService(params, session.user)
 		if (success){
 			flash.success = "Your changes have been saved."
 		}else{
