@@ -145,7 +145,7 @@ class AdminController {
 
 	def deleteService(){
 		println "params: " + params
-		def success = adminService.deleteService(params)
+		def success = adminService.deleteService(params, session.user)
 		if (success){
 			flash.success = "Service deleted."
 		}else{

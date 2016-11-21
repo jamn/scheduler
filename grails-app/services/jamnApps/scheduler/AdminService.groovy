@@ -284,6 +284,8 @@ class AdminService {
 					}else{
 						status.setRollbackOnly()
 					}
+				}else{
+					reorderServices(user)
 				}
 			}
 		}
@@ -319,6 +321,8 @@ class AdminService {
 		service.price = params.servicePrice ? params.long('servicePrice') : service.price
 		service.duration = getDurationInMilleseconds(params.serviceDuration) ?: service.duration
 		service.calendarColor = params.serviceCalendarColor ?: service.calendarColor
+		service.deleted = false
+		service.display = true
 		service.save()
 		return service
 	}
@@ -336,20 +340,16 @@ class AdminService {
 		return service
 	}
 
-	private Boolean deleteService(Map params){
+	private Boolean deleteService(Map params, User user){
 		def success = false
 		try {
 			ServiceType.withTransaction { status ->
 				def deletedService = ServiceType.get(params.id)
 				deletedService?.deleted = true
 				deletedService?.display = false
+				deletedService?.displayOrder = 10000
 				deletedService?.save()
-
-				def services = ServiceType.findAllWhere(serviceProvider:deletedService?.serviceProvider, deleted:false, display:true)
-				services.eachWithIndex(){ service,index ->
-					service.displayOrder = index + 1
-					service.save()
-				}
+				reorderServices(user)
 			}
 			success = true
 		}
@@ -358,6 +358,16 @@ class AdminService {
 		}
 
 		return success
+	}
+
+	private Void reorderServices(User user){
+		println "reordering services"
+		def services = ServiceType.findAll("from ServiceType st where st.serviceProvider = :serviceProvider and st.deleted = false and st.display = true order by st.displayOrder", [serviceProvider:user])
+		services.eachWithIndex(){ service,index ->
+			service.displayOrder = index + 1
+			service.save()
+		}
+		return
 	}
 
 	private getDurationInMilleseconds(String duration){

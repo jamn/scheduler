@@ -7,29 +7,29 @@
 	</div>
 	<hr />
 	<div class="services">
-		<g:each in="${services}">
-				<form action="saveService" method="post" class="row service service-${it.id} grey-gradient" editing="false" id="display-order-${it.displayOrder}">
-					<input type="hidden" name="serviceId" value="${it.id}">
+		<g:each in="${services}" var="service" status="serviceNumber">
+				<form action="saveService" method="post" class="row service service-${service.id} grey-gradient" editing="false" id="display-order-${serviceNumber+1}">
+					<input type="hidden" name="serviceId" value="${service.id}">
 					<div class="row">
 						<div class="col-xs-12">
-							<input type="text" name="serviceDescription" value="${it.description}" class="service-name">
+							<input type="text" name="serviceDescription" value="${service.description}" class="service-name">
 						</div>
 						
 					</div>
 					<div class="row">
 						<div class="col-xs-4">
-							$ <input type="text" name="servicePrice" value="${it.price}" style="width:70%">
+							$ <input type="text" name="servicePrice" value="${service.price}" style="width:70%">
 						</div>
 						<div class="col-xs-4">
-							<g:select name="serviceDuration" from="${['15 min', '30 min', '45 min', '60 min', '90 min', '120 min']}" value="${it.durationInMinutes}" />
+							<g:select name="serviceDuration" from="${['15 min', '30 min', '45 min', '60 min', '90 min', '120 min']}" value="${service.durationInMinutes}" />
 						</div>
 						<div class="col-xs-4">
-							<input type="text" name="serviceCalendarColor" value="${it.calendarColor}" class="color">
+							<input type="text" name="serviceCalendarColor" value="${service.calendarColor}" class="color">
 						</div>
 					</div>
 					<div class="row buttons edit-buttons">
 						<div class="col-xs-3 button display-order">
-							<p>${it.displayOrder}</p>
+							<p>${serviceNumber+1}</p>
 							<h2>Display Order</h2>
 						</div>
 						<div class="col-xs-3 button move-button move-up-button">
