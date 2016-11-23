@@ -1,5 +1,8 @@
 package jamnApps.scheduler
 
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
 import grails.util.Environment
 import java.io.IOException
 import com.sendgrid.*
@@ -16,15 +19,19 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointments[0].client.email}"
 		def subject = "Appointment Booked @ The Den Barbershop"
+		def rescheduleLink
+		def cancelLink
 		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>The following appointment has been scheduled for you:</p><ul>"
 		appointments.each(){ appointment ->
 			println "    - " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('E MM/dd @ hh:mm a')
+			rescheduleLink = getRescheduleLink(appointment)
+			cancelLink = getCancelLink(appointment)
 			body += "<li>A <b>${appointment.service.description}</b> on ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/>"
 			body += "&nbsp;&nbsp;&nbsp;&nbsp;reschedule:<br/>"
-			body += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a><br/>"
+			body += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='${rescheduleLink}'>${rescheduleLink}</a><br/>"
 			body += "<br/>"
 			body += "&nbsp;&nbsp;&nbsp;&nbsp;cancel:<br/>"
-			body += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='${getLink()}/book/cancelAppointment?c="+appointment.code+"'>${getLink()}/book/cancelAppointment?c="+appointment.code+"</a></li>"
+			body += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='${cancelLink}'>${cancelLink}</a></li>"
 		}
 		body += "</ul><p>See you then!</p><p>Kalin</p>"
 		body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
@@ -143,6 +150,34 @@ class EmailService {
 
 	public getLink(){
 		return grailsLinkGenerator.getServerBaseURL()
+	}
+
+	public getCancelLink(Appointment appointment){
+		return makeUrlShorter("${getLink()}/book/cancelAppointment?c=${appointment.code}")
+	}
+
+	public getRescheduleLink(Appointment appointment){
+		return makeUrlShorter("${getLink()}/book/modifyAppointment?a=${appointment.id}&cc=${appointment.client.code}")
+	}
+
+	public makeUrlShorter(longUrl){
+		def domain = 'bit.ly'
+		def accessToken = 'd71aa1757c36deebacd3ad1559211ed9e3a707fb'
+		def shortUrl
+		def isLocalhost = longUrl.contains('localhost')
+		if (!isLocalhost){
+			try {
+				def response = ""
+				URL url = new URL("https://api-ssl.bitly.com/v3/shorten?access_token=${accessToken}&domain=${domain}&longUrl=${longUrl.encodeAsURL()}&format=txt");
+				BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+				while (null != (response = br.readLine())) {
+					shortUrl = response
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return shortUrl ?: longUrl
 	}
 
 	public Boolean sendEmail(clientEmail, message){

@@ -7,16 +7,24 @@ import com.twilio.type.PhoneNumber
  
 class TextMessageService {
 
+	def emailService
+
 	static final String ACCOUNT_SID = "AC698b760c0ae5de295ecc4d99ee0014de"
 	static final String AUTH_TOKEN = "410d76c16d6e4ea879ae44a171011e1d"
 
-	public static void sendReminderToClient(Appointment appointment){
+	public void sendReminderToClient(Appointment appointment){
 		def phone = appointment.client?.phone?.replaceAll("-","")?.replaceAll("\\(","")?.replaceAll("\\)","")?.replaceAll(" ","")?.replaceAll("___-___-____","")
 		if (!appointment.reminderTextSent && (phone?.size() == 10 && !phone.contains('0000000000'))) {
 			println "sending text to client"
 			def to = "+1" + phone
 			def from = "+18162664723"
+			def cancelLink = emailService.getCancelLink(appointment)
+			def rescheduleLink = emailService.getRescheduleLink(appointment)
 			def body = "Reminder: Your appointment for a ${appointment.service.description} @ The Den is tomorrow at ${appointment.appointmentDate.format('hh:mm a')}."
+			if (cancelLink && rescheduleLink){
+				body += " \n\nCancel: ${cancelLink} \n\nReschedule: ${rescheduleLink}"
+			}
+			println "body: " + body
 			sendMessage(to,from,body)
 			appointment.reminderTextSent = true
 			appointment.save()
