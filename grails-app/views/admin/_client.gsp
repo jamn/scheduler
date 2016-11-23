@@ -23,7 +23,7 @@
 	<h3>Password:</h3>
 </div>
 <div class="row">
-	<a href="#">Send Password Reset Link</a>
+	<a href="/access/sendPasswordResetEmail?email=${client.email.encodeAsURL()}">Send Password Reset Link</a>
 </div>
 <div class="row">
 	<h3>History:</h3>

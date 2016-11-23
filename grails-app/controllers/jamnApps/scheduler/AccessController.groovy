@@ -125,7 +125,7 @@ class AccessController {
 		println "\n---- PASSWORD RESET EMAIL REQUESTED ----"
 		println new Date()
 		println "params: " + params
-		Boolean errorOccurred = false
+		Boolean errorOccurred = true
 		def errorMessage = ''
 
 		if (params?.email?.size() > 0){
@@ -135,25 +135,19 @@ class AccessController {
 					client.passwordResetCode = RandomStringUtils.random(14, true, true)
 					client.passwordResetCodeDateCreated = new Date()
 					client.save(flush:true)
-					def appointment = Appointment.get(session.appointmentId)
-					//println "deleting appointment: " + appointment
-					//appointment.deleted = true
-					//appointment.save()
 					emailService.sendPasswordResetLink(client)
+					errorOccurred = false
 				}
 				catch(Exception e){
 					println "ERROR: " + e
-					errorOccurred = true
-					errorMessage = "Oops, something didn't work right. Try again please."
+					errorMessage = "An error has occured. If you continue to receive this message please contact support."
 				}
 				
 			}
 			else{
-				errorOccurred = true
 				errorMessage = "Email not found."
 			}
 		}else{
-			errorOccurred = true
 			errorMessage = "Email required."
 		}
 
@@ -162,7 +156,7 @@ class AccessController {
 			flash.error = errorMessage
 			redirect(action:"resetPassword")
 		}else{
-			render(view:"confirmation", model:[message:"A password reset link has been sent to your email."])
+			render(view:"confirmation", model:[message:"A password reset link has been sent to ${params.email}."])
 		}
 	}
 
