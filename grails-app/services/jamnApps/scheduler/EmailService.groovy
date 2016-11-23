@@ -113,7 +113,7 @@ class EmailService {
 	}
 
 	public sendReminder(Appointment appointment){
-		if (!appointment.reminderEmailSent){
+		if (!appointment.reminderEmailSent && !appointment.deleted){
 			def from = "kalin@thedenbarbershop-kc.com"
 			def to = "${appointment.client.email}"
 			def subject = "Appointment Reminder :: The Den Barbershop"

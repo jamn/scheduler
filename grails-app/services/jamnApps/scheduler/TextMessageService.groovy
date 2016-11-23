@@ -14,7 +14,7 @@ class TextMessageService {
 
 	public void sendReminderToClient(Appointment appointment){
 		def phone = appointment.client?.phone?.replaceAll("-","")?.replaceAll("\\(","")?.replaceAll("\\)","")?.replaceAll(" ","")?.replaceAll("___-___-____","")
-		if (!appointment.reminderTextSent && (phone?.size() == 10 && !phone.contains('0000000000'))) {
+		if (!appointment.reminderTextSent && !appointment.deleted && (phone?.size() == 10 && !phone.contains('0000000000'))) {
 			println "sending text to client"
 			def to = "+1" + phone
 			def from = "+18162664723"
