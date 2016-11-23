@@ -3,6 +3,13 @@ body {
   padding-top: 50px;
 }
 
+.version {
+	font-size: .8em;
+	color: #ccc;
+	text-align: center;
+	padding-bottom: 20px;
+}
+
 /*
  * Global add-ons
  */

@@ -92,6 +92,7 @@
 					</g:if>
 			<g:layoutBody />
 		</div>
+		<div class="version">v${System.properties.getProperty("info.app.version")}</div>
 	</div>
 
 
