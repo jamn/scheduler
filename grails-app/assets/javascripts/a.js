@@ -280,61 +280,6 @@ $(document).on('click', '#saveClientNotesButton', function(e) {
 
 
 
-$(document).on('click', '#blockOffTimeButton', function(e) {
-	var date = $('#chooseDateToBlockOff').val();
-	var fromHour = $('#fromHour').val();
-	var fromMinute = $('#fromMinute').val();
-	var fromMorningOrAfternoon = $('#fromMorningOrAfternoon').val();
-	var toHour = $('#toHour').val();
-	var toMinute = $('#toMinute').val();
-	var toMorningOrAfternoon = $('#toMorningOrAfternoon').val();
-	var from = fromHour + ":" + fromMinute + fromMorningOrAfternoon;
-	var to = toHour + ":" + toMinute + toMorningOrAfternoon;
-
-	$('#blockOffTimeButton').html($('#waitingSpinner').html());
-
-	$.ajax({
-		type: "POST",
-		url: "/admin/saveBlockedTime",
-		data: { date:date, from:from, to:to}
-	}).done(function(response) {
-		var jsonResponse = JSON.parse(response);
-		if (jsonResponse.success === true){
-			$('#blockOffTimeButton').html("Success");
-			$('#blockOffTimeButton').removeClass('error-button');
-		}
-		else{
-			$('#blockOffTimeButton').html("Error");
-			$('#blockOffTimeButton').addClass('error-button');
-		}
-	});
-});
-
-
-
-$(document).on('click', '#blockOffDaysButton', function(e) {
-	var from = $('#fromWholeDay').val();
-	var to = $('#toWholeDay').val();
-
-	$(this).html($('#waitingSpinner').html());
-
-	$.ajax({
-		type: "POST",
-		url: "/admin/blockOffWholeDay",
-		data: { from:from, to:to}
-	}).done(function(response) {
-		var jsonResponse = JSON.parse(response);
-		if (jsonResponse.success === true){
-			$('#blockOffDaysButton').html("Success");
-			$('#blockOffDaysButton').removeClass('error-button');
-		}
-		else{
-			$('#blockOffDaysButton').html("Error");
-			$('#blockOffDaysButton').addClass('error-button');
-		}
-	});
-});
-
 $(document).on('click', '.blocked-time', function(e) {
 	var checkbox = $(this).find('input:checkbox');
 	var tableRow = $(this);
@@ -350,32 +295,6 @@ $(document).on('click', '.blocked-time', function(e) {
 	}
 });
 
-
-$(document).on('click', '#deleteBlockedTimeslotsButton', function(e) {
-	var button = $('#deleteBlockedTimeslotsButton');
-	$(button).html($('#waitingSpinner').html());
-	$('.blocked-timeslots-table tr:hidden').remove();
-	$.ajax({
-		type: "POST",
-		url: "/admin/clearBlockedTime",
-		data: $('#blockedTimesForm').serialize()
-	}).done(function(response) {
-		var jsonResponse = JSON.parse(response);
-		if (jsonResponse.success === true){
-			$(button).html("Success");
-			$(button).removeClass('error-button');
-			var deletedTimeslots = jsonResponse.deletedTimeslots;
-			var arrayLength = deletedTimeslots.length;
-			for (var i = 0; i < arrayLength; i++) {
-				$('#blockedTime'+deletedTimeslots[i]).fadeOut('slow');
-			}
-		}
-		else{
-			$(button).html("Error");
-			$(button).addClass('error-button');
-		}
-	});
-});
 
 $(document).on('click', '#recurringAppointment', function() {
 	var opts = $(".recurringAppointmentAdminOptions");

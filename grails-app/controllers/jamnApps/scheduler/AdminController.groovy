@@ -24,11 +24,18 @@ class AdminController {
 	def dateService
 	def amazonWebService
 	def notificationService
+	def textMessageService
 	
 
 	/*********************************
 				NAVIGATION
 	**********************************/
+
+	def test(){
+		def a = Appointment.get(20344)
+		textMessageService.sendReminderToClient(a)
+		render "done"
+	}
 
 
     def calendar(){
@@ -38,7 +45,7 @@ class AdminController {
     	Map upcomingAppointments = adminService.getUpcomingAppointments(startDate, session.user)
     	def numberOfRows = schedulerService.getNumberOfRowsForCalendar(serviceProviderAvailability)
     	def days = schedulerService.getDaysForCalendar(startDate)
-    	return upcomingAppointments + [startDate:startDate, services:services, serviceProviderAvailability:serviceProviderAvailability, numberOfRows:numberOfRows, days:days]
+    	return upcomingAppointments + [startDate:startDate, services:services, serviceProvider:session.user, serviceProviderAvailability:serviceProviderAvailability, numberOfRows:numberOfRows, days:days]
     }
 
     def upcomingAppointments(){
@@ -132,7 +139,6 @@ class AdminController {
 	}
 
 	def saveService(){
-		println "params: " + params
 		def success = adminService.saveService(params, session.user)
 		if (success){
 			flash.success = "Your changes have been saved."
@@ -144,7 +150,6 @@ class AdminController {
 	}
 
 	def deleteService(){
-		println "params: " + params
 		def success = adminService.deleteService(params, session.user)
 		if (success){
 			flash.success = "Service deleted."
@@ -230,10 +235,10 @@ class AdminController {
 		Boolean success = false
 		Boolean appointmentFailedToSave = false
 		try {
-			def from = dateFormatter2.parse(params?.date+params?.from)
-			def to = dateFormatter2.parse(params?.date+params?.to)
+			def from = dateFormatter2.parse(params.dateToBlock + params.fromHour + ':' + params.fromMinute + params.fromMorningOrAfternoon)
+			def to = dateFormatter2.parse(params.dateToBlock + params.toHour + ':' + params.toMinute + params.toMorningOrAfternoon)
 
-			def serviceProvider = User.findByUsername("kpfanmiller")
+			def serviceProvider = session.user
 			def service = ServiceType.findByDescription("Blocked Off Time")
 			Calendar currentDate = new GregorianCalendar()
 			currentDate.setTime(from)
@@ -264,20 +269,21 @@ class AdminController {
 			println "ERROR: " + e
 		}
 		if (success && !appointmentFailedToSave){
-			render ('{"success":true}') as JSON
+			flash.success = "Timeslot was successfully blocked."
 		}else{
-			render ('{"success":false}') as JSON
+			flash.error = "If you continue to receive this message please contact support."
 		}
+		redirect(action:'blockOffTime')
 	}
 
 	def blockOffWholeDay(){
 		Boolean success = false
 		Boolean dayOffFailedToSave = false
 		try {
-			def from = dateFormatter3.parse(params?.from)
-			def to = dateFormatter3.parse(params?.to)
+			def from = dateFormatter3.parse(params?.fromWholeDay)
+			def to = dateFormatter3.parse(params?.toWholeDay)
 
-			def serviceProvider = User.findByUsername("kpfanmiller")
+			def serviceProvider = session.user
 			Calendar currentDate = new GregorianCalendar()
 			currentDate.setTime(from)
 			currentDate.set(Calendar.HOUR_OF_DAY, 0)
@@ -311,10 +317,11 @@ class AdminController {
 		}
 
 		if (success && !dayOffFailedToSave){
-			render ('{"success":true}') as JSON
+			flash.success = "Day(s) were successfully blocked."
 		}else{
-			render ('{"success":false}') as JSON
+			flash.error = "If you continue to receive this message please contact support."
 		}
+		redirect(action:'blockOffTime')
 	}
 
 	def clearBlockedTime(){
@@ -327,7 +334,7 @@ class AdminController {
 		timeSlotsToDelete?.each(){
 			def appointment = Appointment.get(it.toLong())
 			appointment.deleted = true
-			appointment.updatdBy = session.user.id
+			appointment.updatedBy = session.user.id
 			appointment.save(flush:true)
 			if (appointment.hasErrors()){
 				success = false
@@ -339,7 +346,12 @@ class AdminController {
 				success = true
 			}
 		}
-		render ('{"success":'+success+', "deletedTimeslots":'+deletedTimeslots+'}') as JSON
+		if (success){
+			flash.success = "Blocked time was cleared."
+		}else{
+			flash.error = "If you continue to receive this message please contact support."
+		}
+		redirect(action:'blockOffTime')
 	}
 
 	def bookForClient(){

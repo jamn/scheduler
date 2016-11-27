@@ -449,14 +449,43 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 	padding-left: 16px;
 }
 
+
+
 .block-off-time .form-control {
 	display: initial;
 	width: 80px;
 	text-align: center;
 }
-#chooseDateToBlockOffText{
-	margin-left: 6px;
+.blocked-timeslots-table {
+	width: 100%;
 }
+.blocked-timeslots-table thead {
+	font-size: 1.3em;
+	background-color: #EDEDED;
+}
+
+.blocked-timeslots-table thead td{
+	padding: 10px 0;
+}
+
+.blocked-timeslots-table tbody {
+	font-size: 1.1em;
+}
+
+.blocked-timeslots-table tbody td {
+	vertical-align: middle;
+}
+
+.blocked-timeslots-table input {
+	height: 30px;
+	width: 30px;
+}
+.blocked-timeslots-table .blocked-time input {
+	outline: none;
+    border: none;
+    box-shadow: none;
+}
+
 
 #recurringAppointmentAdmin{
 	margin: 14px 0 26px -8px;
@@ -691,30 +720,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', end
 .appointment-data .appointment-details {
 	font-size: .7em;
 }
-.blocked-timeslots-table {
-	width: 100%;
-}
-.blocked-timeslots-table thead {
-	font-size: 1.3em;
-	background-color: #EDEDED;
-}
 
-.blocked-timeslots-table thead td{
-	padding: 10px 0;
-}
-
-.blocked-timeslots-table tbody {
-	font-size: 1.1em;
-}
-
-.blocked-timeslots-table tbody td {
-	vertical-align: middle;
-}
-
-.blocked-timeslots-table input {
-	height: 30px;
-	width: 30px;
-}
 
 
 
