@@ -7,6 +7,10 @@ class AdminInterceptor {
         println "\n" + new Date()
         println "params: " + params
 
+        if (!session.appVersion){
+            session.appVersion = grailsApplication.metadata.getApplicationVersion()
+        }
+
         def cookie = request.getCookie('den-scheduler-1')
         if (!session.user && cookie){
             session.user = LoginLog.findWhere(loggedInCookieId:cookie, deleted:false)?.user
