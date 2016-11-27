@@ -24,18 +24,11 @@ class AdminController {
 	def dateService
 	def amazonWebService
 	def notificationService
-	def textMessageService
 	
 
 	/*********************************
 				NAVIGATION
 	**********************************/
-
-	def test(){
-		def a = Appointment.get(20344)
-		textMessageService.sendReminderToClient(a)
-		render "done"
-	}
 
 
     def calendar(){
