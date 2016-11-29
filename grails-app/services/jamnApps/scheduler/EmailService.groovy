@@ -165,7 +165,7 @@ class EmailService {
 		def accessToken = 'd71aa1757c36deebacd3ad1559211ed9e3a707fb'
 		def shortUrl
 		def isLocalhost = longUrl.contains('localhost')
-		if (!isLocalhost){
+		/*if (!isLocalhost){
 			try {
 				def response = ""
 				URL url = new URL("https://api-ssl.bitly.com/v3/shorten?access_token=${accessToken}&domain=${domain}&longUrl=${longUrl.encodeAsURL()}&format=txt");
@@ -177,7 +177,8 @@ class EmailService {
 				ex.printStackTrace();
 			}
 		}
-		return shortUrl ?: longUrl
+		return shortUrl ?: longUrl*/
+		return longUrl
 	}
 
 	public Boolean sendEmail(clientEmail, message){
