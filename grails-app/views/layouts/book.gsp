@@ -38,7 +38,7 @@
 
 	<div class="container">
 		<div class="row header">
-			<div class=".col-xs-12">
+			<div class="col-xs-12">
 				<img class="img-responsive logo link home-link" id="logoPlain" src="${resource(dir:'images',file:'logo-plain.png')}" />
 				<div class="address">1013 W 47th Street<br/>KCMO, 64112</div>
 				<div class="user-links">

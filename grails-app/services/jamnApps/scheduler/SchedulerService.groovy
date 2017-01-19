@@ -41,7 +41,8 @@ class SchedulerService {
 		def serviceProviderDayOfTheWeek = getServiceProviderDayOfTheWeek(serviceProvider, startDate)
 		
 		def dayIsAvailableByDefault = serviceProviderDayOfTheWeek?.available
-		def dayIsNotBlockedOff = DayOff.findWhere(serviceProvider:serviceProvider, dayOffDate:requestedDate) ? false : true
+		def dayOffDate = startDate.withMillisOfDay(0).toLocalDateTime().toDate()
+		def dayIsNotBlockedOff = DayOff.findWhere(serviceProvider:serviceProvider, dayOffDate:dayOffDate) ? false : true
 
 		if (dayIsAvailableByDefault && dayIsNotBlockedOff){
 
