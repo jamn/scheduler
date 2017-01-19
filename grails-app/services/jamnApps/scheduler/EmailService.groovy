@@ -36,7 +36,7 @@ class EmailService {
 		body += "</ul><p>See you then!</p><p>Kalin</p>"
 		body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
 		body += "<br><hr><br>"
-		body += "<p>1013 W 47th Street<br>KCMO 64112</p>"
+		body += "<p>The Den Barbershop<br>1013 West 47th Street<br>Kansas City, MO 64112</p>"
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
@@ -106,7 +106,7 @@ class EmailService {
 		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>Hi ${appointment.client.firstName},</p><p>Your appointment for a ${appointment.service.description} has been rescheduled. Your new appointment date is: <b>${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}</b>. If you need to reschedule this appointment please use this link:</p><p><a href='${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a></p><p>To cancel your appointment, please use the following link:</p><p><a href='${getLink()}/book/cancelAppointment?c="+appointment.code+"'>${getLink()}/book/cancelAppointment?c="+appointment.code+"</a></p><p>Thanks,<br>Kalin</p>"
 			body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
 			body += "<br><hr><br>"
-			body += "<p>1013 W 47th Street<br>KCMO 64112</p>"
+			body += "<p>The Den Barbershop<br>1013 West 47th Street<br>Kansas City, MO 64112</p>"
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
@@ -124,7 +124,7 @@ class EmailService {
 			def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>Hi ${appointment.client.firstName},</p><p>This is a friendly reminder that your appointment tomorrow for a ${appointment.service.description} is at <b>${appointment.appointmentDate.format('hh:mm a')}</b>. In the event you need to reschedule, please use this link:</p><p><a href='${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a></p><p>To cancel your appointment, please use the following link:</p><p><a href='${getLink()}/book/cancelAppointment?c="+appointment.code+"'>${getLink()}/book/cancelAppointment?c="+appointment.code+"</a></p><p>Thanks,<br>Kalin</p>"
 				body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
 				body += "<br><hr><br>"
-				body += "<p>1013 W 47th Street<br>KCMO 64112</p>"
+				body += "<p>The Den Barbershop<br>1013 West 47th Street<br>Kansas City, MO 64112</p>"
 			try {
 				sendMailUsingSendGrid(from,to,subject,body)
 				println "Reminder email sent."
