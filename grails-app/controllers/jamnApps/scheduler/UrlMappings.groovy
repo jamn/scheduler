@@ -1,3 +1,5 @@
+package jamnApps.scheduler
+
 class UrlMappings {
 
 	static mappings = {
