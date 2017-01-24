@@ -43,7 +43,7 @@
 					<label>
 						<input type="checkbox" name="textMessageReminder" id="textMessageReminder" checked> Send text message reminder${plural}?
 					</label>
-					<div class="reminders-note">Reminders are sent 24 hours before your appontment.</div>
+					<div class="reminders-note">Reminders are sent 24 hours before your appointment.</div>
 				</g:if>
 
 				<div class="no-show-policy">There will be a $20 charge at your following visit if you cancel within 4 hours of your appointment. Unless previous arrangements have been made, anything past 10 minutes late will be considered a no show and you will need to reschedule.</div>

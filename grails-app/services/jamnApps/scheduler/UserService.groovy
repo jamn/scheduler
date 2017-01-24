@@ -51,11 +51,16 @@ class UserService {
 		newClient.lastName = params.lastName
 		newClient.email = params.email.toLowerCase()?.replace(' @', '@')?.replace('@ ', '@')
 		newClient.password = params.password.encodeAsSHA256()
-		newClient.phone = params.phone
+		newClient.phone = formatPhone(params.phoneNumber)
 		newClient.code = newClient.firstName.substring(0,1).toLowerCase() + newClient.lastName.substring(0,1).toLowerCase() + new Date().getTime()
 		newClient.isClient = true
 		newClient.save(flush:true)
 		return newClient
+	}
+
+	private formatPhone(String phoneNumber){
+		def tempNumber = phoneNumber.replaceAll(/\D/, '')
+		return "(" + tempNumber.substring(0,3) + ") " + tempNumber.substring(3,6) + "-" + tempNumber.substring(6)
 	}
 
 	public Boolean updateExistingClient(existingClient, params) {
