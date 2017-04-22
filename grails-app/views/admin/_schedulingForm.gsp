@@ -1,3 +1,10 @@
+<div data-toggle="modal" data-target="#addClientModal">
+	<div>
+		<div class="add-client green-button">+</div>
+		<div class="add-client-label">Add Client</div>
+	</div>
+</div>
+
 <form>
 	<select class="form-control" id="clients">
 		<option selected="selected">Choose a client...</option>

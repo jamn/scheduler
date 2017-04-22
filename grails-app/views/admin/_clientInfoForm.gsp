@@ -34,8 +34,10 @@
 	<div class="form-group">        
 		<div class="col-sm-offset-2 col-sm-9 col-sm-offset-right-1">
 			<button type="submit" class="btn green-button" id="saveClientButton">${submitText}</button>
-			<button type="button" class="btn white-button" id="cancelClientRegistrationButton" style="margin-top:0;">Cancel</button>
+			<button type="button" class="btn white-button" data-dismiss="modal" aria-label="Close" id="cancelClientRegistrationButton" style="margin-top:0;">Cancel</button>
 		</div>
 	</div>
 </form>
 <div class="error-details"></div>
+
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">

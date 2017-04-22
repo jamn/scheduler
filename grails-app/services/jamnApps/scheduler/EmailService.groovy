@@ -21,7 +21,7 @@ class EmailService {
 		def subject = "Appointment Booked @ The Den Barbershop"
 		def rescheduleLink
 		def cancelLink
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>The following appointment has been scheduled for you:</p><ul>"
+		def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p>"+appointments[0].client.firstName+",</p><p>The following appointment has been scheduled for you:</p><ul>"
 		appointments.each(){ appointment ->
 			println "    - " + appointment.client.getFullName() + " | " + appointment.service.description + " on " + appointment.appointmentDate.format('E MM/dd @ hh:mm a')
 			rescheduleLink = getRescheduleLink(appointment)
@@ -52,7 +52,7 @@ class EmailService {
 			def from = "${appointments[0].client.email}"
 			def to = "bjacobi@gmail.com"
 			def subject = "New Appointment [${appointments[0].appointmentDate.format('E MM/dd @ hh:mm a')}]"
-			def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p><b>Client:</b> ${appointments[0].client.firstName} ${appointments[0].client.lastName}<br/><b>Phone:</b> ${appointments[0].client.phone}<br/><b>Email:</b> <a href='mailto:${appointments[0].client.email}'>${appointments[0].client.email}</a><br/><b>Service:</b> ${appointments[0].service.description}<br/><b>Time(s):</b> "
+			def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p><b>Client:</b> ${appointments[0].client.firstName} ${appointments[0].client.lastName}<br/><b>Phone:</b> ${appointments[0].client.phone}<br/><b>Email:</b> <a href='mailto:${appointments[0].client.email}'>${appointments[0].client.email}</a><br/><b>Service:</b> ${appointments[0].service.description}<br/><b>Time(s):</b> "
 			appointments.eachWithIndex(){ appointment,index ->
 				if (index > 0){
 					body += " | "
@@ -73,7 +73,7 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointment.client.email}"
 		def subject = "** Appointment Cancelled ** [${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}]"     
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>Your appointment for a ${appointment.service.description} on ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')} has been cancelled. Thank you.</p>"
+		def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p>Your appointment for a ${appointment.service.description} on ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')} has been cancelled. Thank you.</p>"
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
@@ -88,7 +88,7 @@ class EmailService {
 		def from = "${appointment.client.email}"
 		def to = "kalin@thedenbarbershop-kc.com"
 		def subject = "** Appointment Cancelled ** [${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}]"
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p><b>Client:</b> ${appointment.client.firstName} ${appointment.client.lastName}<br/><b>Time:</b> ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/><b>Service:</b> ${appointment.service.description}</p>"
+		def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p><b>Client:</b> ${appointment.client.firstName} ${appointment.client.lastName}<br/><b>Time:</b> ${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}<br/><b>Service:</b> ${appointment.service.description}</p>"
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
@@ -103,7 +103,7 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${appointment.client.email}"
 		def subject = "Appointment Rescheduled @ The Den Barbershop"
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>Hi ${appointment.client.firstName},</p><p>Your appointment for a ${appointment.service.description} has been rescheduled. Your new appointment date is: <b>${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}</b>. If you need to reschedule this appointment please use this link:</p><p><a href='${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a></p><p>To cancel your appointment, please use the following link:</p><p><a href='${getLink()}/book/cancelAppointment?c="+appointment.code+"'>${getLink()}/book/cancelAppointment?c="+appointment.code+"</a></p><p>Thanks,<br>Kalin</p>"
+		def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p>Hi ${appointment.client.firstName},</p><p>Your appointment for a ${appointment.service.description} has been rescheduled. Your new appointment date is: <b>${appointment.appointmentDate.format('E MM/dd @ hh:mm a')}</b>. If you need to reschedule this appointment please use this link:</p><p><a href='http://www.thedenbarbershop-kc.com/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>http://www.thedenbarbershop-kc.com/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a></p><p>To cancel your appointment, please use the following link:</p><p><a href='http://www.thedenbarbershop-kc.com/book/cancelAppointment?c="+appointment.code+"'>http://www.thedenbarbershop-kc.com/book/cancelAppointment?c="+appointment.code+"</a></p><p>Thanks,<br>Kalin</p>"
 			body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
 			body += "<br><hr><br>"
 			body += "<p>The Den Barbershop<br>1013 West 47th Street<br>Kansas City, MO 64112</p>"
@@ -121,7 +121,7 @@ class EmailService {
 			def from = "kalin@thedenbarbershop-kc.com"
 			def to = "${appointment.client.email}"
 			def subject = "Appointment Reminder :: The Den Barbershop"
-			def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>Hi ${appointment.client.firstName},</p><p>This is a friendly reminder that your appointment tomorrow for a ${appointment.service.description} is at <b>${appointment.appointmentDate.format('hh:mm a')}</b>. In the event you need to reschedule, please use this link:</p><p><a href='${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>${getLink()}/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a></p><p>To cancel your appointment, please use the following link:</p><p><a href='${getLink()}/book/cancelAppointment?c="+appointment.code+"'>${getLink()}/book/cancelAppointment?c="+appointment.code+"</a></p><p>Thanks,<br>Kalin</p>"
+			def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p>Hi ${appointment.client.firstName},</p><p>This is a friendly reminder that your appointment tomorrow for a ${appointment.service.description} is at <b>${appointment.appointmentDate.format('hh:mm a')}</b>. In the event you need to reschedule, please use this link:</p><p><a href='http://www.thedenbarbershop-kc.com/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"'>http://www.thedenbarbershop-kc.com/book/modifyAppointment?a="+appointment.id+"&cc="+appointment.client.code+"</a></p><p>To cancel your appointment, please use the following link:</p><p><a href='http://www.thedenbarbershop-kc.com/book/cancelAppointment?c="+appointment.code+"'>http://www.thedenbarbershop-kc.com/book/cancelAppointment?c="+appointment.code+"</a></p><p>Thanks,<br>Kalin</p>"
 				body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
 				body += "<br><hr><br>"
 				body += "<p>The Den Barbershop<br>1013 West 47th Street<br>Kansas City, MO 64112</p>"
@@ -144,7 +144,7 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${client.email}"
 		def subject = "Password Reset Link :: The Den Barbershop"
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>The following link can be used to reset your password:</p><ul><li><a href='${getLink()}/access/resetPasswordForm?rc="+client.passwordResetCode+"&cc="+client.code+"'>${getLink()}/access/resetPasswordForm?rc="+client.passwordResetCode+"&cc="+client.code+"</a></li></ul>"
+		def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p>The following link can be used to reset your password:</p><ul><li><a href='http://www.thedenbarbershop-kc.com/access/resetPasswordForm?rc="+client.passwordResetCode+"&cc="+client.code+"'>http://www.thedenbarbershop-kc.com/access/resetPasswordForm?rc="+client.passwordResetCode+"&cc="+client.code+"</a></li></ul>"
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)
 		}
@@ -159,11 +159,11 @@ class EmailService {
 	}
 
 	public getCancelLink(Appointment appointment){
-		return makeUrlShorter("${getLink()}/book/cancelAppointment?c=${appointment.code}")
+		return makeUrlShorter("http://www.thedenbarbershop-kc.com/book/cancelAppointment?c=${appointment.code}")
 	}
 
 	public getRescheduleLink(Appointment appointment){
-		return makeUrlShorter("${getLink()}/book/modifyAppointment?a=${appointment.id}&cc=${appointment.client.code}")
+		return makeUrlShorter("http://www.thedenbarbershop-kc.com/book/modifyAppointment?a=${appointment.id}&cc=${appointment.client.code}")
 	}
 
 	public makeUrlShorter(longUrl){
@@ -196,7 +196,7 @@ class EmailService {
 		def from = "kalin@thedenbarbershop-kc.com"
 		def to = "${clientEmail}"
 		def subject = "Message from Kalin @ The Den Barbershop"
-		def body = "<p><img style='height:120px;width:120px;' src='${getLink()}/static/logo.png'></p><p>${message}</p>"
+		def body = "<p><img style='height:120px;width:120px;' src='http://www.thedenbarbershop-kc.com/static/logo.png'></p><p>${message}</p>"
 		Boolean success = false
 		try {
 			sendMailUsingSendGrid(from,to,subject,body)

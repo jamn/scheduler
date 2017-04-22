@@ -19,6 +19,10 @@ $(document).ready(function(){
 			});
 		});
 	});
+	$('#addClientModal').on('show.bs.modal', function (event) {
+		$('#scheduleAppointmentModal').modal('hide')
+		getAddClientForm()
+	});
 });
 
 function hideAlert(){
@@ -93,7 +97,7 @@ function getScheduleAppointmentForm(datetime, modal){
 		data: { d:datetime }
 	}).done(function(response) {
 		if (response.indexOf("ERROR") === -1){
-			$(".modal-body").html(response);
+			$("#scheduleAppointmentForm").html(response);
 		}
 	});
 }
@@ -132,20 +136,7 @@ $(document).on('click', '#addService', function(e) {
 });
 
 $(document).on('click', '#addClient', function(e) {
-	$.ajax({
-		type: "POST",
-		url: "/admin/getClientDataForm"
-	}).done(function(response) {
-		if (response.indexOf("ERROR") > -1){
-			alert('An error has occured. Please try again.');
-		}else{
-			$('#lastNameFilters').slideUp();
-			$('#clientsDetailsSelector').slideUp();
-			$('#clientDetails').slideUp();
-			$('#addClient').fadeOut();
-			$('#clientInfoForm').html(response).slideDown();
-		}
-	});
+	getAddClientForm()
 });
 
 $(document).on('click', '#editClient', function(e) {
@@ -180,6 +171,24 @@ $(document).on('click', '.last-name-filter', function(e) {
 
 	}
 });
+
+function getAddClientForm(){
+	$.ajax({
+		type: "POST",
+		url: "/admin/getClientDataForm"
+	}).done(function(response) {
+		if (response.indexOf("ERROR") > -1){
+			alert('An error has occured. Please try again.');
+		}else{
+			$('#lastNameFilters').slideUp();
+			$('#clientsDetailsSelector').slideUp();
+			$('#clientDetails').slideUp();
+			$('#addClient').fadeOut();
+			console.log(response)
+			$('#clientInfoForm').html(response).slideDown();
+		}
+	});
+}
 
 function getClientSelectMenuData(lastNameStartsWith){
 	$.ajax({

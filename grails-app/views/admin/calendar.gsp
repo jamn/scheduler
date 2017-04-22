@@ -75,13 +75,13 @@
 					<h4 class="modal-title" id="rescheduleAppointmentModalLabel">Book Appointment</h4>
 				</div>
 				<div class="modal-body">
-
+					<div id="scheduleAppointmentForm"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="modal fade" id="clearBlockedTimeModal" tabindex="-1" role="dialog" aria-labelledby="clearBlockedTimeModalLabel">
+	<div class="modal fade" id="clearBlockedTimeModal" tabindex="-1" role="dialog" aria-labelledby="clearBlockedTimeModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -94,6 +94,21 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="addClientModal" tabindex="-1" role="dialog" aria-labelledby="addClientModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="addClientModalLabel">Add Client</h4>
+				</div>
+				<div class="modal-body">
+					<div id="clientInfoForm"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 
 	<script type="text/javascript">
