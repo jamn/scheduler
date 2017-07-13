@@ -10,7 +10,7 @@
 
 <input class="form-control ${passwordClass}" placeholder="Password" type="password" name="password" id="password-${formAction}" value="${flash.password}" />
 
-<g:if test="${!cancelAppointment}">
+<g:if test="${false || !cancelAppointment}">
 	<input class="form-control new-user ${phoneNumberClass}" placeholder="Phone" type="tel" name="phoneNumber" id="phoneNumber" value="${flash.phoneNumber}" />
 
 	<input placeholder="First Name" type="text" name="firstName" id="firstName" class="form-control new-user ${firstNameClass}" value="${flash.firstName}">
@@ -27,8 +27,8 @@
 </g:if>
 
 <div class="reset-password-links">
-	<span id="registerLink" onclick="showRegistrationForm();">New Client?</span>
-	<span class="left-divider"> | </span>
+	<!-- <span id="registerLink" onclick="showRegistrationForm();">New Client?</span> -->
+	<!-- <span class="left-divider"> | </span> -->
 	<span id="resetPassword" onclick="showResetPasswordForm();">Reset Password</span>
 	<span class="right-divider"> | </span>
 	<span id="showLoginForm" onclick="showLoginForm();">Login Form</span>
@@ -42,7 +42,7 @@
 			$(this).val(value.replace(/\s+/g, ''));
 		});
 		<%if (flash.newClientRegistering){%>
-			showRegistrationForm();
+			//showRegistrationForm();
 		<%}%>
 		<%if (flash.sendPasswordResetLink){%>
 			showResetPasswordForm();

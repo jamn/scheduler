@@ -57,7 +57,11 @@ class User extends CoreObject {
     }
 
     String getShortName(){
-        return fullName.substring(0,8) + "&hellip;"
+        if (fullName.size() > 8) {
+            return fullName.substring(0,8) + "&hellip;"
+        }else{
+            return fullName
+        }
     }
 
     Boolean isNewUser(){
