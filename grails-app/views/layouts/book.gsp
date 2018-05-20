@@ -81,6 +81,7 @@
 						</div>
 					</div>
 				</g:if>
+				<div style="clear:both;"></div>
 				<g:layoutBody />
 			</div>
 		</div>

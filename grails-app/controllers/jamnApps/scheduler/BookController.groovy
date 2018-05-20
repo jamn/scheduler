@@ -279,6 +279,7 @@ class BookController {
 				session.service = appointment.service
 				session.serviceProvider = appointment.serviceProvider
 				session.existingAppointmentId = appointment.id
+				flash.error = "Please note, there will be a \$20 charge at your following appointment if you reschedule within 4 hours of your appointment."
 				redirect(action:'chooseTime')
 				return
 			}
@@ -289,7 +290,7 @@ class BookController {
 		else{
 			println "ERROR: required params not passed"
 		}
-		flash.error = "There was an error rescheduling your appointment. If the problem persists please email the shop."
+		flash.error = "There was an error rescheduling your appointment. If the problem persists please email the <a href='mailto:kalin@thedenbarbershop-kc.com'>kalin@thedenbarbershop-kc.com</a>."
 		redirect(controller:'user', action:'history')
 	}
 
@@ -305,6 +306,7 @@ class BookController {
 				println "appointment(${appointment?.id}): " + appointment?.client?.getFullName() + " | " + appointment?.service?.description + " on " + appointment?.appointmentDate?.format('MM/dd/yy @ hh:mm a [E]')
 			}
 		}
+		flash.error = "Please note, there will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment."
 		render (view: "cancelAppointment")
 	}
 

@@ -18,7 +18,7 @@ body {
             box-shadow: 6px 6px 5px 0px rgba(214,213,213,1);
 }
 .main-content .page .alert {
-	margin-top: 12px;
+	margin-top: 30px;
 }
 .alert {
 	margin: 0;
@@ -422,7 +422,7 @@ body {
 
 .confirm-appointment-cancellation {
 	text-align: center;
-	padding: 54px;
+	padding: 36px 54px;
 }
 .confirm-appointment-cancellation .btn {
 	  padding: 10px 42px;

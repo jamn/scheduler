@@ -36,6 +36,7 @@
 						<div class="modal-content">
 							<div class="modal-body">
 								<h1>Cancel this appointment?</h1>
+								<p style="text-align:center; padding: 0 40px;">Please note, there will be a $20 charge at your following appointment if you cancel within 4 hours of your appointment.</p>
 								<h1>
 									<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 									<button type="button" class="btn btn-primary cancel-this-appointment">Yes</button>

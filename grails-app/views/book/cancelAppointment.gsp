@@ -4,7 +4,7 @@
 	<div class="confirm-appointment-cancellation">
 		<g:if test="${session?.appointmentToDelete}">
 			<h2>Confirm Cancellation</h2>
-			<small>${session.appointmentToDelete.service.description}: ${session.appointmentToDelete.appointmentDate.format('EEEE, MMMM dd @ hh:mm a')}</small>
+			<p>${session.appointmentToDelete.service.description}: ${session.appointmentToDelete.appointmentDate.format('EEEE, MMMM dd @ hh:mm a')}</p>
 			<br />
 			<button type="button" class="btn btn-success" onclick="window.location='./confirmAppointmentCancellation'">Yes</button>
 			<button type="button" class="btn btn-danger" onclick="window.location='./cancelAttemptToCancelAppointment'">No</button>
