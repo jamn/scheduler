@@ -25,6 +25,9 @@ environments:
     production:
         dataSource:
             dbCreate: validate
+            url: jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_8d9ad838f8c7d40?user=b78b3baf0bdf80&password=44c827dc&reconnect=true
+            username: b78b3baf0bdf80
+            password: 44c827dc
             properties:
                 jmxEnabled: true
                 initialSize: 4
