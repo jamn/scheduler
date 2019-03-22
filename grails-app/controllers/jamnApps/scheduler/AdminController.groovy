@@ -24,6 +24,11 @@ class AdminController {
 	def dateService
 	def amazonWebService
 	def notificationService
+
+	def checkConnections(){
+		def message = utilService.checkConnections()
+		render message
+	}
 	
 
 	/*********************************

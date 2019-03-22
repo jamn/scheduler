@@ -17,9 +17,9 @@ environments:
     development:
         dataSource:
             username: root
-            password:
+            password: root
             dbCreate: validate
-            url: jdbc:mysql://localhost/scheduler?useOldAliasMetadataBehavior=true&autoReconnect=true
+            url: jdbc:mysql://localhost:8889/scheduler?useOldAliasMetadataBehavior=true&autoReconnect=true
             #logSql: true
             #formatSql: true
     production:
@@ -27,9 +27,9 @@ environments:
             dbCreate: validate
             properties:
                 jmxEnabled: true
-                initialSize: 5
+                initialSize: 4
                 maxActive: 50
-                minIdle: 5
+                minIdle: 4
                 maxIdle: 25
                 maxWait: 10000
                 maxAge: 600000
