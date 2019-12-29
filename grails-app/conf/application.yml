@@ -30,9 +30,9 @@ environments:
             password: 44c827dc
             properties:
                 jmxEnabled: true
-                initialSize: 4
+                initialSize: 3
                 maxActive: 50
-                minIdle: 4
+                minIdle: 3
                 maxIdle: 25
                 maxWait: 10000
                 maxAge: 600000

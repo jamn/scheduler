@@ -26,6 +26,27 @@ class BookController {
 	
 	def index(){}
 
+	def ssSignup(){
+		println "\n---- SIGNUP UP FOR STONE & SPRUCE EMAILS ----"
+		println new Date()
+		println params
+		if (params?.email && params.email.size() > 0){
+			def signup = new SpruceStoneSignup()
+			signup.email = params.email
+			if (!signup.validate()) {
+			    signup.errors.allErrors.each {
+			        println it
+			    }
+			    render(status: 500, text: "500")
+			}else{
+				signup.save()
+				render(status: 200, text: "200")
+			}
+		}else{
+			render(status: 422, text: "422")
+		}
+	}
+
 	def chooseService(){
 		//schedulerService.deleteStaleAppointments()
 		println "\n---- GETTING SERVICES ----"
@@ -48,6 +69,8 @@ class BookController {
 			redirect(action:'chooseService')
 		}	
 	}
+
+
 
 	def chooseTime(){
 		println "\n---- GETTING AVAILABLE TIMESLOTS ----"

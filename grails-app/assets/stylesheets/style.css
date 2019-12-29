@@ -45,6 +45,65 @@ body {
 	position: relative;
 }
 
+#ss-mask {
+	display: none;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,.8);
+	z-index: 10000;
+}
+
+#ss-banner-message {
+	background: #fff;
+	border-radius: 4px;
+	padding: 20px;
+	font-size: 25px;
+	margin: 0 auto;
+	width: 300px;
+	min-height: 364px;
+	position: relative;
+	top: 40px;
+}
+
+#ss-banner-message img {
+	width: 244px;
+	margin-top: 20px;
+}
+
+#ss-banner-message p {
+	text-align: center;
+	color: #464646;
+	line-height: 26px;
+}
+
+#ss-signup-thank-you, #ss-signup-error {
+	display: none;
+}
+
+#ss-banner-close-btn {
+	position: absolute;
+	right: 16px;
+	border-radius: 20px;
+	font-size: 20px;
+	border: none;
+}
+
+#ss-banner-message form {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+#ss-banner-message form input {
+	margin: 0 0 10px;
+}
+#ss-banner-message form button {
+	width: 100%;
+	border-radius: 4px;
+}
+
 .btn-default {
 	background-color: #58585A;
 	border-color: #525252;

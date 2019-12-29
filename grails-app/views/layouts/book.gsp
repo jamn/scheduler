@@ -92,11 +92,76 @@
 	</div>
 
 	<div id="mask"><img class="loader" src="${resource(dir:'images',file:'loading.gif')}" /></div>
+	
+	<div id="ss-mask" style="display">
+		<div id="ss-banner-message">
+			<button type="button" id="ss-banner-close-btn">X</button>
+			<img src="${resource(dir:'images',file:'ss-logo.png')}" />
+			<div id="ss-signup-ask">
+				<p>
+				Would you like to receive information about my new line of mens products?
+				</p>
+				<form method="post" class="login-box" id="ssSignupForm">
+					<input class="form-control" placeholder="Email" type="email" name="email" id="ssEmail" autofocus="autofocus" required="true" />
+					<button id="ss-signup-btn" type="submit">Sign Up</button> 
+				</form>
+			</div>
+			<div id="ss-signup-thank-you" style="margin:72px 0;">
+				<p>
+					Thank you.
+				</p>
+			</div>
+			<div id="ss-signup-error" style="margin:72px 0;">
+				<p>
+					Something went wrong.
+				</p>
+			</div>
+		</div>
+	</div>
 
 	<script src="${resource(dir:'js', file:'bootstrap-3.2.0.min.js')}" type="text/javascript"></script>
 	<!-- <script src="${resource(dir:'js', file:'jquery.confirmon.js')}"></script> -->
 	<!-- <script src="${resource(dir:'js', file:'jquery-validate-min.js')}"></script> -->
 	<!-- <script src="${resource(dir:'js', file:'application.min.js')}?v${appVersion}" type="text/javascript"></script> -->
 	<script src="${resource(dir:'js', file:'masked-input-plugin.min.js')}" type="text/javascript"></script>
+	<script src="${resource(dir:'js', file:'jquery.cookie.min.js')}" type="text/javascript"></script>
 	<script src="${resource(dir:'js', file:'app.js')}" type="text/javascript"></script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+
+			if ($.cookie('ss-signup') != '1') {
+    			//show popup here
+				$("#ss-mask").fadeIn();
+			}
+
+			$(document).on("click", "#ss-banner-close-btn", function() {
+					$("#ss-mask").fadeOut();
+					$.cookie('ss-signup', '1');
+			});
+
+			$("#ssSignupForm").submit(function( event ) {
+				event.preventDefault();
+				var ssEmail = $("#ssEmail").val(); 
+				$.post("book/ssSignup",
+				{
+					email: ssEmail
+				},
+				function(data, status){
+					console.log("Data: " + data + "\nStatus: " + status);
+					if (data === "200"){
+						$.cookie('ss-signup', '1');
+						$("#ss-signup-ask").fadeOut();
+						$("#ss-signup-thank-you").delay(500).fadeIn();
+						$("#ss-mask").delay(3000).fadeOut();
+					}
+					if (data === "422" || data === "500"){
+						$("#ss-signup-ask").fadeOut();
+						$("#ss-signup-error").delay(500).fadeIn();
+						$("#ss-signup-ask").delay(3000).fadeIn();
+					}
+				});
+			});
+		});
+	
+	</script>
 </body></html>
