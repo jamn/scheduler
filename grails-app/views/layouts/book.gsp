@@ -99,7 +99,7 @@
 			<img src="${resource(dir:'images',file:'ss-logo.png')}" />
 			<div id="ss-signup-ask">
 				<p>
-				Would you like to receive information about my new line of mens products?
+				Would you like to receive information about my new line of men's products?
 				</p>
 				<form method="post" class="login-box" id="ssSignupForm">
 					<input class="form-control" placeholder="Email" type="email" name="email" id="ssEmail" autofocus="autofocus" required="true" />
