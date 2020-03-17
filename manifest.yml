@@ -2,7 +2,7 @@
 applications:
   - memory: 1G
     instances: 1
-    path: build/libs/scheduler-0.32.war
+    path: build/libs/scheduler-0.33.war
     buildpack: java_buildpack
     env:
       JAVA_OPTS: -Duser.timezone=America/Chicago
