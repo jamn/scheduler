@@ -34,7 +34,10 @@ class EmailService {
 			body += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='${cancelLink}'>${cancelLink}</a></li>"
 		}
 		body += "</ul><p>See you then!</p><p>Kalin</p>"
-		body += "<p><b>Please Note:</b> <i>I am having an issue with last minute cancelations. Starting 3/1/15 I will be implementing a cancelation policy. I need 4 hours notice for a cancelation/rescheduled appointment. This gives me time to potentially fill that gap. There will be a \$20 charge at your following appointment if you cancel within 4 hours of your appointment. Thank you for understanding.</i></p>"
+		body += "<p><b>PANDEMIC UPDATE:</b></p>"
+		body += "<p><i>Hey Guys.  I am planning on operating on a tight schedule for the time being.  I will be doing everything I can to keep the shop extra clean.  I have stocked up on wipes and sanitizer and will make sure to clean between each cut.  I would appreciate EVERYONE washing or sanitizing their hands when you come in.  Please do NOT come in if you or your family is ill. Obviously do NOT come in if you have been traveling to New York, Colorado, Florida, California or out of the country (or any additional state that may have been added). I really don't even want you to come in if you have been on a plane in the last week (🙏🙏🙏). Use your judgment.  Your hair can wait a week so I can stay open for everyone else if you are remotely on the fence about coming in due to exposure.  I am putting all of my trust in you guys to be honest with me. I will have to cut my hours with school being closed to accommodate my family's needs.  I will not be taking new clients so I can make sure to be efficient with my time.  Be smart. Wash your hands.</i></p>"
+		body += "<p><i>Also, please consider buying soap from me if you need it! I don't know how long this will last and it is pretty scary. I promise it will help keep your hands softer than most over the counter soaps with all of your extra washing!</i></p>"
+		body += "<p><i>I am selling my soap out of the shop for $5/bar during a trial period. I also have supplies to make an alcohol spray that is safe to use on skin that I have been working on and will have available soon for purchase.</i></p>"
 		body += "<br><hr><br>"
 		body += "<p>The Den Barbershop<br>1013 West 47th Street<br>Kansas City, MO 64112</p>"
 		try {
